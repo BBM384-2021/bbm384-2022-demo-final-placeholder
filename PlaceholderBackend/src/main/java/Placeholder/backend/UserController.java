@@ -1,5 +1,6 @@
 package Placeholder.backend;
 
+import com.google.gson.Gson;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -7,15 +8,17 @@ import org.hibernate.cfg.Configuration;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
 public class UserController {
 
-    public SessionFactory createFactory(){
+    public static SessionFactory createFactory(){
         return new Configuration().
                 configure("hibernate.cfg.xml").
-                addAnnotatedClass(User.class).
+                addAnnotatedClass(User.class).addAnnotatedClass(Connection.class).
                 buildSessionFactory();
     }
 
@@ -88,9 +91,9 @@ public class UserController {
     }
 
     @GetMapping("/user/getUser")
-    public User getUser(@RequestParam(value = "current_users_id",defaultValue = "") String current_users_id ,@RequestParam(value = "requested_id",defaultValue = "") String requested_id){
+    public static User getUser(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id ,@RequestParam(value = "requested_id",defaultValue = "") String requested_id){
 
-        if(current_users_id.equals("") || requested_id.equals("")){
+        if(current_user_id.equals("") || requested_id.equals("")){
             return null;
         }
 
@@ -110,10 +113,11 @@ public class UserController {
             user.setUser_password("");
             System.out.println(user);
 
-            user.setIs_connected(ConnectionController.checkConnection(current_users_id,requested_id));
+            user.setIs_connected(ConnectionController.checkConnection(current_user_id,requested_id));
 
         }
         catch (Exception e){
+            System.out.println(e);
             return null;
         }
         finally {
@@ -147,18 +151,19 @@ public class UserController {
     }
 
     @DeleteMapping("/user/deleteUser")
-    public int deleteUser(@RequestParam(value = "id") String id){
+    public int deleteUser(@RequestParam(value = "current_user_id") String current_user_id){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
         try{
             session.beginTransaction();
-            session.createQuery("delete from User s where s.id = "+id).executeUpdate();
+            session.createQuery("delete from User s where s.id = "+current_user_id).executeUpdate();
             session.getTransaction().commit();
-
+            ConnectionController.removeAllConnections(current_user_id);
         }
         catch (Exception e){
+            System.out.println(e);
             return 400;
         }
         finally {
@@ -197,19 +202,38 @@ public class UserController {
     }
 
     @GetMapping("/user/searchUser")
-    public List<User> searchUser(@RequestParam (value = "query",defaultValue = "")String query){
+    public List<User> searchUser(@RequestParam (value = "current_user_id",defaultValue = "")String current_user_id, @RequestParam (value = "query",defaultValue = "")String query){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
-        List<User> allUsers = null;
+        List<User> allUsers = new ArrayList<>();
+        List<Object> queryResult = null;
         try{
+            HashSet<Integer> found = new HashSet<>();
+            Gson gson = new Gson();
             session.beginTransaction();
-            allUsers = session.createQuery(String.format("from User u WHERE u.full_name LIKE '%s'",(query+"%"))).getResultList();
-            session.getTransaction().commit();
-            for(User u : allUsers){
-                u.setUser_password("");
+            queryResult = session.createQuery(String.format("from User u INNER JOIN Connection c ON user1_id = '%s' and user2_id = u.id WHERE u.full_name LIKE '%s'",current_user_id,(query+"%"))).getResultList();
+            System.out.println(allUsers);
+            for(Object o : queryResult){
+                System.out.println("asdas"+o);
+                String jsonStr = ((Object[]) o)[0].toString();
+                System.out.println(jsonStr.substring(4));
+                User u = gson.fromJson(jsonStr.substring(4), User.class);
+                u.setIs_connected(true);
+                allUsers.add(u);
+                found.add(u.getId());
             }
+            queryResult = session.createQuery(String.format("from User u WHERE u.full_name LIKE '%s'",(query+"%"))).getResultList();
+            for(Object o : queryResult){
+                String jsonStr = o.toString();
+                System.out.println(jsonStr.substring(4));
+                User u = gson.fromJson(jsonStr.substring(4), User.class);
+                if(!found.contains(u.getId())){
+                    allUsers.add(u);
+                }
+            }
+            session.getTransaction().commit();
             System.out.println(allUsers);
         }
         finally {
@@ -251,6 +275,30 @@ public class UserController {
             factory.close();
         }
 
+        return 200;
+    }
+
+    @PatchMapping("/user/updateUserType")
+    public int updateUserType(@RequestParam(value = "user_type",defaultValue = "0") String user_type, @RequestParam (value = "current_user_id",defaultValue = "")String current_user_id){
+        if(current_user_id.equals("")){
+            return 400;
+        }
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try{
+            session.beginTransaction();
+            session.createQuery(String.format("update User u SET u.user_type = '%s' WHERE u.id = '%s'",user_type,current_user_id)).executeUpdate();
+            session.getTransaction().commit();
+
+        }
+        catch (Exception e){
+            factory.close();
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
         return 200;
     }
 

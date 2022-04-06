@@ -30,6 +30,12 @@ public class ConnectionController {
         Session session = factory.getCurrentSession();
 
         try{
+            /*
+            if(UserController.getUser("1",Integer.toString(connection.getUser2_id())) == null){
+                return 400;
+            }
+
+             */
             session.beginTransaction();
             session.save(connection);
             session.getTransaction().commit();
@@ -85,7 +91,7 @@ public class ConnectionController {
     }
 
     @DeleteMapping("/connection/removeConnection")
-    public int removeConnection(@RequestParam(value = "user1_id",defaultValue = "") String user1_id ,@RequestParam(value = "user2_id",defaultValue = "") String user2_id){
+    public static int removeConnection(@RequestParam(value = "user1_id",defaultValue = "") String user1_id ,@RequestParam(value = "user2_id",defaultValue = "") String user2_id){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
@@ -93,6 +99,31 @@ public class ConnectionController {
         try{
             session.beginTransaction();
             session.createQuery(String.format("delete from Connection c where (c.user1_id = '%s' and c.user2_id = '%s') or (c.user2_id = '%s' and c.user1_id = '%s')",user1_id,user2_id,user1_id,user2_id)).executeUpdate();
+            session.getTransaction().commit();
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
+
+        return 200;
+
+
+    }
+
+    @DeleteMapping("/connection/deleteAllConnections")
+    public static int removeAllConnections(@RequestParam(value = "user_id",defaultValue = "") String user_id){
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try{
+            session.beginTransaction();
+            session.createQuery(String.format("delete from Connection c where c.user1_id = '%s' or c.user2_id = '%s'",user_id,user_id)).executeUpdate();
             session.getTransaction().commit();
 
         }
