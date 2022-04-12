@@ -13,8 +13,8 @@ This platform will provide an efficient and reliable way to connect, share, and 
 - Material UI
 
 ## Notes about the Repo
-Both front-end and back-end exists within this repo. 
-  > In order to test front-end in your local, you need to
+> Both front-end and back-end exists within this repo. 
+   In order to test front-end in your local, you need to
   1. Clone the project in your working environment
   2. Navigate inside the `placeholder-frontend` folder
   3. call `npm install` in your terminal: This will download the necessary `node-modules` in your folder
