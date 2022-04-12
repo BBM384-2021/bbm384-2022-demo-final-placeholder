@@ -22,12 +22,6 @@ public class ConnectionDAO {
         Session session = factory.getCurrentSession();
 
         try{
-            /*
-            if(UserController.getUser("1",Integer.toString(connection.getUser2_id())) == null){
-                return 400;
-            }
-
-             */
             session.beginTransaction();
             session.save(connection);
             session.getTransaction().commit();
@@ -59,15 +53,16 @@ public class ConnectionDAO {
         try{
             session.beginTransaction();
             List<Connection> connections = session.createQuery(String.format("from Connection c WHERE c.user1_id = '%s' and c.user2_id = '%s'",user1_id,user2_id)).getResultList();
+            session.getTransaction().commit();
             if(connections.size() == 0){
                 return false;
             }
             connection = connections.get(0);
-            session.getTransaction().commit();
             System.out.println(connection);
 
         }
         catch (Exception e){
+            System.out.println(e);
             return false;
         }
         finally {
