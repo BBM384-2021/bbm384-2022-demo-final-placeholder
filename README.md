@@ -1,5 +1,5 @@
 # bbm384-2022-project-team-placeholder
-# Placeholder Frontend 
+# Placeholder Team: LinkedHU_CENG Web Application 
 This project develops a web application for Hacettepe University Computer Engineering Department students, graduates, and academicians to connect with each other. 
 This platform will provide an efficient and reliable way to connect, share, and socialize to its users.
 
