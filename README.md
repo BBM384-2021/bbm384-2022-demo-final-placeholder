@@ -20,18 +20,9 @@ Then you can safely run `npm start` to open the front-end in `localhost:XXXX` de
 ## Authors
 
 
-| <center> 
-<img src="https://github.com/tuanacetinkaya.png?size=400" width="100"/></center> | 
-<img src="https://github.com/kaantuncer.png?size=400" width="100"/> | 
-<img src="https://github.com/mavibirdesmi.png?size=400" width="100"/> | 
-<img src="https://github.com/sanshigo345.png?size=400" width="100"/> | 
-<img src="https://github.com/b21990303.png?size=400" width="100"/> |
+| <center> <img src="https://github.com/tuanacetinkaya.png?size=400" width="100"/></center> | <img src="https://github.com/kaantuncer.png?size=400" width="100"/> | <img src="https://github.com/mavibirdesmi.png?size=400" width="100"/> | <img src="https://github.com/sanshigo345.png?size=400" width="100"/> | <img src="https://github.com/b21990303.png?size=400" width="100"/> |
 | --- | --- | --- | -- | -- |
-| <center>[Tuana Cetinkaya](https://github.com/tuanacetinkaya) </center> 
-| <center>[Kaan Tuncer](https://github.com/kaantuncer)</center> 
-| <center>[Desmin Alpaslan](https://github.com/mavibirdesmi) </center> 
-| <center>[Buğra Ercan](https://github.com/sanshigo345) </center> 
-| <center>[Hüseyin Mirza Dal](https://github.com/b21990303) </center> |
+| <center>[Tuana Cetinkaya](https://github.com/tuanacetinkaya) </center> | <center>[Kaan Tuncer](https://github.com/kaantuncer)</center> | <center>[Desmin Alpaslan](https://github.com/mavibirdesmi) </center> | <center>[Buğra Ercan](https://github.com/sanshigo345) </center> | <center>[Hüseyin Mirza Dal](https://github.com/b21990303) </center> |
 | <center>**SWE & Project Manager** </center> | <center>**SWE & Software Architect** </center> | <center>**SWE & Software Analyst** </center> | <center>**SWE & Software Configuration Manager** </center> | <center>**SWE & Software Tester** </center>  |
 
 
