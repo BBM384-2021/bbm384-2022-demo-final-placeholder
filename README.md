@@ -13,12 +13,9 @@ This platform will provide an efficient and reliable way to connect, share, and 
 - Material UI
 
 ## Notes about the Repo
-Both front-end and back-end exists within this repo. In order to test front-end in your local, you need to go inside the `placeholder-frontend` folder and call
-<br> `npm install`</br> in your terminal. This will download the necessary `node-modules` in your folder. 
-Then you can safely run `npm start` to open the front-end in `localhost:XXXX` depending on your ports.
+Both front-end and back-end exists within this repo. In order to test front-end in your local, you need to go inside the `placeholder-frontend` folder and call <br> `npm install`</br> in your terminal. This will download the necessary `node-modules` in your folder. Then you can safely run `npm start` to open the front-end in `localhost:XXXX` depending on your ports.
 
 ## Authors
-
 
 | <center> <img src="https://github.com/tuanacetinkaya.png?size=400" width="100"/></center> | <img src="https://github.com/kaantuncer.png?size=400" width="100"/> | <img src="https://github.com/mavibirdesmi.png?size=400" width="100"/> | <img src="https://github.com/sanshigo345.png?size=400" width="100"/> | <img src="https://github.com/b21990303.png?size=400" width="100"/> |
 | --- | --- | --- | -- | -- |
