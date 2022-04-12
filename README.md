@@ -14,6 +14,7 @@ This platform will provide an efficient and reliable way to connect, share, and 
 
 ## Notes about the Repo
 > Both front-end and back-end exists within this repo. 
+
    In order to test front-end in your local, you need to
   1. Clone the project in your working environment
   2. Navigate inside the `placeholder-frontend` folder
