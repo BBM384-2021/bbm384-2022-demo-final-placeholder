@@ -1,9 +1,10 @@
 package Placeholder.backend.DAO;
 
-import Placeholder.backend.Controller.ConnectionController;
 import Placeholder.backend.Model.Connection;
 import Placeholder.backend.Model.User;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -22,31 +23,36 @@ public class UserDAO {
                 buildSessionFactory();
     }
 
-    public static int createUser(User user){
+    public static User createUser(User user){
         user.setUser_password(Integer.toString(user.getUser_password().hashCode()));
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
-
+        List<User> users;
         try{
             session.beginTransaction();
-            List<User> users= session.createQuery(String.format("from User u WHERE u.cs_mail = '%s'",user.getCs_mail())).getResultList();
+            users= session.createQuery(String.format("from User u WHERE u.cs_mail = '%s'",user.getCs_mail())).getResultList();
             if(users.size() == 0){
                 session.save(user);
-
             }
             else{
-                return 400;
+                return null;
+            }
+            users= session.createQuery(String.format("from User u WHERE u.cs_mail = '%s'",user.getCs_mail())).getResultList();
+            System.out.println(users+"!!!!!!!!!!!!!!!!!!!!");
+            if(users.size() != 1){
+                return null;
             }
             session.getTransaction().commit();
         }
         catch (Exception e){
-            return 400;
+            System.out.println(e);
+            return null;
         }
         finally {
             factory.close();
         }
-        return 200;
+        return users.get(0);
     }
 
     public static User login(String cs_mail, String user_password){
@@ -95,7 +101,7 @@ public class UserDAO {
             user.setUser_password("");
             System.out.println(user);
 
-            user.setIs_connected(ConnectionController.checkConnection(current_user_id,requested_id));
+            user.setIs_connected(ConnectionDAO.checkConnection(current_user_id,requested_id));
 
         }
         catch (Exception e){
@@ -113,6 +119,7 @@ public class UserDAO {
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
+
         List<User> allUsers = null;
         try{
             session.beginTransaction();
@@ -122,6 +129,10 @@ public class UserDAO {
                 u.setUser_password("");
             }
             System.out.println(allUsers);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
         }
         finally {
             factory.close();
@@ -139,7 +150,7 @@ public class UserDAO {
             session.beginTransaction();
             session.createQuery("delete from User s where s.id = "+current_user_id).executeUpdate();
             session.getTransaction().commit();
-            ConnectionController.removeAllConnections(current_user_id);
+            ConnectionDAO.removeAllConnections(current_user_id);
         }
         catch (Exception e){
             System.out.println(e);
@@ -168,7 +179,7 @@ public class UserDAO {
 
         }
         catch (Exception e){
-            factory.close();
+            System.out.println(e);
             return 400;
         }
         finally {
@@ -189,9 +200,7 @@ public class UserDAO {
             Gson gson = new Gson();
             session.beginTransaction();
             queryResult = session.createQuery(String.format("from User u INNER JOIN Connection c ON user1_id = '%s' and user2_id = u.id WHERE u.full_name LIKE '%s'",current_user_id,(query+"%"))).getResultList();
-            System.out.println(allUsers);
             for(Object o : queryResult){
-                System.out.println("asdas"+o);
                 String jsonStr = ((Object[]) o)[0].toString();
                 System.out.println(jsonStr.substring(4));
                 User u = gson.fromJson(jsonStr.substring(4), User.class);
@@ -210,6 +219,10 @@ public class UserDAO {
             }
             session.getTransaction().commit();
             System.out.println(allUsers);
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
         }
         finally {
             factory.close();
@@ -239,6 +252,7 @@ public class UserDAO {
 
         }
         catch (Exception e){
+            System.out.println(e);
             return 400;
         }
         finally {
@@ -260,7 +274,7 @@ public class UserDAO {
 
         }
         catch (Exception e){
-            factory.close();
+            System.out.println(e);
             return 400;
         }
         finally {
@@ -269,6 +283,36 @@ public class UserDAO {
         return 200;
     }
 
+    public static List<User> getUsersConnected(String current_user_id){
+
+        List<User> result = new ArrayList<>();
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+        try {
+            session.beginTransaction();
+            List<Object> rawResult = session.createQuery(String.format("from User u INNER JOIN Connection c ON c.user2_id = u.id and c.user1_id = '%s'",current_user_id)).getResultList();
+            for(Object o : rawResult){
+                Gson gson = new Gson();
+                String jsonStr = gson.toJson(o);
+                JsonParser jsonParser = new JsonParser();
+                JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
+                User u = gson.fromJson(jsonArray.get(0), User.class);
+                u.setIs_connected(true);
+                result.add(u);
+            }
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+        finally {
+            factory.close();
+        }
+        return result;
+
+    }
 
 
 }

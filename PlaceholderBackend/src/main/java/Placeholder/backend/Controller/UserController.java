@@ -4,9 +4,8 @@ import Placeholder.backend.DAO.UserDAO;
 import Placeholder.backend.Model.User;
 
 
-
+import Placeholder.backend.Util.DAOFunctions;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 
@@ -14,87 +13,134 @@ import java.util.List;
 public class UserController {
 
     @PostMapping("/user/createUser")
-    public int createUser(@RequestBody User user){
+    public Object createUser(@RequestBody User user){
         System.out.println(user);
         if(user.getUser_password() == null){
-            return 400;
+            return DAOFunctions.getResponse(400,"",null);
         }
-        return UserDAO.createUser(user);
+        User u = UserDAO.createUser(user);
+
+        if(u != null){
+            return DAOFunctions.getResponse(200,"user",u);
+        }
+        else{
+            return DAOFunctions.getResponse(400,"",null);
+        }
     }
 
     @GetMapping("/user/login")
-    public User login(@RequestParam(value = "cs_mail",defaultValue = "") String cs_mail, @RequestParam(value = "user_password",defaultValue = "")String user_password){
+    public Object login(@RequestParam(value = "cs_mail",defaultValue = "") String cs_mail, @RequestParam(value = "user_password",defaultValue = "")String user_password){
 
         System.out.println(cs_mail);
         System.out.println(user_password);
         if(cs_mail.equals("") || user_password.equals("")){
 
-            return null;
+            return DAOFunctions.getResponse(400,"",null);
         }
+        User u = UserDAO.login(cs_mail,user_password);
 
-        return UserDAO.login(cs_mail,user_password);
+        if(u != null){
+            return DAOFunctions.getResponse(200,"user",u);
+        }
+        else{
+            return DAOFunctions.getResponse(400,"",null);
+        }
     }
 
     @GetMapping("/user/getUser")
-    public User getUser(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id ,@RequestParam(value = "requested_id",defaultValue = "") String requested_id){
+    public Object getUser(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id ,@RequestParam(value = "requested_id",defaultValue = "") String requested_id){
 
         if(current_user_id.equals("") || requested_id.equals("")){
-            return null;
+            return DAOFunctions.getResponse(400,"",null);
         }
-        return UserDAO.getUser(current_user_id,requested_id);
+        User u = UserDAO.getUser(current_user_id,requested_id);
+        if(u != null){
+            return DAOFunctions.getResponse(200,"user",u);
+        }
+        else{
+            return DAOFunctions.getResponse(400,"",null);
+        }
 
     }
 
     @GetMapping("/user/getAllUsers")
-    public List<User> getAllUsers(){
-        return UserDAO.getAllUsers();
+    public Object getAllUsers(){
+
+        List<User> allUsers = UserDAO.getAllUsers();
+        if(allUsers != null){
+            return DAOFunctions.getResponse(200,"allUsers",allUsers);
+        }
+        else{
+            return DAOFunctions.getResponse(400,"",null);
+        }
     }
 
     @DeleteMapping("/user/deleteUser")
-    public int deleteUser(@RequestParam(value = "current_user_id") String current_user_id){
+    public Object deleteUser(@RequestParam(value = "current_user_id") String current_user_id){
 
         if(current_user_id.equals("")){
-            return 400;
+            return DAOFunctions.getResponse(400,"",null);
         }
 
-        return UserDAO.deleteUser(current_user_id);
+        return DAOFunctions.getResponse(UserDAO.deleteUser(current_user_id),"",null);
 
     }
 
     @PatchMapping("/user/updateUser")
-    public int updateUser(@RequestBody User user){
+    public Object updateUser(@RequestBody User user){
         if(user.getId() == 0){
-            return 400;
+            return DAOFunctions.getResponse(400,"",null);
         }
-        return UserDAO.updateUser(user);
+        return DAOFunctions.getResponse(UserDAO.updateUser(user),"",null);
     }
 
     @GetMapping("/user/searchUser")
-    public List<User> searchUser(@RequestParam (value = "current_user_id",defaultValue = "")String current_user_id, @RequestParam (value = "query",defaultValue = "")String query){
+    public Object searchUser(@RequestParam (value = "current_user_id",defaultValue = "")String current_user_id, @RequestParam (value = "query",defaultValue = "")String query){
 
         if(query.equals("") || current_user_id.equals("")){
-            return null;
+            return DAOFunctions.getResponse(400,"",null);
         }
-        return UserDAO.searchUser(current_user_id,query);
+        List<User> searchResult = UserDAO.searchUser(current_user_id,query);
+        if(searchResult != null){
+            return DAOFunctions.getResponse(200,"searchResult",searchResult);
+        }
+        else{
+            return DAOFunctions.getResponse(400,"",null);
+        }
 
     }
 
     @PatchMapping("/user/updatePassword")
-    public int updatePassword(@RequestParam(value = "cs_mail",defaultValue = "") String cs_mail, @RequestParam(value = "old_password",defaultValue = "") String old_password, @RequestParam(value = "new_password",defaultValue = "")String new_password){
+    public Object updatePassword(@RequestParam(value = "cs_mail",defaultValue = "") String cs_mail, @RequestParam(value = "old_password",defaultValue = "") String old_password, @RequestParam(value = "new_password",defaultValue = "")String new_password){
 
         if(new_password.equals("") ||old_password.equals("")){
-            return 400;
+            return DAOFunctions.getResponse(400,"",null);
         }
-        return UserDAO.updatePassword(cs_mail,old_password,new_password);
+        return DAOFunctions.getResponse(UserDAO.updatePassword(cs_mail,old_password,new_password),"",null);
     }
 
     @PatchMapping("/user/updateUserType")
-    public int updateUserType(@RequestParam(value = "user_type",defaultValue = "0") String user_type, @RequestParam (value = "current_user_id",defaultValue = "")String current_user_id){
+    public Object updateUserType(@RequestParam(value = "user_type",defaultValue = "0") String user_type, @RequestParam (value = "current_user_id",defaultValue = "")String current_user_id){
         if(current_user_id.equals("")){
-            return 400;
+            return DAOFunctions.getResponse(400,"",null);
+        }
+        return DAOFunctions.getResponse(UserDAO.updateUserType(user_type,current_user_id),"",null);
+    }
+    @GetMapping("/user/getUsersConnected")
+    public static Object getUsersConnected(@RequestParam (value = "current_user_id",defaultValue = "")String current_user_id){
+
+
+        if(current_user_id.equals("")){
+            return DAOFunctions.getResponse(400,"",null);
+        }
+        List<User> connectedUsers = UserDAO.getUsersConnected(current_user_id);
+        if(connectedUsers != null){
+            return DAOFunctions.getResponse(200,"connectedUsers",connectedUsers);
+        }
+        else{
+            return DAOFunctions.getResponse(400,"",null);
         }
 
-        return UserDAO.updateUserType(user_type,current_user_id);
     }
 
 
