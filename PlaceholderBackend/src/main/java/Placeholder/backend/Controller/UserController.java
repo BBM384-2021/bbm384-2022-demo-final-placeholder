@@ -1,5 +1,6 @@
 package Placeholder.backend.Controller;
 
+import Placeholder.backend.DAO.ConnectionDAO;
 import Placeholder.backend.DAO.UserDAO;
 import Placeholder.backend.Model.User;
 
@@ -7,6 +8,8 @@ import Placeholder.backend.Model.User;
 import Placeholder.backend.Util.DAOFunctions;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -55,7 +58,9 @@ public class UserController {
         }
         User u = UserDAO.getUser(current_user_id,requested_id);
         if(u != null){
-            return DAOFunctions.getResponse(200,"user",u);
+            boolean connected = ConnectionDAO.checkConnection(current_user_id,requested_id);
+            List<User> connectionList = UserDAO.getUsersConnected(requested_id);
+            return DAOFunctions.getResponseWithMultipleObjects(200, new ArrayList<>(Arrays. asList("user","connected","connectedUsers")),new ArrayList<>(Arrays. asList(u,connected,connectionList)));
         }
         else{
             return DAOFunctions.getResponse(400,"",null);
@@ -81,7 +86,7 @@ public class UserController {
         if(current_user_id.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-
+        ConnectionDAO.removeAllConnections(current_user_id);
         return DAOFunctions.getResponse(UserDAO.deleteUser(current_user_id),"",null);
 
     }
@@ -100,9 +105,9 @@ public class UserController {
         if(query.equals("") || current_user_id.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        List<User> searchResult = UserDAO.searchUser(current_user_id,query);
+        List<List<User>> searchResult = UserDAO.searchUser(current_user_id,query);
         if(searchResult != null){
-            return DAOFunctions.getResponse(200,"searchResult",searchResult);
+            return DAOFunctions.getResponseWithMultipleObjects(200,new ArrayList<>(Arrays. asList("connectedUsers","nonConnectedUsers")),new ArrayList<Object>(Arrays. asList(searchResult.get(0),searchResult.get(1))));
         }
         else{
             return DAOFunctions.getResponse(400,"",null);

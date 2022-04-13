@@ -100,9 +100,6 @@ public class UserDAO {
             session.getTransaction().commit();
             user.setUser_password("");
             System.out.println(user);
-
-            user.setIs_connected(ConnectionDAO.checkConnection(current_user_id,requested_id));
-
         }
         catch (Exception e){
             System.out.println(e);
@@ -150,7 +147,6 @@ public class UserDAO {
             session.beginTransaction();
             session.createQuery("delete from User s where s.id = "+current_user_id).executeUpdate();
             session.getTransaction().commit();
-            ConnectionDAO.removeAllConnections(current_user_id);
         }
         catch (Exception e){
             System.out.println(e);
@@ -188,12 +184,14 @@ public class UserDAO {
         return 200;
     }
 
-    public static List<User> searchUser(String current_user_id, String query){
+    public static List<List<User>> searchUser(String current_user_id, String query){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
-        List<User> allUsers = new ArrayList<>();
+        List<List<User>> allUsers = new ArrayList<>();
+        List<User> connectedUsers = new ArrayList<>();
+        List<User> nonConnectedUsers = new ArrayList<>();
         List<Object> queryResult = null;
         try{
             HashSet<Integer> found = new HashSet<>();
@@ -204,8 +202,7 @@ public class UserDAO {
                 String jsonStr = ((Object[]) o)[0].toString();
                 System.out.println(jsonStr.substring(4));
                 User u = gson.fromJson(jsonStr.substring(4), User.class);
-                u.setIs_connected(true);
-                allUsers.add(u);
+                connectedUsers.add(u);
                 found.add(u.getId());
             }
             queryResult = session.createQuery(String.format("from User u WHERE u.full_name LIKE '%s'",(query+"%"))).getResultList();
@@ -214,10 +211,12 @@ public class UserDAO {
                 System.out.println(jsonStr.substring(4));
                 User u = gson.fromJson(jsonStr.substring(4), User.class);
                 if(!found.contains(u.getId())){
-                    allUsers.add(u);
+                    nonConnectedUsers.add(u);
                 }
             }
             session.getTransaction().commit();
+            allUsers.add(connectedUsers);
+            allUsers.add(nonConnectedUsers);
             System.out.println(allUsers);
         }
         catch (Exception e){
@@ -298,7 +297,6 @@ public class UserDAO {
                 JsonParser jsonParser = new JsonParser();
                 JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
                 User u = gson.fromJson(jsonArray.get(0), User.class);
-                u.setIs_connected(true);
                 result.add(u);
             }
             session.getTransaction().commit();
