@@ -17,6 +17,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import './Login.css'
 
+import { Link as RouterLink} from "react-router-dom";
+
 function Copyright(props) {
   return (
     <Typography
@@ -101,9 +103,11 @@ export default function Login() {
               />
               <Button
                 type="submit"
+                component={RouterLink}
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                to='/mainPage'
               >
                 Sign In
               </Button>
