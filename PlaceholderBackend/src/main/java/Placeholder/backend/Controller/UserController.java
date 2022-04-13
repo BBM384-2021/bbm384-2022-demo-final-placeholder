@@ -1,6 +1,7 @@
 package Placeholder.backend.Controller;
 
 import Placeholder.backend.DAO.ConnectionDAO;
+import Placeholder.backend.DAO.ConnectionRequestDAO;
 import Placeholder.backend.DAO.UserDAO;
 import Placeholder.backend.Model.User;
 
@@ -84,6 +85,7 @@ public class UserController {
             return DAOFunctions.getResponse(400,"",null);
         }
         ConnectionDAO.removeAllConnections(current_user_id);
+        ConnectionRequestDAO.removeAllRequests(current_user_id);
         return DAOFunctions.getResponse(UserDAO.deleteUser(current_user_id),"",null);
 
     }
@@ -143,6 +145,35 @@ public class UserController {
             return DAOFunctions.getResponse(400,"",null);
         }
 
+    }
+    @GetMapping("user/getConnectionRequestedUsers")
+    public static Object getConnectionRequestedUsers(@RequestParam (value = "current_user_id",defaultValue = "")String current_user_id){
+
+        if(current_user_id.equals("")){
+            return DAOFunctions.getResponse(400,"",null);
+        }
+        List<User> requestedUsers = UserDAO.getConnectionRequestedUsers(current_user_id);
+        if(requestedUsers != null){
+            return DAOFunctions.getResponse(200,"requestedUsers",requestedUsers);
+        }
+        else{
+            return DAOFunctions.getResponse(400,"",null);
+        }
+    }
+
+    @GetMapping("user/getConnectionReceivedUsers")
+    public static Object getConnectionReceivedUsers(@RequestParam (value = "current_user_id",defaultValue = "")String current_user_id){
+
+        if(current_user_id.equals("")){
+            return DAOFunctions.getResponse(400,"",null);
+        }
+        List<User> requestedUsers = UserDAO.getConnectionReceivedUsers(current_user_id);
+        if(requestedUsers != null){
+            return DAOFunctions.getResponse(200,"receivedUsers",requestedUsers);
+        }
+        else{
+            return DAOFunctions.getResponse(400,"",null);
+        }
     }
 
 

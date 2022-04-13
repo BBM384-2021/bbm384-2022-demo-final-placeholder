@@ -1,36 +1,30 @@
 package Placeholder.backend.DAO;
 
-import Placeholder.backend.Model.Connection;
+import Placeholder.backend.Model.ConnectionRequest;
+import Placeholder.backend.Model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
 
-public class ConnectionDAO {
+public class ConnectionRequestDAO {
 
     public static SessionFactory createFactory(){
         return new Configuration().
                 configure("hibernate.cfg.xml").
-                addAnnotatedClass(Connection.class).
+                addAnnotatedClass(ConnectionRequest.class).
                 buildSessionFactory();
     }
 
-    public static int createConnection(Connection connection){
+    public static int createRequest(ConnectionRequest connectionRequest){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
         try{
             session.beginTransaction();
-            session.save(connection);
-            session.getTransaction().commit();
-            session = factory.getCurrentSession();
-            session.beginTransaction();
-            Connection reverse = new Connection();
-            reverse.setUser1_id(connection.getUser2_id());
-            reverse.setUser2_id(connection.getUser1_id());
-            session.save(reverse);
+            session.save(connectionRequest);
             session.getTransaction().commit();
         }
         catch (Exception e){
@@ -42,20 +36,42 @@ public class ConnectionDAO {
         }
         return 200;
     }
-
-    public static boolean checkConnection(String user1_id , String user2_id){
+    public static int removeRequest(ConnectionRequest connectionRequest){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
         try{
             session.beginTransaction();
-            List<Connection> connections = session.createQuery(String.format("from Connection c WHERE c.user1_id = '%s' and c.user2_id = '%s'",user1_id,user2_id)).getResultList();
+            session.createQuery(String.format("delete from ConnectionRequest where sender_id = '%s' and receiver_id = '%s'",connectionRequest.getSender_id(),connectionRequest.getReceiver_id())).executeUpdate();
             session.getTransaction().commit();
-            if(connections.size() == 0){
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
+
+        return 200;
+
+
+    }
+
+    public static boolean checkRequest(ConnectionRequest checkedRequest){
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try{
+            session.beginTransaction();
+            List<ConnectionRequest> connectionRequests = session.createQuery(String.format("from ConnectionRequest WHERE sender_id = '%s' and receiver_id = '%s'",checkedRequest.getSender_id(),checkedRequest.getReceiver_id())).getResultList();
+            session.getTransaction().commit();
+            if(connectionRequests.size() == 0){
                 return false;
             }
-
         }
         catch (Exception e){
             System.out.println(e);
@@ -68,14 +84,14 @@ public class ConnectionDAO {
 
     }
 
-    public static int removeConnection(String user1_id ,String user2_id){
+    public static int removeAllRequests(String user_id){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
         try{
             session.beginTransaction();
-            session.createQuery(String.format("delete from Connection c where (c.user1_id = '%s' and c.user2_id = '%s') or (c.user2_id = '%s' and c.user1_id = '%s')",user1_id,user2_id,user1_id,user2_id)).executeUpdate();
+            session.createQuery(String.format("delete from ConnectionRequest c where c.sender_id = '%s' or c.receiver_id = '%s'",user_id,user_id)).executeUpdate();
             session.getTransaction().commit();
 
         }
@@ -92,38 +108,15 @@ public class ConnectionDAO {
 
     }
 
-    public static int removeAllConnections(String user_id){
-
+    public static List<ConnectionRequest> getAllRequests(){
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
+
+        List<ConnectionRequest> allRequests;
         try{
             session.beginTransaction();
-            session.createQuery(String.format("delete from Connection c where c.user1_id = '%s' or c.user2_id = '%s'",user_id,user_id)).executeUpdate();
-            session.getTransaction().commit();
-
-        }
-        catch (Exception e){
-            System.out.println(e);
-            return 400;
-        }
-        finally {
-            factory.close();
-        }
-
-        return 200;
-
-
-    }
-
-    public static List<Connection> getAllConnections(){
-        SessionFactory factory = createFactory();
-        Session session = factory.getCurrentSession();
-
-        List<Connection> allConnections;
-        try{
-            session.beginTransaction();
-            allConnections = session.createQuery("from Connection c").getResultList();
+            allRequests = session.createQuery("from ConnectionRequest c").getResultList();
             session.getTransaction().commit();
         }
         catch (Exception e){
@@ -134,6 +127,6 @@ public class ConnectionDAO {
             factory.close();
         }
 
-        return allConnections;
+        return allRequests;
     }
 }

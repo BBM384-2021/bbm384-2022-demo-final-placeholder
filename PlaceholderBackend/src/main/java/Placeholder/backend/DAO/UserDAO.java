@@ -1,6 +1,7 @@
 package Placeholder.backend.DAO;
 
 import Placeholder.backend.Model.Connection;
+import Placeholder.backend.Model.ConnectionRequest;
 import Placeholder.backend.Model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -16,10 +17,21 @@ import java.util.List;
 
 public class UserDAO {
 
+    private static void extractUserList(List<User> result, List<Object> rawResult) {
+        for(Object o : rawResult){
+            Gson gson = new Gson();
+            String jsonStr = gson.toJson(o);
+            JsonParser jsonParser = new JsonParser();
+            JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
+            User u = gson.fromJson(jsonArray.get(0), User.class);
+            result.add(u);
+        }
+    }
+
     public static SessionFactory createFactory(){
         return new Configuration().
                 configure("hibernate.cfg.xml").
-                addAnnotatedClass(User.class).addAnnotatedClass(Connection.class).
+                addAnnotatedClass(User.class).addAnnotatedClass(Connection.class).addAnnotatedClass(ConnectionRequest.class).
                 buildSessionFactory();
     }
 
@@ -286,14 +298,7 @@ public class UserDAO {
         try {
             session.beginTransaction();
             List<Object> rawResult = session.createQuery(String.format("from User u INNER JOIN Connection c ON c.user2_id = u.id and c.user1_id = '%s'",current_user_id)).getResultList();
-            for(Object o : rawResult){
-                Gson gson = new Gson();
-                String jsonStr = gson.toJson(o);
-                JsonParser jsonParser = new JsonParser();
-                JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
-                User u = gson.fromJson(jsonArray.get(0), User.class);
-                result.add(u);
-            }
+            extractUserList(result, rawResult);
             session.getTransaction().commit();
         }
         catch (Exception e){
@@ -304,6 +309,58 @@ public class UserDAO {
             factory.close();
         }
         return result;
+
+    }
+
+    public static List<User> getConnectionRequestedUsers(String current_user_id){
+
+        List<User> result = new ArrayList<>();
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try {
+            session.beginTransaction();
+            List<Object> rawResult = session.createQuery(String.format("from User u INNER JOIN ConnectionRequest c ON c.receiver_id = u.id and c.sender_id = '%s'",current_user_id)).getResultList();
+            extractUserList(result, rawResult);
+            session.getTransaction().commit();
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+        finally {
+            factory.close();
+        }
+        return result;
+
+
+    }
+
+    public static List<User> getConnectionReceivedUsers(String current_user_id){
+
+        List<User> result = new ArrayList<>();
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try {
+            session.beginTransaction();
+            List<Object> rawResult = session.createQuery(String.format("from User u INNER JOIN ConnectionRequest c ON c.sender_id = u.id and c.receiver_id = '%s'",current_user_id)).getResultList();
+            extractUserList(result, rawResult);
+            session.getTransaction().commit();
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+        finally {
+            factory.close();
+        }
+        return result;
+
 
     }
 
