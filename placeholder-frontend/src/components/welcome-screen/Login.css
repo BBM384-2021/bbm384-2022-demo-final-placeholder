@@ -1,4 +1,4 @@
-.form{
-    background-color: #888888;
-    margin: 20vmax;
+.card-view {
+  max-width: 475;
+  padding: 5%;
 }
