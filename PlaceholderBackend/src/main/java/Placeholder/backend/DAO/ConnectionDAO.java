@@ -48,7 +48,7 @@ public class ConnectionDAO {
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
-        Connection connection= null;
+        Connection connection;
 
         try{
             session.beginTransaction();

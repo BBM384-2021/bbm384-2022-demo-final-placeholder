@@ -17,8 +17,7 @@ public class UserController {
 
     @PostMapping("/user/createUser")
     public Object createUser(@RequestBody User user){
-        System.out.println(user);
-        if(user.getUser_password() == null){
+        if(user.getUser_password() == null || user.getUser_type() == null || user.getFull_name() == null || user.getCs_mail() == null || !user.getCs_mail().endsWith("@cs.hacettepe.edu.tr")){
             return DAOFunctions.getResponse(400,"",null);
         }
         User u = UserDAO.createUser(user);
@@ -34,8 +33,6 @@ public class UserController {
     @GetMapping("/user/login")
     public Object login(@RequestParam(value = "cs_mail",defaultValue = "") String cs_mail, @RequestParam(value = "user_password",defaultValue = "")String user_password){
 
-        System.out.println(cs_mail);
-        System.out.println(user_password);
         if(cs_mail.equals("") || user_password.equals("")){
 
             return DAOFunctions.getResponse(400,"",null);
@@ -93,7 +90,7 @@ public class UserController {
 
     @PatchMapping("/user/updateUser")
     public Object updateUser(@RequestBody User user){
-        if(user.getId() == 0){
+        if(user.getId() == 0 || user.getUser_type() == null || user.getFull_name() == null || user.getCs_mail() == null || !user.getCs_mail().endsWith("@cs.hacettepe.edu.tr")){
             return DAOFunctions.getResponse(400,"",null);
         }
         return DAOFunctions.getResponse(UserDAO.updateUser(user),"",null);
@@ -118,15 +115,15 @@ public class UserController {
     @PatchMapping("/user/updatePassword")
     public Object updatePassword(@RequestParam(value = "cs_mail",defaultValue = "") String cs_mail, @RequestParam(value = "old_password",defaultValue = "") String old_password, @RequestParam(value = "new_password",defaultValue = "")String new_password){
 
-        if(new_password.equals("") ||old_password.equals("")){
+        if(new_password.equals("") ||old_password.equals("") || cs_mail.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
         return DAOFunctions.getResponse(UserDAO.updatePassword(cs_mail,old_password,new_password),"",null);
     }
 
     @PatchMapping("/user/updateUserType")
-    public Object updateUserType(@RequestParam(value = "user_type",defaultValue = "0") String user_type, @RequestParam (value = "current_user_id",defaultValue = "")String current_user_id){
-        if(current_user_id.equals("")){
+    public Object updateUserType(@RequestParam(value = "user_type",defaultValue = "") String user_type, @RequestParam (value = "current_user_id",defaultValue = "")String current_user_id){
+        if(current_user_id.equals("") || user_type.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
         return DAOFunctions.getResponse(UserDAO.updateUserType(user_type,current_user_id),"",null);
