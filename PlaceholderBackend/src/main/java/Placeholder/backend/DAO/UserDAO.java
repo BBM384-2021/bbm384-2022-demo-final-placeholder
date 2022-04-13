@@ -36,11 +36,12 @@ public class UserDAO {
                 session.save(user);
             }
             else{
+                session.getTransaction().commit();
                 return null;
             }
             users= session.createQuery(String.format("from User u WHERE u.cs_mail = '%s'",user.getCs_mail())).getResultList();
-            System.out.println(users+"!!!!!!!!!!!!!!!!!!!!");
             if(users.size() != 1){
+                session.getTransaction().commit();
                 return null;
             }
             session.getTransaction().commit();
@@ -60,7 +61,7 @@ public class UserDAO {
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
-        User user = null;
+        User user;
         String hashedPassword = Integer.toString(user_password.hashCode());
 
         try{
@@ -70,7 +71,6 @@ public class UserDAO {
                 return null;
             }
             user = users.get(0);
-            System.out.println(user);
             session.getTransaction().commit();
 
         }
@@ -88,7 +88,7 @@ public class UserDAO {
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
-        User user = null;
+        User user;
 
         try{
             session.beginTransaction();
@@ -99,10 +99,6 @@ public class UserDAO {
             user = users.get(0);
             session.getTransaction().commit();
             user.setUser_password("");
-            System.out.println(user);
-
-            user.setIs_connected(ConnectionDAO.checkConnection(current_user_id,requested_id));
-
         }
         catch (Exception e){
             System.out.println(e);
@@ -120,7 +116,7 @@ public class UserDAO {
         Session session = factory.getCurrentSession();
 
 
-        List<User> allUsers = null;
+        List<User> allUsers;
         try{
             session.beginTransaction();
             allUsers = session.createQuery("from User u").getResultList();
@@ -128,7 +124,6 @@ public class UserDAO {
             for(User u : allUsers){
                 u.setUser_password("");
             }
-            System.out.println(allUsers);
         }
         catch (Exception e){
             System.out.println(e);
@@ -150,7 +145,6 @@ public class UserDAO {
             session.beginTransaction();
             session.createQuery("delete from User s where s.id = "+current_user_id).executeUpdate();
             session.getTransaction().commit();
-            ConnectionDAO.removeAllConnections(current_user_id);
         }
         catch (Exception e){
             System.out.println(e);
@@ -188,12 +182,14 @@ public class UserDAO {
         return 200;
     }
 
-    public static List<User> searchUser(String current_user_id, String query){
+    public static List<List<User>> searchUser(String current_user_id, String query){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
-        List<User> allUsers = new ArrayList<>();
+        List<List<User>> allUsers = new ArrayList<>();
+        List<User> connectedUsers = new ArrayList<>();
+        List<User> nonConnectedUsers = new ArrayList<>();
         List<Object> queryResult = null;
         try{
             HashSet<Integer> found = new HashSet<>();
@@ -202,23 +198,21 @@ public class UserDAO {
             queryResult = session.createQuery(String.format("from User u INNER JOIN Connection c ON user1_id = '%s' and user2_id = u.id WHERE u.full_name LIKE '%s'",current_user_id,(query+"%"))).getResultList();
             for(Object o : queryResult){
                 String jsonStr = ((Object[]) o)[0].toString();
-                System.out.println(jsonStr.substring(4));
                 User u = gson.fromJson(jsonStr.substring(4), User.class);
-                u.setIs_connected(true);
-                allUsers.add(u);
+                connectedUsers.add(u);
                 found.add(u.getId());
             }
             queryResult = session.createQuery(String.format("from User u WHERE u.full_name LIKE '%s'",(query+"%"))).getResultList();
             for(Object o : queryResult){
                 String jsonStr = o.toString();
-                System.out.println(jsonStr.substring(4));
                 User u = gson.fromJson(jsonStr.substring(4), User.class);
                 if(!found.contains(u.getId())){
-                    allUsers.add(u);
+                    nonConnectedUsers.add(u);
                 }
             }
             session.getTransaction().commit();
-            System.out.println(allUsers);
+            allUsers.add(connectedUsers);
+            allUsers.add(nonConnectedUsers);
         }
         catch (Exception e){
             System.out.println(e);
@@ -237,7 +231,7 @@ public class UserDAO {
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
-        User user = null;
+        User user;
         String hashedPassword = Integer.toString(old_password.hashCode());
 
         try{
@@ -298,7 +292,6 @@ public class UserDAO {
                 JsonParser jsonParser = new JsonParser();
                 JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
                 User u = gson.fromJson(jsonArray.get(0), User.class);
-                u.setIs_connected(true);
                 result.add(u);
             }
             session.getTransaction().commit();
