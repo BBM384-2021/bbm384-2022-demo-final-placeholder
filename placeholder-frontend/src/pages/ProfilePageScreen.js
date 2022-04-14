@@ -12,9 +12,9 @@ export default function ProfilePageScreen() {
 
   return (
     <div>
-      <TopBar />
+      <TopBar/>
       <div>
-        <Profile />
+        <Profile/>
       </div>
     </div>
   )
