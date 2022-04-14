@@ -12,9 +12,13 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import AppsIcon from '@mui/icons-material/Apps';
+import SettingsIcon from '@mui/icons-material/Settings';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { SvgIcon } from '@mui/material';
 
 import { ReactComponent as LinkedHuIcon } from '../../linhu_logo.svg'
@@ -174,20 +178,33 @@ export default function PrimarySearchAppBar() {
             </SearchIconWrapper>
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
+          <Box sx={{ display: { xs: 'none', md: 'flex' } , gap: 1}}>
+            <IconButton size="large" sx={{backgroundColor:"#F5F5F5"}}>
+              <AppsIcon />
+            </IconButton>
+            <IconButton size="large" aria-label="mails" sx={{backgroundColor:"#F5F5F5"}}>
+              <Badge badgeContent={1} color="error">
                 <MailIcon />
               </Badge>
             </IconButton>
+
+            <IconButton size="large" aria-label="connections req" sx={{backgroundColor:"#F5F5F5"}}>
+              <Badge badgeContent={1} color="error" sx={{fontFamily:'Poppins', fontWeight:700}}>
+                <PersonOutlineIcon />
+              </Badge>
+            </IconButton>
+
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
-              color="inherit"
+              sx={{backgroundColor:"#F5F5F5"}}
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={5} color="error">
                 <NotificationsIcon />
               </Badge>
+            </IconButton>
+            <IconButton size="large" sx={{backgroundColor:"#F5F5F5"}}>
+              <SettingsIcon />
             </IconButton>
             <IconButton
               size="large"
@@ -196,7 +213,6 @@ export default function PrimarySearchAppBar() {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit"
             >
               <AccountCircle />
             </IconButton>
