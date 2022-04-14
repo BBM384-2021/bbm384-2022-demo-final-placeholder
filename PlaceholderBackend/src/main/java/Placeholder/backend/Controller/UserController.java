@@ -18,11 +18,14 @@ import java.util.List;
 public class UserController {
 
     @PostMapping("/user/createUser")
-    public Object createUser(@RequestBody User user){
-        if(user.getUser_password() == null || user.getUser_type() == null || user.getFull_name() == null || user.getCs_mail() == null || !user.getCs_mail().endsWith("@cs.hacettepe.edu.tr")){
+    public Object createUser(@RequestBody  HashMap<String, String> body){
+        if(!body.containsKey("user_password") || !body.containsKey("user_type") || !body.containsKey("cs_mail") || !body.containsKey("full_name") ||
+                body.get("user_password") == null || body.get("user_type") == null || body.get("cs_mail") == null || body.get("full_name") == null || !body.get("cs_mail").endsWith("@cs.hacettepe.edu.tr")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        User u = UserDAO.createUser(user);
+        User u = new User(0,body.get("full_name"),body.get("user_type"), body.get("cs_mail"), body.get("user_password"),"","","","","");
+        u.setUser_password(Integer.toString(body.get("user_password").hashCode()));
+        u = UserDAO.createUser(u);
 
         if(u != null){
             return DAOFunctions.getResponse(200,"user",u);
@@ -37,7 +40,6 @@ public class UserController {
 
         if(!body.containsKey("cs_mail") || !body.containsKey("user_password") ||
                 body.get("cs_mail").equals("") || body.get("user_password").equals("")){
-
             return DAOFunctions.getResponse(400,"",null);
         }
         User u = UserDAO.login(body.get("cs_mail"),body.get("user_password"));
