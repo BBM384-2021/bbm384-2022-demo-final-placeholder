@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import HomePageScreen from "./pages/HomePageScreen";
+import ProfilePageScreen from "./pages/ProfilePageScreen";
 
 
 // here comes router 
@@ -19,6 +20,7 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/mainPage" element={<HomePageScreen/>} />
+      <Route path="/profilePage" element={<ProfilePageScreen/>} />
     </Routes>
   </BrowserRouter>
 );

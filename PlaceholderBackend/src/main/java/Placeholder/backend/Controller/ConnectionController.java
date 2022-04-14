@@ -7,6 +7,8 @@ import Placeholder.backend.Model.Connection;
 import Placeholder.backend.Util.DAOFunctions;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 public class ConnectionController {
@@ -49,6 +51,18 @@ public class ConnectionController {
         return DAOFunctions.getResponse(ConnectionDAO.removeAllConnections(user_id),"",null);
 
 
+    }
+
+    @GetMapping("/connection/getAllConnections")
+    public Object getAllRequests(){
+
+        List<Connection> allConnections = ConnectionDAO.getAllConnections();
+        if(allConnections != null){
+            return DAOFunctions.getResponse(200,"allRequests",allConnections);
+        }
+        else{
+            return DAOFunctions.getResponse(400,"",null);
+        }
     }
 
 
