@@ -163,7 +163,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ bgcolor: "white", borderRadius:'20px'}} >
+      <AppBar position="static" sx={{ bgcolor: "white", borderRadius:'20px'}} elevation={0}>
         <Toolbar sx={{height:"90px"}}>
           <SvgIcon component={LinkedHuIcon} inheritViewBox sx={{ width:"199.62px" , height:"50.64px", marginLeft:"57px",
           marginRight: "54.38px"}} />
