@@ -9,6 +9,7 @@ import vectorCamera from "./assets/camera.png";
 import vectorGithub from "./assets/github.png";
 import vectorLinkedin from "./assets/linkedin.png";
 import vectorMore from "./assets/menu-dots.png";
+import vectorAdd from "./assets/user-add.png";
 import vectorDocument from "./assets/document-signed.png";
 import vectorSmile from "./assets/smile.png";
 
@@ -18,6 +19,7 @@ export default function Profile() {
     return (
         <div className="profileContainer">
             <img src={cover} className="coverImage" alt=""/>
+
             <div className="profileDetails">
                 <div className="profileDetailLeft">
                     <div className="profileDetailRow">
@@ -31,7 +33,8 @@ export default function Profile() {
                     </div>
                 </div>
                 <div className="profileDetailRight">
-                    <button> Edit profile <img src={vectorPencil} className="githubImage" alt=""/> </button>
+                    <a> <img src={vectorAdd} className="more" alt=""/> </a>
+                    <a> <img src={vectorPencil} className="githubImage" alt=""/> </a>
                     <a> <img src={vectorMore} className="more" alt=""/> </a>
                 </div>
             </div>
