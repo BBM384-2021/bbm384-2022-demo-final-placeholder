@@ -1,22 +1,19 @@
 import * as React from 'react';
-import { styled, alpha, createTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import AppsIcon from '@mui/icons-material/Apps';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { SvgIcon } from '@mui/material';
@@ -25,7 +22,6 @@ import { ReactComponent as LinkedHuIcon } from '../../linhu_logo.svg'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
-  borderRadius: theme.shape.borderRadius,
   backgroundColor: '#F5F5F5',
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -63,7 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function TopBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -165,7 +161,7 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ bgcolor: "white", borderRadius:'20px'}} elevation={0}>
         <Toolbar sx={{height:"90px"}}>
-          <SvgIcon component={LinkedHuIcon} inheritViewBox sx={{ width:"199.62px" , height:"50.64px", marginLeft:"57px",
+          <SvgIcon component={LinkedHuIcon} inheritViewBox sx={{ width:"199.62px" , height:"50.64px", marginLeft:"40px",
           marginRight: "54.38px"}} />
           <Search>
             <StyledInputBase
@@ -179,9 +175,6 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } , gap: 1}}>
-            <IconButton size="large" sx={{backgroundColor:"#F5F5F5"}}>
-              <AppsIcon />
-            </IconButton>
             <IconButton size="large" aria-label="mails" sx={{backgroundColor:"#F5F5F5"}}>
               <Badge badgeContent={1} color="error">
                 <MailIcon />

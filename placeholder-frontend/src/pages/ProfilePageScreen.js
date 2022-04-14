@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import PrimarySearchAppBar from '../components/homepage-screen/PrimarySearchAppBar';
+import TopBar from '../components/homepage-screen/TopBar';
 import EventSideBar from '../components/homepage-screen/EventSideBar';
 import ChatSideBar from '../components/homepage-screen/ChatSideBar';
 import Profile from "../components/profilepage-screen/Profile"
@@ -12,7 +12,7 @@ export default function ProfilePageScreen() {
 
   return (
     <div>
-      <PrimarySearchAppBar />
+      <TopBar />
       <div>
         <Profile />
       </div>
