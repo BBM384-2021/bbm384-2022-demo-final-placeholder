@@ -35,14 +35,14 @@ public class ConnectionRequestDAO {
         }
         return 200;
     }
-    public static int removeRequest(ConnectionRequest connectionRequest){
+    public static int removeRequest(String current_user_id, String other_user_id){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
         try{
             session.beginTransaction();
-            session.createQuery(String.format("delete from ConnectionRequest where sender_id = '%s' and receiver_id = '%s'",connectionRequest.getSender_id(),connectionRequest.getReceiver_id())).executeUpdate();
+            session.createQuery(String.format("delete from ConnectionRequest WHERE (sender_id = '%s' and receiver_id = '%s') or (receiver_id = '%s' and sender_id = '%s')",current_user_id,other_user_id,current_user_id,other_user_id)).executeUpdate();
             session.getTransaction().commit();
 
         }
@@ -59,27 +59,32 @@ public class ConnectionRequestDAO {
 
     }
 
-    public static boolean checkRequest(ConnectionRequest checkedRequest){
+    public static int checkRequest(String current_user_id, String checked_user_id){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
         try{
             session.beginTransaction();
-            List<ConnectionRequest> connectionRequests = session.createQuery(String.format("from ConnectionRequest WHERE sender_id = '%s' and receiver_id = '%s'",checkedRequest.getSender_id(),checkedRequest.getReceiver_id())).getResultList();
+            List<ConnectionRequest> connectionRequests = session.createQuery(String.format("from ConnectionRequest WHERE (sender_id = '%s' and receiver_id = '%s') or (receiver_id = '%s' and sender_id = '%s')",current_user_id,checked_user_id,current_user_id,checked_user_id)).getResultList();
             session.getTransaction().commit();
             if(connectionRequests.size() == 0){
-                return false;
+                return 0;
+            }
+            else if(Integer.toString(connectionRequests.get(0).getSender_id()).equals(current_user_id)){
+                return 1;
+            }
+            else{
+                return 2;
             }
         }
         catch (Exception e){
             System.out.println(e);
-            return false;
+            return 0;
         }
         finally {
             factory.close();
         }
-        return true;
 
     }
 

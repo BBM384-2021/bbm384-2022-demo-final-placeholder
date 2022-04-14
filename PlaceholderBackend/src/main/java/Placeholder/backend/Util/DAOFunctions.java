@@ -31,5 +31,19 @@ public class DAOFunctions {
         return res;
 
     }
+    public static Object getResponseWithMap(int code, HashMap<String,Object> map){
+
+        HashMap<String,Object> res = new HashMap<String,Object>();
+        res.put("code",code);
+
+        for(String key : map.keySet()){
+            if(!key.equals("")){
+                res.put(key,map.get(key));
+            }
+        }
+
+        return res;
+
+    }
 
 }

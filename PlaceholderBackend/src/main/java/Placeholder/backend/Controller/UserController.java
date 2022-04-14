@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -49,20 +50,36 @@ public class UserController {
     }
 
     @GetMapping("/user/getUser")
-    public Object getUser(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id ,@RequestParam(value = "requested_id",defaultValue = "") String requested_id){
+    public Object getUser(@RequestParam(value = "requested_id",defaultValue = "") String requested_id){
 
-        if(current_user_id.equals("") || requested_id.equals("")){
+        if(requested_id.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        User u = UserDAO.getUser(current_user_id,requested_id);
+        User u = UserDAO.getUser(requested_id);
         if(u != null){
-            boolean connected = ConnectionDAO.checkConnection(current_user_id,requested_id);
-            List<User> connectionList = UserDAO.getUsersConnected(requested_id);
-            return DAOFunctions.getResponseWithMultipleObjects(200, new ArrayList<>(Arrays. asList("user","connected","connectedUsers")),new ArrayList<>(Arrays. asList(u,connected,connectionList)));
+            return DAOFunctions.getResponse(200,"user",u);
         }
         else{
             return DAOFunctions.getResponse(400,"",null);
         }
+
+    }
+    @GetMapping("/user/getProfileData")
+    public Object getProfileData(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id ,@RequestParam(value = "requested_id",defaultValue = "") String requested_id){
+
+        if(current_user_id.equals("") || requested_id.equals("")){
+            return DAOFunctions.getResponse(400,"",null);
+        }
+
+        HashMap<String,Object> profileData = UserDAO.getProfileData(current_user_id,requested_id);
+        if(profileData == null){
+            return DAOFunctions.getResponse(400,"",null);
+        }
+        if(!current_user_id.equals(requested_id)  && !(boolean)profileData.get("connected")){
+            profileData.put("connection_request_code",ConnectionRequestDAO.checkRequest(current_user_id,requested_id));
+
+        }
+        return DAOFunctions.getResponseWithMap(200, profileData);
 
     }
 

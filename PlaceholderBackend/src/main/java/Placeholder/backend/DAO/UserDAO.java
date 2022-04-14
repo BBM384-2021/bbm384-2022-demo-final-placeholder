@@ -12,16 +12,17 @@ import org.hibernate.cfg.Configuration;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 public class UserDAO {
 
     private static void extractUserList(List<User> result, List<Object> rawResult) {
+        JsonParser jsonParser = new JsonParser();
         for(Object o : rawResult){
             Gson gson = new Gson();
             String jsonStr = gson.toJson(o);
-            JsonParser jsonParser = new JsonParser();
             JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
             User u = gson.fromJson(jsonArray.get(0), User.class);
             result.add(u);
@@ -95,7 +96,7 @@ public class UserDAO {
         return user;
     }
 
-    public static User getUser(String current_user_id ,String requested_id){
+    public static User getUser(String requested_id){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
@@ -362,6 +363,55 @@ public class UserDAO {
         return result;
 
 
+    }
+
+    public static HashMap<String,Object> getProfileData(String current_user_id, String  requested_id){
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        HashMap<String,Object> result = new HashMap<>();
+        List<Object> queryResult = null;
+        List<User> connectedList = new ArrayList<>();
+        try{
+            session.beginTransaction();
+            queryResult= session.createQuery(String.format("from Connection c INNER JOIN User u1 on c.user1_id = u1.id INNER JOIN User u2 on c.user2_id = u2.id WHERE c.user2_id = '%s'",requested_id)).getResultList();
+            if(queryResult.size() != 0){
+                JsonParser jsonParser = new JsonParser();
+                User currentUser = null;
+                for(Object o : queryResult){
+                    Gson gson = new Gson();
+                    String jsonStr = gson.toJson(o);
+                    JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
+                    User u = gson.fromJson(jsonArray.get(1), User.class);
+                    connectedList.add(u);
+                    if(Integer.toString(u.getId()).equals(current_user_id)){
+                        result.put("connected",true);
+                    }
+                    if(currentUser == null){
+                        currentUser = gson.fromJson(jsonArray.get(2), User.class);
+                    }
+                }
+                result.put("connectedUsers",connectedList);
+                result.put("user",currentUser);
+                session.getTransaction().commit();
+            }
+            else{
+                result.put("user",getUser(requested_id));
+            }
+
+            if(!result.containsKey("connected") && !current_user_id.equals(requested_id)){
+                result.put("connected",false);
+            }
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+        finally {
+            factory.close();
+        }
+        return result;
     }
 
 

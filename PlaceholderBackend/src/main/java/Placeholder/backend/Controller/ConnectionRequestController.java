@@ -22,21 +22,21 @@ public class ConnectionRequestController {
     }
 
     @DeleteMapping("/connectionRequest/removeRequest")
-    public Object removeConnection(@RequestBody ConnectionRequest connectionRequest){
+    public Object removeRequest(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id ,@RequestParam(value = "other_user_id",defaultValue = "") String other_user_id){
 
-        if(connectionRequest.getSender_id() == 0 || connectionRequest.getReceiver_id() == 0){
+        if(current_user_id.equals("") || other_user_id.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        return DAOFunctions.getResponse(ConnectionRequestDAO.removeRequest(connectionRequest),"",null);
+        return DAOFunctions.getResponse(ConnectionRequestDAO.removeRequest(current_user_id,other_user_id),"",null);
     }
 
     @GetMapping("/connectionRequest/checkRequest")
-    public Object checkConnection(@RequestBody ConnectionRequest connectionRequest){
+    public Object checkRequest(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id ,@RequestParam(value = "checked_user_id",defaultValue = "") String checked_user_id){
 
-        if(connectionRequest.getSender_id() == 0 || connectionRequest.getReceiver_id() == 0){
+        if(current_user_id.equals("") || checked_user_id.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        return DAOFunctions.getResponse(200,"requested",ConnectionRequestDAO.checkRequest(connectionRequest));
+        return DAOFunctions.getResponse(200,"requested_code",ConnectionRequestDAO.checkRequest(current_user_id,checked_user_id));
     }
 
     @DeleteMapping("/connectionRequest/acceptRequest")
@@ -45,7 +45,7 @@ public class ConnectionRequestController {
         if(connectionRequest.getSender_id() == 0 || connectionRequest.getReceiver_id() == 0){
             return DAOFunctions.getResponse(400,"",null);
         }
-        int deleteResponse = ConnectionRequestDAO.removeRequest(connectionRequest);
+        int deleteResponse = ConnectionRequestDAO.removeRequest(Integer.toString(connectionRequest.getSender_id()),Integer.toString(connectionRequest.getReceiver_id()));
         if(deleteResponse == 200){
             return DAOFunctions.getResponse(ConnectionDAO.createConnection(new Connection(0,connectionRequest.getReceiver_id(),connectionRequest.getSender_id())),"",null);
         }
