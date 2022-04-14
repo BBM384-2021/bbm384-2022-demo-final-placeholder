@@ -1,6 +1,7 @@
 
 .profileContainer{
-    padding: 30px 20%;
+
+    padding: 30px 21%;
 }
 
 .coverImage{
@@ -28,10 +29,12 @@
     position: absolute;
     top: 220px;
     left: 350px;
-    background: white;
+
+    background: #EFEFEF;
     border-radius: 200px;
     width: 150px;
-    border: 15px solid white;
+    border: 15px solid #EFEFEF;
+
 }
 
 .profileDetailRow div h3{
