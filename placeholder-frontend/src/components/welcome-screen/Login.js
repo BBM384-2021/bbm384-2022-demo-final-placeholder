@@ -18,6 +18,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import './Login.css'
 import {Colors} from '../../Colors'
 
+import { Link as RouterLink} from "react-router-dom";
+
 function Copyright(props) {
   return (
     <Typography
@@ -104,8 +106,11 @@ export default function Login() {
               </button>
               <Button
                 type="submit"
+                component={RouterLink}
+                fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, width: '30%' }}
+                sx={{ mt: 3, mb: 2 }}
+                to='/mainPage'
               >
                 Register
               </Button>

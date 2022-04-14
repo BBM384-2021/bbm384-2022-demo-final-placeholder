@@ -1,16 +1,13 @@
-package Placeholder.backend;
+package Placeholder.backend.DAO;
 
+import Placeholder.backend.Model.Connection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
-@RestController
-public class ConnectionController {
+public class ConnectionDAO {
 
     public static SessionFactory createFactory(){
         return new Configuration().
@@ -19,23 +16,12 @@ public class ConnectionController {
                 buildSessionFactory();
     }
 
-    @PostMapping("/connection/createConnection")
-    public int createConnection(@RequestBody Connection connection){
-        System.out.println(connection);
+    public static int createConnection(Connection connection){
 
-        if(connection.getUser1_id() == 0 || connection.getUser2_id() == 0){
-            return 400;
-        }
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
         try{
-            /*
-            if(UserController.getUser("1",Integer.toString(connection.getUser2_id())) == null){
-                return 400;
-            }
-
-             */
             session.beginTransaction();
             session.save(connection);
             session.getTransaction().commit();
@@ -57,30 +43,22 @@ public class ConnectionController {
         return 200;
     }
 
-    @GetMapping("/connection/checkConnection")
-    public static boolean checkConnection(@RequestParam(value = "user1_id",defaultValue = "") String user1_id ,@RequestParam(value = "user2_id",defaultValue = "") String user2_id){
-
-        if(user1_id.equals("") || user2_id.equals("")){
-            return false;
-        }
+    public static boolean checkConnection(String user1_id , String user2_id){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
-         Connection connection= null;
-
         try{
             session.beginTransaction();
             List<Connection> connections = session.createQuery(String.format("from Connection c WHERE c.user1_id = '%s' and c.user2_id = '%s'",user1_id,user2_id)).getResultList();
+            session.getTransaction().commit();
             if(connections.size() == 0){
                 return false;
             }
-            connection = connections.get(0);
-            session.getTransaction().commit();
-            System.out.println(connection);
 
         }
         catch (Exception e){
+            System.out.println(e);
             return false;
         }
         finally {
@@ -90,8 +68,7 @@ public class ConnectionController {
 
     }
 
-    @DeleteMapping("/connection/removeConnection")
-    public static int removeConnection(@RequestParam(value = "user1_id",defaultValue = "") String user1_id ,@RequestParam(value = "user2_id",defaultValue = "") String user2_id){
+    public static int removeConnection(String user1_id ,String user2_id){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
@@ -115,8 +92,7 @@ public class ConnectionController {
 
     }
 
-    @DeleteMapping("/connection/deleteAllConnections")
-    public static int removeAllConnections(@RequestParam(value = "user_id",defaultValue = "") String user_id){
+    public static int removeAllConnections(String user_id){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
@@ -140,5 +116,24 @@ public class ConnectionController {
 
     }
 
+    public static List<Connection> getAllConnections(){
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
 
+        List<Connection> allConnections;
+        try{
+            session.beginTransaction();
+            allConnections = session.createQuery("from Connection c").getResultList();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+        finally {
+            factory.close();
+        }
+
+        return allConnections;
+    }
 }
