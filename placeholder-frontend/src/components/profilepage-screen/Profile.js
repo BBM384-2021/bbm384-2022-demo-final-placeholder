@@ -12,7 +12,10 @@ import vectorMore from "./assets/menu-dots.png";
 import vectorAdd from "./assets/user-add.png";
 import vectorDocument from "./assets/document-signed.png";
 import vectorSmile from "./assets/smile.png";
-
+import vectorHeart from "./assets/heart.png";
+import vectorComment from "./assets/comment-alt.png";
+import vectorShare from "./assets/refresh.png";
+import vectorExpand from "./assets/expand.png";
 
 export default function Profile() {
 
@@ -47,6 +50,69 @@ export default function Profile() {
 
                 <div className="feedColumn">
 
+                    <div className="postContainer">
+                        <div className="userProfile">
+                            <img src={profilePic} alt=""/>
+                            <div>
+                                <p>Desmin Alpaslan posted</p>
+                                <span>April 15 2022, 13:40 pm</span>
+                            </div>
+                        </div>
+                        <p className="postText"> ⠀⠀Harika, müthiş, inanılmaz!⠀
+                            <a href="#">#BuDersHarikaydıDostum</a></p>
+                        <div className="postRow">
+                            <div className="activityIcons">
+                                <div><img src={vectorHeart}/>21</div>
+                                <div><img src={vectorComment}/>3</div>
+                                <div><img src={vectorShare}/>6</div>
+                                <button> <img src={vectorExpand}/></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="postContainer">
+                        <div className="userProfile">
+                            <img src={profilePic} alt=""/>
+                            <div>
+                                <p>Desmin Alpaslan posted</p>
+                                <span>April 15 2022, 13:40 pm</span>
+                            </div>
+                        </div>
+                        <p className="postText"> ⠀⠀Harika, müthiş, inanılmaz!⠀
+                            <a href="#">#BuDersHarikaydıDostum</a></p>
+                        <div className="postRow">
+                            <div className="activityIcons">
+                                <div><img src={vectorHeart}/>21</div>
+                                <div><img src={vectorComment}/>3</div>
+                                <div><img src={vectorShare}/>6</div>
+                                <button> <img src={vectorExpand}/></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="postContainer">
+                        <div className="userProfile">
+                            <img src={profilePic} alt=""/>
+                            <div>
+                                <p>Desmin Alpaslan posted</p>
+                                <span>April 15 2022, 13:40 pm</span>
+                            </div>
+                        </div>
+                        <p className="postText"> ⠀⠀Harika, müthiş, inanılmaz!⠀
+                            <a href="#">#BuDersHarikaydıDostum</a></p>
+                        <div className="postRow">
+                            <div className="activityIcons">
+                                <div><img src={vectorHeart}/>21</div>
+                                <div><img src={vectorComment}/>3</div>
+                                <div><img src={vectorShare}/>6</div>
+                                <button> <img src={vectorExpand}/></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="postProfileIcon">
+                        <img/> <i className="bruh"></i>
+                    </div>
                 </div>
             </div>
         </div>
