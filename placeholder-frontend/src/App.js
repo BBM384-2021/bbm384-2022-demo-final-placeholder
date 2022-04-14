@@ -1,11 +1,15 @@
-import WelcomeScreen from './pages/WelcomeScreen';
+import React, {useState} from 'react';
+import WelcomeScreen from "./pages/WelcomeScreen";
 
-import './App.css';
+import "./App.css";
+import HomePageScreen from './pages/HomePageScreen';
 
 function App() {
+  const [user, setUser] = useState();
+
   return (
     <div className="App">
-      <WelcomeScreen/>
+      {!user ? <WelcomeScreen /> : <HomePageScreen user = {user}/>}
     </div>
   );
 }

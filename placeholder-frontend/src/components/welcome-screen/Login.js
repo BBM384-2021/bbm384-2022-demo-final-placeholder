@@ -1,4 +1,7 @@
-import * as React from "react";
+import React, { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import PropTypes from 'prop-types';
+
 import {
   Avatar,
   Button,
@@ -12,13 +15,14 @@ import {
   Box,
   Typography,
   Container,
+  Alert,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import './Login.css'
-import {Colors} from '../../Colors'
+import "./Login.css";
+import { Colors } from "../../Colors";
 
-import { Link as RouterLink} from "react-router-dom";
+
 
 function Copyright(props) {
   return (
@@ -43,7 +47,9 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Login() {
+export default function Login({setLogin}) {
+  const [error, setError] = useState('');
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -66,12 +72,11 @@ export default function Login() {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
+            <h3 className="welcome">
+              Welcome
+            </h3>
+            {error && <Alert severity="error">{error}</Alert>}
+
             <Box
               component="form"
               onSubmit={handleSubmit}
@@ -99,34 +104,23 @@ export default function Login() {
                 autoComplete="current-password"
               />
               <Box display="flex" justifyContent="space-between">
-              <button
-                type="submit"
-              >
-                Login
-              </button>
-              <Button
-                type="submit"
-                component={RouterLink}
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                to='/mainPage'
-              >
-                Register
-              </Button>
+                <Button
+                  type="submit"
+                  onClick={handleSubmit}
+                  variant="contained"
+                  sx={{
+                    backgroundColor: Colors.red,
+                    mt: 3,
+                    mb: 2,
+                    width: "40%",
+                  }}
+                >
+                  Login
+                </Button>
+                <button onClick={()=>{setLogin(false)}} type="submit" className="passive">
+                  Register
+                </button>
               </Box>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/register" variant="body2">
-                    {"Don't have an account? Register"}
-                  </Link>
-                </Grid>
-              </Grid>
             </Box>
           </Box>
           <Copyright sx={{ mt: 8, mb: 4 }} />
@@ -135,3 +129,7 @@ export default function Login() {
     </ThemeProvider>
   );
 }
+
+Login.propTypes = {
+  setLogin : PropTypes.func,
+};
