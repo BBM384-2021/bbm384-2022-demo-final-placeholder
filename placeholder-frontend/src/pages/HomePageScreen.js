@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import PrimarySearchAppBar from '../components/homepage-screen/PrimarySearchAppBar';
-import EventSideBar from '../components/homepage-screen/EventSideBar';
-import ChatSideBar from '../components/homepage-screen/ChatSideBar';
+import PrimarySearchAppBar from '../components/PrimarySearchAppBar';
+import EventSideBar from '../components/EventSideBar';
+import ChatSideBar from '../components/ChatSideBar';
 import MainFeed from '../components/homepage-screen/MainFeed';
 
 const theme = createTheme();
