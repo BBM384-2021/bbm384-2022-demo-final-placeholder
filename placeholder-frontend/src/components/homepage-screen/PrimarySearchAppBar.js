@@ -22,39 +22,39 @@ import { ReactComponent as LinkedHuIcon } from '../../linhu_logo.svg'
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.secondary.dark, 1),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.secondary.dark, 0.25),
-  },
+  backgroundColor: '#F5F5F5',
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
+  borderRadius: '12px',
+  width: '451px',
+  display:'flex',
+  textAlign: 'center',
+  justifyContent: 'space-around',
+  
+  // [theme.breakpoints.up('sm')]: {
+  //   marginLeft: theme.spacing(3),
+  //   width: 'auto',
+  // },
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  padding: theme.spacing(1, 0, 1, 0),
   height: '100%',
-  position: 'absolute',
+  position: 'right',
   pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
   justifyContent: 'center',
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
+  color: '#808080',
   '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: theme.spacing(0, 1, 0, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingLeft: `calc(1em + ${theme.spacing(2)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '20ch',
+      width: '35ch',
     },
   },
 }));
@@ -161,24 +161,17 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ bgcolor: "white", borderRadius:'20px'}} >
         <Toolbar sx={{height:"90px"}}>
-          <SvgIcon component={LinkedHuIcon} inheritViewBox sx={{ width:"199.62px" , height:"50.64px", marginLeft:"57px"}} />
-          
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            MUI
-          </Typography>
+          <SvgIcon component={LinkedHuIcon} inheritViewBox sx={{ width:"199.62px" , height:"50.64px", marginLeft:"57px",
+          marginRight: "54.38px"}} />
           <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              sx={{fontFamily:'Poppins'}}
             />
+            <SearchIconWrapper>
+              <SearchIcon htmlColor='#808080' sx= {{transform:'rotate(90deg)'}}/>
+            </SearchIconWrapper>
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
