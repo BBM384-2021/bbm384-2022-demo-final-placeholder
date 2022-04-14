@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 export default function HomePageScreen() {
 
   return (
-    <Box sx={{ display:'flex', flexDirection:'column', height:'100vh',bgcolor: '#F5F5F5'}}>
+    <Box>
           <div>
             <PrimarySearchAppBar />
             <div>
