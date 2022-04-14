@@ -16,6 +16,7 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import './Login.css'
+import {Colors} from '../../Colors'
 
 function Copyright(props) {
   return (
@@ -95,18 +96,20 @@ export default function Login() {
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              <Box display="flex" justifyContent="space-between">
+              <button
+                type="submit"
+              >
+                Login
+              </button>
               <Button
                 type="submit"
-                fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, width: '30%' }}
               >
-                Sign In
+                Register
               </Button>
+              </Box>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
