@@ -4,11 +4,10 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
+
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import MailIcon from '@mui/icons-material/Mail';
@@ -20,44 +19,7 @@ import { SvgIcon } from '@mui/material';
 
 import { ReactComponent as LinkedHuIcon } from '../../linhu_logo.svg'
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  backgroundColor: '#F5F5F5',
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  borderRadius: '12px',
-  width: '400px',
-  display:'flex',
-  textAlign: 'center',
-  justifyContent: 'space-around',
-  
-  // [theme.breakpoints.up('sm')]: {
-  //   marginLeft: theme.spacing(3),
-  //   width: 'auto',
-  // },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(1, 0, 1, 0),
-  height: '100%',
-  position: 'right',
-  pointerEvents: 'none',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: '#808080',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(0, 1, 0, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(2)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '30ch',
-    },
-  },
-}));
+import SearchBar from '../commons/SearchBar';
 
 export default function TopBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -163,16 +125,7 @@ export default function TopBar() {
         <Toolbar sx={{height:"90px"}}>
           <SvgIcon component={LinkedHuIcon} inheritViewBox sx={{ width:"199.62px" , height:"50.64px", marginLeft:"40px",
           marginRight: "54.38px"}} />
-          <Search>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-              sx={{fontFamily:'Poppins'}}
-            />
-            <SearchIconWrapper>
-              <SearchIcon htmlColor='#808080' sx= {{transform:'rotate(90deg)'}}/>
-            </SearchIconWrapper>
-          </Search>
+          <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } , gap: 1}}>
             <IconButton size="large" aria-label="mails" sx={{backgroundColor:"#F5F5F5"}}>
