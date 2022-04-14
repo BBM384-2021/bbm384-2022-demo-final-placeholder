@@ -1,0 +1,8 @@
+.imageIcon {
+  display: "flex";
+  height: "inherit";
+  width: "inherit";
+}
+.iconRoot {
+  text-align: "center";
+}

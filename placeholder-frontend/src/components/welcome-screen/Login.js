@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import {
   Avatar,
@@ -21,8 +21,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./Login.css";
 import { Colors } from "../../Colors";
-
-
 
 function Copyright(props) {
   return (
@@ -47,8 +45,8 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Login({setLogin}) {
-  const [error, setError] = useState('');
+export default function Login({ setLogin }) {
+  const [error, setError] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -72,9 +70,7 @@ export default function Login({setLogin}) {
               alignItems: "center",
             }}
           >
-            <h3 className="welcome">
-              Welcome
-            </h3>
+            <h3 className="welcome">Welcome</h3>
             {error && <Alert severity="error">{error}</Alert>}
 
             <Box
@@ -104,20 +100,16 @@ export default function Login({setLogin}) {
                 autoComplete="current-password"
               />
               <Box display="flex" justifyContent="space-between">
-                <Button
-                  type="submit"
-                  onClick={handleSubmit}
-                  variant="contained"
-                  sx={{
-                    backgroundColor: Colors.red,
-                    mt: 3,
-                    mb: 2,
-                    width: "40%",
-                  }}
-                >
+                <button className="active" type="submit" onClick={handleSubmit}>
                   Login
-                </Button>
-                <button onClick={()=>{setLogin(false)}} type="submit" className="passive">
+                </button>
+                <button
+                  onClick={() => {
+                    setLogin(false);
+                  }}
+                  type="submit"
+                  className="passive"
+                >
                   Register
                 </button>
               </Box>
@@ -131,5 +123,5 @@ export default function Login({setLogin}) {
 }
 
 Login.propTypes = {
-  setLogin : PropTypes.func,
+  setLogin: PropTypes.func,
 };
