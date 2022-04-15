@@ -1,5 +1,6 @@
-import React from 'react'
+import {useState} from 'react'
 import "./Profile.css"
+import axios from "axios"
 
 import cover from "./assets/cover.png";
 import profilePic from "./assets/1.png";
@@ -21,7 +22,31 @@ import vectorPostPic from "./assets/1post.png";
 import vectorFeed from "./assets/home.png";
 
 
-export default function Profile() {
+const baseProfileURL = "https://placeholder-backend.herokuapp.com/user/getUser"
+const getProfilePage = ( user_id, setUser ) => {
+    axios.get(baseProfileURL, {
+        params: {
+            "requested_id": user_id
+        }
+    }).then( (response) => {
+        if (response.data.code === 200) { // success
+            const user = response.data.user;
+            setUser(user);
+        } else {
+            setUser(null);
+        }
+    }).catch( (error) => console.log(error));
+};
+
+
+export default function Profile( {user_id} ) {
+    const [user, setUser] = useState(null);
+    getProfilePage(user_id, setUser);
+
+    if (!user)
+    {
+        return (<div>404</div>)
+    }
 
     return (
         <div className="profileContainer">
@@ -32,7 +57,7 @@ export default function Profile() {
                     <div className="profileDetailRow">
                         <img src={profilePic} alt="" className="profileImage"/>
                         <div>
-                            <h3>Desmin Alpaslan</h3>
+                            <h3>{user.full_name}</h3>
                             <h4>54 connections</h4>
                             <a href="https://github.com/mavibirdesmi"> <img src={vectorGithub} className="githubImage" alt=""/> </a>
                             <a href="https://www.linkedin.com/in/desmin-alpaslan/"> <img src={vectorLinkedin} className="githubImage" alt=""/> </a>
@@ -76,7 +101,7 @@ export default function Profile() {
                         <div className="userProfile">
                             <img src={vectorPostPic} alt=""/>
                             <div>
-                                <p>Desmin Alpaslan posted</p>
+                                <p>{user.full_name} posted</p>
                                 <span>April 15 2022, 13:40 pm</span>
                             </div>
                         </div>
@@ -96,7 +121,7 @@ export default function Profile() {
                         <div className="userProfile">
                             <img src={vectorPostPic} alt=""/>
                             <div>
-                                <p>Desmin Alpaslan posted</p>
+                                <p>{user.full_name} posted</p>
                                 <span>April 15 2022, 13:40 pm</span>
                             </div>
                         </div>
@@ -116,7 +141,7 @@ export default function Profile() {
                         <div className="userProfile">
                             <img src={vectorPostPic} alt=""/>
                             <div>
-                                <p>Desmin Alpaslan posted</p>
+                                <p>{user.full_name} posted</p>
                                 <span>April 15 2022, 13:40 pm</span>
                             </div>
                         </div>
