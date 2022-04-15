@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className="App">
-      {!user ? <WelcomeScreen /> : <HomePageScreen user = {user} setUser={setUser} />}
+      {!user ? <WelcomeScreen setUser={setUser}/> : <HomePageScreen user = {user} setUser={setUser} />}
     </div>
   );
 }

@@ -6,7 +6,7 @@ import MainFeed from '../components/homepage-screen/MainFeed';
 
 import Box from '@mui/material/Box';
 
-export default function HomePageScreen() {
+export default function HomePageScreen( {user} ) {
 
   return (
     <Box sx={{display:'flex', marginLeft:'10px', marginRight:'10px', flexDirection:'column'}}>

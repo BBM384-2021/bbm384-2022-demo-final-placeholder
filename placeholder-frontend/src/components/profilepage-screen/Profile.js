@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import "./Profile.css"
 import axios from "axios"
 
@@ -41,7 +41,8 @@ const getProfilePage = ( user_id, setUser ) => {
 
 export default function Profile( {user_id} ) {
     const [user, setUser] = useState(null);
-    getProfilePage(user_id, setUser);
+
+    useEffect( () => getProfilePage(user_id, setUser), user_id);
 
     if (!user)
     {
