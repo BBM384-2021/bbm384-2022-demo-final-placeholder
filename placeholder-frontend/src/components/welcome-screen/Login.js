@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import {
   Avatar,
@@ -19,10 +19,8 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import "./Login.css";
+import "./Welcome.css";
 import { Colors } from "../../Colors";
-
-
 
 function Copyright(props) {
   return (
@@ -45,13 +43,16 @@ function Copyright(props) {
   );
 }
 
+//in case we need a dark theme in the future
 const theme = createTheme();
 
-export default function Login({setLogin}) {
+export default function Login({ setLogin }) {
   const [error, setError] = useState('');
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(event);
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
@@ -72,9 +73,7 @@ export default function Login({setLogin}) {
               alignItems: "center",
             }}
           >
-            <h3 className="welcome">
-              Welcome
-            </h3>
+            <h3 className="welcome">Welcome</h3>
             {error && <Alert severity="error">{error}</Alert>}
 
             <Box
@@ -84,6 +83,7 @@ export default function Login({setLogin}) {
               sx={{ mt: 1 }}
             >
               <TextField
+                className="TextField"
                 margin="normal"
                 required
                 fullWidth
@@ -94,6 +94,7 @@ export default function Login({setLogin}) {
                 autoFocus
               />
               <TextField
+                className="TextField"
                 margin="normal"
                 required
                 fullWidth
@@ -111,7 +112,8 @@ export default function Login({setLogin}) {
                   sx={{
                     backgroundColor: Colors.hacettepe,
                     ":hover": {
-                      background: Colors.whiteShaded
+                      background: Colors.whiteShaded,
+                      color: "#000",
                     },
                     mt: 3,
                     mb: 2,
@@ -120,7 +122,13 @@ export default function Login({setLogin}) {
                 >
                   Login
                 </Button>
-                <button onClick={()=>{setLogin(false)}} type="submit" className="passive">
+                <button
+                  onClick={() => {
+                    setLogin(false);
+                  }}
+                  type="button"
+                  className="passive"
+                >
                   Register
                 </button>
               </Box>
@@ -134,5 +142,5 @@ export default function Login({setLogin}) {
 }
 
 Login.propTypes = {
-  setLogin : PropTypes.func,
+  setLogin: PropTypes.func,
 };

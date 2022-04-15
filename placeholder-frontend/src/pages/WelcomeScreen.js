@@ -22,6 +22,7 @@ export default function WelcomeScreen() {
             height: "50.64px",
             marginLeft: "40px",
             marginRight: "54.38px",
+            marginBottom: "60px",
           }}
         />
         {login ? (

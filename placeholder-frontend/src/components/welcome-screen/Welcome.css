@@ -1,0 +1,40 @@
+.card-view {
+  max-width: 475px;
+  height: 40%;
+  border-radius: 0px;
+  padding: 15px 25px;
+}
+
+button span {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 4px;
+}
+
+.passive {
+  width: 30%;
+  padding: 3px;
+  background: transparent;
+  border: none;
+}
+.btn-center {
+  vertical-align: middle;
+}
+.welcome {
+  align-items: left;
+  font-size: large;
+  float: left;
+}
+.radio-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.radio {
+  padding: 0px 15px;
+  background-color: white;
+  border-radius: 10px;
+}
+.TextField {
+  border-radius: 20px;
+}
