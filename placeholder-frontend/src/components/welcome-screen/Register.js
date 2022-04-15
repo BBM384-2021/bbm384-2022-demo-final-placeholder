@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 import {
   Button,
@@ -45,6 +46,7 @@ function Copyright(props) {
 
 //in case we need a dark theme in the future
 const theme = createTheme();
+const BaseLoginURL = "https://placeholder-backend.herokuapp.com/user/login";
 
 export default function Register({ setLogin }) {
   const [error, setError] = useState("");
@@ -74,11 +76,31 @@ export default function Register({ setLogin }) {
       full_name: data.get("full_name"),
       cs_mail: data.get("cs_mail"),
       user_password: data.get("user_password"),
-      user_type: data.get('user_type')==='student'? 1 : 2
+      user_type: data.get("user_type") === "student" ? 1 : 2,
     });
     console.log(error);
     if (validate(data)) {
       console.log(userData);
+      axios
+        .post(BaseLoginURL, {
+          cs_mail: data.get("cs_mail"),
+          full_name: data.get("full_name"),
+          user_password: data.get("user_password"),
+          user_type: data.get("user_type") === "student" ? 1 : 2,
+        })
+        .then((response) => {
+          if (response.data.code === 200) {
+            // success
+            const user = response.data.user;
+            console.log(user);
+            setUserData(user);
+          } else {
+          }
+        })
+        .catch((error) => {
+          console.log(error.response.request);
+          setError("Check Your Info!");
+        });
     }
   };
 
@@ -133,6 +155,17 @@ export default function Register({ setLogin }) {
                   label="Graduate"
                 />
               </RadioGroup>
+              <TextField
+                className="TextField"
+                margin="normal"
+                required
+                fullWidth
+                id="full_name"
+                label="Name Surname"
+                name="full_name"
+                autoComplete="name"
+                autoFocus
+              />
               <TextField
                 className="TextField"
                 margin="normal"

@@ -123,8 +123,8 @@ export default function TopBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ bgcolor: "white", borderRadius:'20px'}} elevation={0}>
         <Toolbar sx={{height:"90px"}}>
-          <SvgIcon component={LinkedHuIcon} inheritViewBox sx={{ width:"199.62px" , height:"50.64px", marginLeft:"40px",
-          marginRight: "54.38px"}} />
+          <a href='/mainPage'><SvgIcon component={LinkedHuIcon} inheritViewBox sx={{ width:"199.62px" , height:"50.64px", marginLeft:"40px",
+          marginRight: "54.38px"}} /></a>
           <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } , gap: 1}}>
