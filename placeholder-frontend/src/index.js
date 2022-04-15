@@ -20,7 +20,7 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/mainPage" element={<HomePageScreen/>} />
-      <Route path="/profilePage" element={<ProfilePageScreen/>} />
+      <Route path="/in/:user_id" element={<ProfilePageScreen/>} />
     </Routes>
   </BrowserRouter>
 );

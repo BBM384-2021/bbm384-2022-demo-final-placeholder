@@ -1,5 +1,5 @@
 import React from 'react'
-import profilePic from '../profilepage-screen/assets/1.png'
+import profilePic from '../profilepage-screen/assets/1post.png'
 
 export default function ProfileBanner( {withoutName, withStatus, isChatBanner, user, onClick }) {
   return (

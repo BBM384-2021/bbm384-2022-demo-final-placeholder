@@ -76,7 +76,7 @@ export default function SearchBar () {
     const handleProfileBannerClick = (user) => () =>
     {
         const user_prof_id = user.cs_mail.split('@')[0]
-        window.open("/in/" + user_prof_id, "_blank");
+        window.open("/in/" + user.id, "_blank");
     }
 
     return (
