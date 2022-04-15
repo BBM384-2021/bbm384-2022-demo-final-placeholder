@@ -141,26 +141,26 @@ export default function Profile() {
     )
 }
 
-var modal = document.getElementById("simpleModal");
-var modalBtn = document.getElementById("modalBtn");
-var closeBtn = document.getElementsByClassName("closeBtn")[0];
+// var modal = document.getElementById("simpleModal");
+// var modalBtn = document.getElementById("modalBtn");
+// var closeBtn = document.getElementsByClassName("closeBtn")[0];
 
-modalBtn.addEventListener("click",openModal)
+// modalBtn.addEventListener("click",openModal)
 
-closeBtn.addEventListener("click",closeModal)
+// closeBtn.addEventListener("click",closeModal)
 
-window.addEventListener("click",clickOutside)
+// window.addEventListener("click",clickOutside)
 
-function openModal(){
-    modal.style.display = "flex";
-}
+// function openModal(){
+//     modal.style.display = "flex";
+// }
 
-function closeModal(){
-    modal.style.display = "none";
-}
+// function closeModal(){
+//     modal.style.display = "none";
+// }
 
-function clickOutside(e){
-    if(e.target === modal){
-        modal.style.display = "none";
-    }
-}
+// function clickOutside(e){
+//     if(e.target === modal){
+//         modal.style.display = "none";
+//     }
+// }
