@@ -109,7 +109,10 @@ export default function Login({setLogin}) {
                   onClick={handleSubmit}
                   variant="contained"
                   sx={{
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.hacettepe,
+                    ":hover": {
+                      background: Colors.whiteShaded
+                    },
                     mt: 3,
                     mb: 2,
                     width: "40%",

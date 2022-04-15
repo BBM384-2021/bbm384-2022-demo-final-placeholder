@@ -1,17 +1,17 @@
 .card-view {
-  max-width: 475;
+  max-width: 475px;
   padding: 5%;
   border-radius: 20px;
 }
 
-.passive{
+.passive {
   width: 20%;
   background: transparent;
   border: none;
 }
 
-.welcome{
-  width: 100%;
+.welcome {
+  align-items:left;
   font-size: large;
   float: left;
 }
