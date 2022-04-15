@@ -48,18 +48,51 @@ const theme = createTheme();
 
 export default function Register({ setLogin }) {
   const [error, setError] = useState("");
+  const [userData, setUserData] = useState({ cs_mail: "", user_password: "" });
+
+  const validate = (fieldValues) => {
+    console.log("user_password" in fieldValues);
+    if (fieldValues.get("user_password")?.length < 6) {
+      setError("Minimum 6 characters required.");
+      return false;
+    } else if (
+      fieldValues.get("user_password") !== fieldValues.get("confirm_password")
+    ) {
+      setError("Please Confirm Password!");
+      return false;
+    }
+    return true;
+  };
+  // const { values, setValues, errors, setErrors, handleInputChange, resetForm } =
+  //   useForm(initialFValues, true, validate);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(event);
     const data = new FormData(event.currentTarget);
-    console.log(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      type: data.get("user-type"),
-      password: data.get("password"),
-      confpassword: data.get("confirm-password"),
+    setUserData({
+      full_name: data.get("full_name"),
+      cs_mail: data.get("cs_mail"),
+      user_password: data.get("user_password"),
+      user_type: data.get('user_type')==='student'? 1 : 2
     });
+    console.log(error);
+    if (validate(data)) {
+      console.log(userData);
+    }
   };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log(event.currentTarget);
+  //   console.log({
+  //     email: data.get("email"),
+  //     type: data.get("user-type"),
+  //     password: data.get("password"),
+  //     confpassword: data.get("confirm-password"),
+  //   });
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,25 +114,25 @@ export default function Register({ setLogin }) {
               handleSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
-            <RadioGroup
-              row
-              aria-labelledby="user-type"
-              name="user-type"
-              className="radio-container"
-            >
-              <FormControlLabel
-                className="radio"
-                value="student"
-                control={<Radio />}
-                label="Student"
-              />
-              <FormControlLabel
-                className="radio"
-                value="graduate"
-                control={<Radio />}
-                label="Graduate"
-              />
-            </RadioGroup>
+              <RadioGroup
+                row
+                aria-labelledby="user-type"
+                name="user-type"
+                className="radio-container"
+              >
+                <FormControlLabel
+                  className="radio"
+                  value="student"
+                  control={<Radio />}
+                  label="Student"
+                />
+                <FormControlLabel
+                  className="radio"
+                  value="graduate"
+                  control={<Radio />}
+                  label="Graduate"
+                />
+              </RadioGroup>
               <TextField
                 className="TextField"
                 margin="normal"
@@ -136,13 +169,12 @@ export default function Register({ setLogin }) {
               <Box display="flex" justifyContent="space-between">
                 <Button
                   type="submit"
-                  onClick={()=>{console.log('count');}}
                   variant="contained"
                   sx={{
                     backgroundColor: Colors.hacettepe,
                     ":hover": {
                       background: Colors.whiteShaded,
-                      color: '#000'
+                      color: "#000",
                     },
                     mt: 3,
                     mb: 2,

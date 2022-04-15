@@ -47,17 +47,33 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login({ setLogin }) {
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [userData, setUserData] = useState({ cs_mail: "", user_password: "" });
 
+  const validate = (fieldValues) => {
+    console.log("user_password" in fieldValues);
+    if (fieldValues.get('user_password')?.length < 6) {
+      setError("Check your password!");
+      return false;
+    }
+    return true;
+  };
+  // const { values, setValues, errors, setErrors, handleInputChange, resetForm } =
+  //   useForm(initialFValues, true, validate);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(event);
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+      cs_mail: data.get("cs_mail"),
+      user_password: data.get("user_password"),
     });
+    console.log(error);
+    if (validate(data)) {
+      console.log('login success');
+      // <Route to="/mainPage"/>
+    }
   };
 
   return (
@@ -87,9 +103,9 @@ export default function Login({ setLogin }) {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
+                id="cs_mail"
+                label="CS Mail"
+                name="cs_mail"
                 autoComplete="email"
                 autoFocus
               />
@@ -98,16 +114,15 @@ export default function Login({ setLogin }) {
                 margin="normal"
                 required
                 fullWidth
-                name="password"
+                name="user_password"
                 label="Password"
                 type="password"
-                id="password"
+                id="user_password"
                 autoComplete="current-password"
               />
               <Box display="flex" justifyContent="space-between">
                 <Button
                   type="submit"
-                  onClick={handleSubmit}
                   variant="contained"
                   sx={{
                     backgroundColor: Colors.hacettepe,
