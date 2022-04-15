@@ -18,6 +18,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    box-shadow: 0 5px 10px -10px #AFAFAF;
 }
 
 .profileDetailRow{
@@ -51,7 +52,7 @@
     color: #959595;
 }
 
-.profileDetailRow button{
+.profileDetailRow a{
     margin-bottom: 5px;
     margin-left: 20px;
     align-items: center;
@@ -66,18 +67,19 @@
     cursor: pointer;
 }
 
-.profileDetailRow button img{
+.profileDetailRow a img{
     height: 25px;
 }
 
 .profileDetailRight{
+    margin-right: 20px;
     text-align: center;
 }
 
 .profileDetailRight a{
-    margin-left: 15px;
+    margin-left: 30px;
     align-items: center;
-    box-shadow: 0 5px 15px -10px #AFAFAF;
+    box-shadow: 0 5px 15px -10px #565656;
     background: #EFEFEF;
     padding: 10px;
     display: inline-flex;
@@ -86,7 +88,7 @@
 }
 
 .profileDetailRight a img{
-    width: 25px;
+    width: 30px;
 }
 
 .profileDetailRight button:first-child{
@@ -112,7 +114,9 @@
 
 
 .feedColumn{
-    display: block;
+
+    background: #EFEFEF;
+    display: inline-list-item;
     border-radius: 25px;
 }
 
@@ -121,6 +125,7 @@
     align-items: center;
     margin-top: 10px;
     margin-left: 15px;
+
 }
 
 .userProfile img{
@@ -146,10 +151,12 @@
 .postContainer{
     width: 95.7%;
     background: white;
+    box-shadow: 0 5px 15px -10px #AFAFAF;
+
     border-radius: 15px;
     padding: 20px;
     color: #626262;
-    margin: 20px 0;
+    margin: 30px 0;
 }
 
 .postText{
@@ -195,4 +202,16 @@
 .activityIcons button img{
     height: 20px;
 
+}
+
+.profileFeed{
+    margin-left: 5px;
+    font-family: 'SansSerif', "Verdana", sans-serif;font-size: 14px;
+    font-weight: 500;
+    color: #AFAFAF;
+}
+
+.profileFeed img{
+    width: 20px;
+    height: 20px;
 }
