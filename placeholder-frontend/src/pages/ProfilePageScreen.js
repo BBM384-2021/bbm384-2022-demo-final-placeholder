@@ -12,7 +12,6 @@ const theme = createTheme();
 
 export default function ProfilePageScreen() {
     const { user_id } = useParams();
-    console.log(user_id)
   return (
       <Box sx={{display:'flex', marginLeft:'10px', marginRight:'10px', flexDirection:'column'}}>
           <TopBar />
