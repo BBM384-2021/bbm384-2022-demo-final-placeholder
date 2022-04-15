@@ -37,7 +37,6 @@ public class UserDAO {
     }
 
     public static User createUser(User user){
-        user.setUser_password(Integer.toString(user.getUser_password().hashCode()));
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
@@ -81,6 +80,7 @@ public class UserDAO {
             session.beginTransaction();
             List<User> users= session.createQuery(String.format("from User u WHERE u.cs_mail = '%s' and u.user_password = '%s'",cs_mail,hashedPassword)).getResultList();
             if(users.size() == 0){
+                System.out.println("wsejugddşklfhgşjdf");
                 return null;
             }
             user = users.get(0);
@@ -88,6 +88,7 @@ public class UserDAO {
 
         }
         catch (Exception e){
+            System.out.println(e);
             return null;
         }
         finally {
@@ -149,14 +150,14 @@ public class UserDAO {
         return allUsers;
     }
 
-    public static int deleteUser(String current_user_id){
+    public static int deleteUser(String user_id){
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
         try{
             session.beginTransaction();
-            session.createQuery("delete from User s where s.id = "+current_user_id).executeUpdate();
+            session.createQuery("delete from User s where s.id = "+user_id).executeUpdate();
             session.getTransaction().commit();
         }
         catch (Exception e){

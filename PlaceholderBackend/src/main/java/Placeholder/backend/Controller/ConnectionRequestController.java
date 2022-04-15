@@ -7,6 +7,7 @@ import Placeholder.backend.Model.ConnectionRequest;
 import Placeholder.backend.Util.DAOFunctions;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -22,21 +23,23 @@ public class ConnectionRequestController {
     }
 
     @DeleteMapping("/connectionRequest/removeRequest")
-    public Object removeRequest(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id ,@RequestParam(value = "other_user_id",defaultValue = "") String other_user_id){
+    public Object removeRequest(@RequestBody HashMap<String, String> body){
 
-        if(current_user_id.equals("") || other_user_id.equals("")){
+        if(!body.containsKey("current_user_id") || !body.containsKey("other_user_id") ||
+                body.get("current_user_id").equals("") || body.get("other_user_id").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        return DAOFunctions.getResponse(ConnectionRequestDAO.removeRequest(current_user_id,other_user_id),"",null);
+        return DAOFunctions.getResponse(ConnectionRequestDAO.removeRequest(body.get("current_user_id"),body.get("other_user_id")),"",null);
     }
 
     @GetMapping("/connectionRequest/checkRequest")
-    public Object checkRequest(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id ,@RequestParam(value = "checked_user_id",defaultValue = "") String checked_user_id){
+    public Object checkRequest(@RequestBody HashMap<String, String> body){
 
-        if(current_user_id.equals("") || checked_user_id.equals("")){
+        if(!body.containsKey("current_user_id") || !body.containsKey("other_user_id") ||
+                body.get("current_user_id").equals("") || body.get("other_user_id").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        return DAOFunctions.getResponse(200,"requested_code",ConnectionRequestDAO.checkRequest(current_user_id,checked_user_id));
+        return DAOFunctions.getResponse(200,"requested_code",ConnectionRequestDAO.checkRequest(body.get("current_user_id"),body.get("other_user_id")));
     }
 
     @DeleteMapping("/connectionRequest/acceptRequest")

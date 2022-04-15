@@ -18,11 +18,14 @@ import java.util.List;
 public class UserController {
 
     @PostMapping("/user/createUser")
-    public Object createUser(@RequestBody User user){
-        if(user.getUser_password() == null || user.getUser_type() == null || user.getFull_name() == null || user.getCs_mail() == null || !user.getCs_mail().endsWith("@cs.hacettepe.edu.tr")){
+    public Object createUser(@RequestBody  HashMap<String, String> body){
+        if(!body.containsKey("user_password") || !body.containsKey("user_type") || !body.containsKey("cs_mail") || !body.containsKey("full_name") ||
+                body.get("user_password") == null || body.get("user_type") == null || body.get("cs_mail") == null || body.get("full_name") == null || !body.get("cs_mail").endsWith("@cs.hacettepe.edu.tr")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        User u = UserDAO.createUser(user);
+        User u = new User(0,body.get("full_name"),body.get("user_type"), body.get("cs_mail"), body.get("user_password"),"","","","","");
+        u.setUser_password(Integer.toString(body.get("user_password").hashCode()));
+        u = UserDAO.createUser(u);
 
         if(u != null){
             return DAOFunctions.getResponse(200,"user",u);
@@ -33,13 +36,13 @@ public class UserController {
     }
 
     @GetMapping("/user/login")
-    public Object login(@RequestParam(value = "cs_mail",defaultValue = "") String cs_mail, @RequestParam(value = "user_password",defaultValue = "")String user_password){
+    public Object login(@RequestBody  HashMap<String, String> body){
 
-        if(cs_mail.equals("") || user_password.equals("")){
-
+        if(!body.containsKey("cs_mail") || !body.containsKey("user_password") ||
+                body.get("cs_mail").equals("") || body.get("user_password").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        User u = UserDAO.login(cs_mail,user_password);
+        User u = UserDAO.login(body.get("cs_mail"),body.get("user_password"));
 
         if(u != null){
             return DAOFunctions.getResponse(200,"user",u);
@@ -65,18 +68,19 @@ public class UserController {
 
     }
     @GetMapping("/user/getProfileData")
-    public Object getProfileData(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id ,@RequestParam(value = "requested_id",defaultValue = "") String requested_id){
+    public Object getProfileData(@RequestBody  HashMap<String, String> body){
 
-        if(current_user_id.equals("") || requested_id.equals("")){
+        if(!body.containsKey("current_user_id") || !body.containsKey("requested_id") ||
+                body.get("current_user_id").equals("") || body.get("requested_id").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
 
-        HashMap<String,Object> profileData = UserDAO.getProfileData(current_user_id,requested_id);
+        HashMap<String,Object> profileData = UserDAO.getProfileData(body.get("current_user_id"),body.get("requested_id"));
         if(profileData == null){
             return DAOFunctions.getResponse(400,"",null);
         }
-        if(!current_user_id.equals(requested_id)  && !(boolean)profileData.get("connected")){
-            profileData.put("connection_request_code",ConnectionRequestDAO.checkRequest(current_user_id,requested_id));
+        if(!body.get("current_user_id").equals(body.get("requested_id"))  && !(boolean)profileData.get("connected")){
+            profileData.put("connection_request_code",ConnectionRequestDAO.checkRequest(body.get("current_user_id"),body.get("requested_id")));
 
         }
         return DAOFunctions.getResponseWithMap(200, profileData);
@@ -96,14 +100,14 @@ public class UserController {
     }
 
     @DeleteMapping("/user/deleteUser")
-    public Object deleteUser(@RequestParam(value = "current_user_id") String current_user_id){
+    public Object deleteUser(@RequestBody  HashMap<String, String> body){
 
-        if(current_user_id.equals("")){
+        if(!body.containsKey("user_id") || body.get("user_id").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        ConnectionDAO.removeAllConnections(current_user_id);
-        ConnectionRequestDAO.removeAllRequests(current_user_id);
-        return DAOFunctions.getResponse(UserDAO.deleteUser(current_user_id),"",null);
+        ConnectionDAO.removeAllConnections(body.get("user_id"));
+        ConnectionRequestDAO.removeAllRequests(body.get("user_id"));
+        return DAOFunctions.getResponse(UserDAO.deleteUser(body.get("user_id")),"",null);
 
     }
 
@@ -132,20 +136,21 @@ public class UserController {
     }
 
     @PatchMapping("/user/updatePassword")
-    public Object updatePassword(@RequestParam(value = "cs_mail",defaultValue = "") String cs_mail, @RequestParam(value = "old_password",defaultValue = "") String old_password, @RequestParam(value = "new_password",defaultValue = "")String new_password){
-
-        if(new_password.equals("") ||old_password.equals("") || cs_mail.equals("")){
+    public Object updatePassword(@RequestBody  HashMap<String, String> body){
+        if(!body.containsKey("new_password") || !body.containsKey("old_password") || !body.containsKey("cs_mail") ||
+                body.get("new_password").equals("") || body.get("old_password").equals("") || body.get("cs_mail").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        return DAOFunctions.getResponse(UserDAO.updatePassword(cs_mail,old_password,new_password),"",null);
+        return DAOFunctions.getResponse(UserDAO.updatePassword(body.get("cs_mail"),body.get("old_password"),body.get("new_password")),"",null);
     }
 
     @PatchMapping("/user/updateUserType")
-    public Object updateUserType(@RequestParam(value = "user_type",defaultValue = "") String user_type, @RequestParam (value = "current_user_id",defaultValue = "")String current_user_id){
-        if(current_user_id.equals("") || user_type.equals("")){
+    public Object updateUserType(@RequestBody  HashMap<String, String> body){
+        if(!body.containsKey("current_user_id") || !body.containsKey("user_type") ||
+                body.get("current_user_id").equals("") || body.get("user_type").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
-        return DAOFunctions.getResponse(UserDAO.updateUserType(user_type,current_user_id),"",null);
+        return DAOFunctions.getResponse(UserDAO.updateUserType(body.get("user_type"),body.get("current_user_id")),"",null);
     }
     @GetMapping("/user/getUsersConnected")
     public static Object getUsersConnected(@RequestParam (value = "current_user_id",defaultValue = "")String current_user_id){
