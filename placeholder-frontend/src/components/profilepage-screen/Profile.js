@@ -47,7 +47,17 @@ export default function Profile() {
                     <div id="simpleModal" className="modal">
                         <div className="modalContent">
                             <span className="closeBtn">&times;</span>
-                            <p>Ben bir modal'ım ulan</p>
+                            <h2>Edit profile</h2>
+                            <form>
+                                <label>Name</label>
+                                <input type="text" placeholder="Name..."/>
+                                <label>Surname</label>
+                                <input type="text" placeholder="Surname..."/>
+                                <label>Github</label>
+                                <input type="text" placeholder="Github..."/>
+                                <label>Linkedin</label>
+                                <input type="text" placeholder="Linkedin..."/>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -139,10 +149,18 @@ modalBtn.addEventListener("click",openModal)
 
 closeBtn.addEventListener("click",closeModal)
 
+window.addEventListener("click",clickOutside)
+
 function openModal(){
-    modal.style.display = "block";
+    modal.style.display = "flex";
 }
 
 function closeModal(){
     modal.style.display = "none";
+}
+
+function clickOutside(e){
+    if(e.target === modal){
+        modal.style.display = "none";
+    }
 }
