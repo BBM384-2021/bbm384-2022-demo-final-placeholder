@@ -48,6 +48,7 @@ function Copyright(props) {
 
 //in case we need a dark theme in the future
 const theme = createTheme();
+const BaseLoginURL = "https://placeholder-backend.herokuapp.com/user/login";
 
 export default function Register({ setLogin, setUser }) {
   const [error, setError] = useState("");
@@ -169,6 +170,17 @@ export default function Register({ setLogin, setUser }) {
                   label="Graduate"
                 />
               </RadioGroup>
+              <TextField
+                className="TextField"
+                margin="normal"
+                required
+                fullWidth
+                id="full_name"
+                label="Name Surname"
+                name="full_name"
+                autoComplete="name"
+                autoFocus
+              />
               <TextField
                 className="TextField"
                 margin="normal"

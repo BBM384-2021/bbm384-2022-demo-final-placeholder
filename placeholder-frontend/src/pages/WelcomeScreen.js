@@ -7,7 +7,9 @@ import Register from "../components/welcome-screen/Register";
 import { ReactComponent as LinkedHuIcon } from "../img/linhu_logo.svg";
 import "./WelcomeScreen.css";
 
+
 export default function WelcomeScreen({ setUser }) {
+
   const [login, setLogin] = useState(true);
 
   return (
@@ -25,7 +27,7 @@ export default function WelcomeScreen({ setUser }) {
           }}
         />
         {login ? (
-          <Login setLogin={setLogin} />
+          <Login setLogin={setLogin} setUser={setUser} />
         ) : (
           <Register setLogin={setLogin} setUser={setUser} />
         )}

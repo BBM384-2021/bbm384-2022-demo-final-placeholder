@@ -6,11 +6,11 @@ import MainFeed from '../components/homepage-screen/MainFeed';
 
 import Box from '@mui/material/Box';
 
-export default function HomePageScreen() {
+export default function HomePageScreen( {user} ) {
 
   return (
     <Box sx={{display:'flex', marginLeft:'10px', marginRight:'10px', flexDirection:'column'}}>
-      <TopBar />
+      <TopBar userObj={user}/>
       <div style={{display:'flex', height:'80vh',margin:'0px', justifyContent:'space-between', paddingTop:'2%',
       fontFamily:'Poppins', flex:'auto'}}>
         <EventSideBar />
