@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
+// here comes router
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import App from "./App";
 import HomePageScreen from "./pages/HomePageScreen";
 import ProfilePageScreen from "./pages/ProfilePageScreen";
-
-// here comes router
-import { Routes, Route, BrowserRouter, Redirect } from "react-router-dom";
 import ErrorPage from "./pages/error/ErrorPage";
 
+import "./index.css";
 
 const container = document.getElementById("root");
 const root = createRoot(container);

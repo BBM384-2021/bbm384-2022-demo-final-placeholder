@@ -1,25 +1,23 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Link as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import axios from "axios"
 
+import { MailOutlined, LockOutlined } from "@mui/icons-material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
-  Avatar,
   Button,
   CssBaseline,
   Card,
-  TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
-  Grid,
   Box,
   Typography,
   Container,
   Alert,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import IconTextField from "../commons/IconTextField";
+
 import "./Welcome.css";
 import { Colors } from "../../Colors";
 
@@ -46,8 +44,7 @@ function Copyright(props) {
 
 //in case we need a dark theme in the future
 const theme = createTheme();
-const BaseLoginURL = "https://placeholder-backend.herokuapp.com/user/login"
-
+const BaseLoginURL = "https://placeholder-backend.herokuapp.com/user/login";
 
 export default function Login({ setLogin, setUser }) {
   const [error, setError] = useState("");
@@ -55,7 +52,7 @@ export default function Login({ setLogin, setUser }) {
 
   const validate = (fieldValues) => {
     console.log("user_password" in fieldValues);
-    if (fieldValues.get('user_password')?.length < 6) {
+    if (fieldValues.get("user_password")?.length < 6) {
       setError("Check your password!");
       return false;
     }
@@ -74,23 +71,39 @@ export default function Login({ setLogin, setUser }) {
     });
     console.log(error);
     if (validate(data)) {
-      console.log('login success');
+      console.log("login success");
 
-    axios.get(BaseLoginURL, {
-          params: {
-              "cs_mail": data.get("cs_mail"),
-              "user_password": data.get("user_password")
-          }}, { headers : { 
-            'Authorization': 'Basic xxxxxxxxxxxxxxxxxxx',
-            'Content-Type' : 'text/plain' 
-        }}).then( (response) => {
-          if (response.data.code === 200) { // success
+      axios
+        .get(
+          BaseLoginURL,
+          {
+            params: {
+              cs_mail: data.get("cs_mail"),
+              user_password: data.get("user_password"),
+            },
+          },
+          {
+            headers: {
+              Authorization: "Basic xxxxxxxxxxxxxxxxxxx",
+              "Content-Type": "text/plain",
+            },
+          }
+        )
+        .then((response) => {
+          console.log("response: ", response);
+
+          if (response.data.code === 200) {
+            // success
             const user = response.data.user;
             console.log(user);
-            setUser(user)
+            setUser(user);
           } else {
+            setError("Wrong E-mail or Password!");
           }
-      }).catch( (error) => console.log(error.response.request));
+        })
+        .catch((error) => {
+          console.log("error axios: ", error.response);
+        });
     }
   };
 
@@ -116,7 +129,7 @@ export default function Login({ setLogin, setUser }) {
               noValidate
               sx={{ mt: 1 }}
             >
-              <TextField
+              <IconTextField
                 className="TextField"
                 margin="normal"
                 required
@@ -126,8 +139,9 @@ export default function Login({ setLogin, setUser }) {
                 name="cs_mail"
                 autoComplete="email"
                 autoFocus
+                iconEnd={<MailOutlined />}
               />
-              <TextField
+              <IconTextField
                 className="TextField"
                 margin="normal"
                 required
@@ -137,6 +151,7 @@ export default function Login({ setLogin, setUser }) {
                 type="password"
                 id="user_password"
                 autoComplete="current-password"
+                iconEnd={<LockOutlined />}
               />
               <Box display="flex" justifyContent="space-between">
                 <Button
