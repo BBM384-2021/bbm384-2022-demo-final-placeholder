@@ -7,7 +7,6 @@ import axios from "axios";
 import {
   Button,
   CssBaseline,
-  Card,
   TextField,
   FormControlLabel,
   Link,
@@ -17,8 +16,11 @@ import {
   Typography,
   Container,
   Alert,
+  Card,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
+import CardContainerSc from "../commons/CardContainerSc";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./Welcome.css";
 import { Colors } from "../../Colors";
@@ -48,7 +50,7 @@ function Copyright(props) {
 const theme = createTheme();
 const BaseLoginURL = "https://placeholder-backend.herokuapp.com/user/login";
 
-export default function Register({ setLogin }) {
+export default function Register({ setLogin, setUser }) {
   const [error, setError] = useState("");
   const [userData, setUserData] = useState({ cs_mail: "", user_password: "" });
 
@@ -70,37 +72,32 @@ export default function Register({ setLogin }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event);
     const data = new FormData(event.currentTarget);
+
     setUserData({
       full_name: data.get("full_name"),
       cs_mail: data.get("cs_mail"),
       user_password: data.get("user_password"),
       user_type: data.get("user_type") === "student" ? 1 : 2,
     });
-    console.log(error);
+    console.log("current error: ", error);
     if (validate(data)) {
       console.log(userData);
-      axios
-        .post(BaseLoginURL, {
-          cs_mail: data.get("cs_mail"),
-          full_name: data.get("full_name"),
-          user_password: data.get("user_password"),
-          user_type: data.get("user_type") === "student" ? 1 : 2,
-        })
-        .then((response) => {
-          if (response.data.code === 200) {
-            // success
-            const user = response.data.user;
-            console.log(user);
-            setUserData(user);
-          } else {
-          }
-        })
-        .catch((error) => {
-          console.log(error.response.request);
-          setError("Check Your Info!");
-        });
+      // axios
+      //   .post(BaseLoginURL)
+      //   .then((response) => {
+      //     if (response.data.code === 200) {
+      //       // success
+      //       const user = response.data.user;
+      //       console.log(user);
+      //       setUser(user);
+      //     } else {
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.log(error.response.request);
+      //     setError("Check Your Info!");
+      //   });
     }
   };
 
@@ -145,13 +142,31 @@ export default function Register({ setLogin }) {
                 <FormControlLabel
                   className="radio"
                   value="student"
-                  control={<Radio />}
+                  control={
+                    <Radio
+                      className="Radio"
+                      sx={{
+                        "&, &.Mui-checked": {
+                          color: Colors.hacettepe,
+                        },
+                      }}
+                    />
+                  }
                   label="Student"
                 />
                 <FormControlLabel
                   className="radio"
                   value="graduate"
-                  control={<Radio />}
+                  control={
+                    <Radio
+                      className="Radio"
+                      sx={{
+                        "&, &.Mui-checked": {
+                          color: Colors.hacettepe,
+                        },
+                      }}
+                    />
+                  }
                   label="Graduate"
                 />
               </RadioGroup>
