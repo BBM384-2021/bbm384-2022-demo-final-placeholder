@@ -8,9 +8,10 @@ import EventSideBar from "../components/homepage-screen/EventSideBar";
 import ChatSideBar from "../components/homepage-screen/ChatSideBar";
 import Profile from "../components/profilepage-screen/Profile";
 
-
-export default function ProfilePageScreen() {
+export default function ProfilePageScreen({ sessionUser }) {
   const { user_id } = useParams();
+  const isSessionUser = user_id === sessionUser.user_id ? true : false;
+
   return (
     <Box
       sx={{
@@ -20,22 +21,7 @@ export default function ProfilePageScreen() {
         flexDirection: "column",
       }}
     >
-      <TopBar />
-      <div
-        style={{
-          display: "flex",
-          height: "80vh",
-          margin: "0px",
-          justifyContent: "space-between",
-          paddingTop: "2%",
-          fontFamily: "Poppins",
-          flex: "auto",
-        }}
-      >
-        <EventSideBar />
-        <Profile user_id={user_id} />
-        <ChatSideBar />
-      </div>
+      <Profile user_id={user_id} />
     </Box>
   );
 }

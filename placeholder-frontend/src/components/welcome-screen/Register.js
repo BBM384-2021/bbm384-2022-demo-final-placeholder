@@ -87,6 +87,7 @@ export default function Register({ setLogin, setUser }) {
     console.log("current error: ", error);
     if (validate(data)) {
       console.log(userData);
+      axios.post()
       // axios
       //   .post(BaseLoginURL)
       //   .then((response) => {
@@ -104,18 +105,6 @@ export default function Register({ setLogin, setUser }) {
       //   });
     }
   };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log(event.currentTarget);
-  //   console.log({
-  //     email: data.get("email"),
-  //     type: data.get("user-type"),
-  //     password: data.get("password"),
-  //     confpassword: data.get("confirm-password"),
-  //   });
-  // };
 
   return (
     <ThemeProvider theme={theme}>
