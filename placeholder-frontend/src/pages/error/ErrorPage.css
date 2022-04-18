@@ -1,0 +1,29 @@
+h1 {
+  font-size: 20vmin;
+  font-weight: 800;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+}
+h2 {
+  font-size: 3vmin;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  margin-top: -40px;
+}
+p {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+}
+.Button {
+  text-align: center !important;
+  padding: 10px 15px !important;
+  color: var(--hacettepe)
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 10vmin;
+}

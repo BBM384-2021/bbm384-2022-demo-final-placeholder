@@ -1,6 +1,5 @@
-import { SvgIcon } from "@mui/material";
+import { SvgIcon, Card } from "@mui/material";
 import React, { useState } from "react";
-import { Card } from "@mui/material";
 
 import Login from "../components/welcome-screen/Login";
 import Register from "../components/welcome-screen/Register";
@@ -8,7 +7,7 @@ import Register from "../components/welcome-screen/Register";
 import { ReactComponent as LinkedHuIcon } from "../img/linhu_logo.svg";
 import "./WelcomeScreen.css";
 
-export default function WelcomeScreen() {
+export default function WelcomeScreen({ setUser }) {
   const [login, setLogin] = useState(true);
 
   return (
@@ -28,7 +27,7 @@ export default function WelcomeScreen() {
         {login ? (
           <Login setLogin={setLogin} />
         ) : (
-          <Register setLogin={setLogin} />
+          <Register setLogin={setLogin} setUser={setUser} />
         )}
       </Card>
     </div>

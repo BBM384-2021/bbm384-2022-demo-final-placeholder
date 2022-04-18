@@ -1,26 +1,27 @@
-import React, {useState} from 'react';
-import { createRoot } from 'react-dom/client'
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useState } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
 import HomePageScreen from "./pages/HomePageScreen";
 import ProfilePageScreen from "./pages/ProfilePageScreen";
 
+// here comes router
+import { Routes, Route, BrowserRouter, Redirect } from "react-router-dom";
+import ErrorPage from "./pages/error/ErrorPage";
 
-// here comes router 
-import { BrowserRouter as Router, Link as RouterLink, Routes, Route, BrowserRouter } from "react-router-dom";
-// ######################
 
-const container = document.getElementById('root');
+const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
     <Routes>
+      <Route path="*" element={<ErrorPage />} />
       <Route path="/" element={<App />} />
-      <Route path="/mainPage" element={<HomePageScreen/>} />
-      <Route path="/profilePage" element={<ProfilePageScreen/>} />
+      {/* <Route path="/mainPage" element={<HomePageScreen />} /> */}
+      <Route path="/in/:user_id" element={<ProfilePageScreen />} />
     </Routes>
   </BrowserRouter>
 );
