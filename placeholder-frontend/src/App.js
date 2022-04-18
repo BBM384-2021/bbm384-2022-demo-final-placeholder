@@ -1,9 +1,10 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
+import axios from "axios";
+
 import WelcomeScreen from "./pages/WelcomeScreen";
+import HomePageScreen from "./pages/HomePageScreen";
 
 import "./App.css";
-import HomePageScreen from "./pages/HomePageScreen";
-import axios from "axios";
 
 const client = axios.create({
   baseURL: "https://placeholder-backend.herokuapp.com/",

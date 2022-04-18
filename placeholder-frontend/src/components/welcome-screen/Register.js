@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import PropTypes from "prop-types";
 import axios from "axios";
+import { Link as RouterLink } from "react-router-dom";
+import PropTypes from "prop-types";
 
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  ArrowBack,
+  PersonOutlined,
+  MailOutlined,
+  LockOutlined,
+} from "@mui/icons-material";
 import {
   Button,
   CssBaseline,
-  TextField,
   FormControlLabel,
   Link,
   Radio,
@@ -19,11 +24,10 @@ import {
   Card,
 } from "@mui/material";
 
-import CardContainerSc from "../commons/CardContainerSc";
+import IconTextField from "../commons/IconTextField";
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import "./Welcome.css";
 import { Colors } from "../../Colors";
+import "./Welcome.css";
 
 function Copyright(props) {
   return (
@@ -170,7 +174,7 @@ export default function Register({ setLogin, setUser }) {
                   label="Graduate"
                 />
               </RadioGroup>
-              <TextField
+              <IconTextField
                 className="TextField"
                 margin="normal"
                 required
@@ -180,8 +184,9 @@ export default function Register({ setLogin, setUser }) {
                 name="full_name"
                 autoComplete="name"
                 autoFocus
+                iconEnd={<PersonOutlined />}
               />
-              <TextField
+              <IconTextField
                 className="TextField"
                 margin="normal"
                 required
@@ -191,8 +196,9 @@ export default function Register({ setLogin, setUser }) {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                iconEnd={<MailOutlined />}
               />
-              <TextField
+              <IconTextField
                 className="TextField"
                 margin="normal"
                 required
@@ -202,8 +208,9 @@ export default function Register({ setLogin, setUser }) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                iconEnd={<LockOutlined />}
               />
-              <TextField
+              <IconTextField
                 className="TextField"
                 margin="normal"
                 required
@@ -213,6 +220,7 @@ export default function Register({ setLogin, setUser }) {
                 type="password"
                 id="confirm-password"
                 autoComplete="current-password"
+                iconEnd={<LockOutlined />}
               />
               <Box display="flex" justifyContent="space-between">
                 <Button
@@ -239,7 +247,7 @@ export default function Register({ setLogin, setUser }) {
                   className="passive"
                 >
                   <span className="back-arrow">
-                    <ArrowBackIcon />
+                    <ArrowBack />
                   </span>
                   <span>Go back</span>
                 </button>

@@ -1,5 +1,5 @@
-import { SvgIcon, Card } from "@mui/material";
 import React, { useState } from "react";
+import { SvgIcon, Card } from "@mui/material";
 
 import Login from "../components/welcome-screen/Login";
 import Register from "../components/welcome-screen/Register";
