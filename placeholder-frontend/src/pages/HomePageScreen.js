@@ -9,7 +9,7 @@ import MainFeed from "../components/homepage-screen/MainFeed";
 import ProfilePageScreen from "./ProfilePageScreen";
 import ErrorPage from "./error/ErrorPage";
 
-export default function HomePageScreen({ user }) {
+export default function HomePageScreen({ user, setUser }) {
   return (
     <Box
       sx={{
@@ -19,7 +19,7 @@ export default function HomePageScreen({ user }) {
         flexDirection: "column",
       }}
     >
-      <TopBar userObj={user} />
+      <TopBar user={user} setUser={setUser} />
       <div
         style={{
           display: "flex",
@@ -36,7 +36,10 @@ export default function HomePageScreen({ user }) {
           <Routes>
             <Route path="*" component={<ErrorPage />} />
             <Route path="/" component={<MainFeed />} />
-            <Route path="/in/:user_id" component={<ProfilePageScreen sessionUser={user}/>} />
+            <Route
+              path="/in/:user_id"
+              component={<ProfilePageScreen sessionUser={user} />}
+            />
             {/* <Route path="/mainPage" element={<HomePageScreen />} /> */}
           </Routes>
         </div>
