@@ -6,7 +6,9 @@ export default function MainFeed() {
   return (
     <Box 
       sx={{
-        width:'45%',
+        marginLeft: '30px',
+        marginRight: '30px',
+        width: '75%',
         backgroundColor:'white',
         borderRadius:'17px',
         display:'flex'
