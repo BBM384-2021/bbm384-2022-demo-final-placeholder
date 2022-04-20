@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 
-import TopBar from "../components/homepage-screen/TopBar";
+import TopBar from "../components/topbar/Topbar";
 import EventSideBar from "../components/homepage-screen/EventSideBar";
 import ChatSideBar from "../components/homepage-screen/ChatSideBar";
 import MainFeed from "../components/homepage-screen/MainFeed";
