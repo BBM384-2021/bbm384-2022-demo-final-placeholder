@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import WelcomeScreen from "./pages/WelcomeScreen";
@@ -29,6 +29,18 @@ function App() {
   // const { data, error, loading } = useAxios({
   //   url: "https://jsonplaceholder.typicode.com/posts/1"
   // });
+
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      setUser(JSON.parse(localStorage.getItem('user')))
+    }
+  }, [])
+
+  useEffect(() => {
+    const userJson = JSON.stringify(user);
+    localStorage.setItem('user', userJson);
+  }, [user])
+  
 
   return (
     <div className="App">
