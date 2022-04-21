@@ -17,10 +17,10 @@ const root = createRoot(container);
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="*" element={<ErrorPage />} />
       <Route path="/" element={<App />} />
-      {/* <Route path="/mainPage" element={<HomePageScreen />} /> */}
+      <Route path="/mainPage" element={<HomePageScreen />} />
       <Route path="/in/:user_id" element={<ProfilePageScreen />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   </BrowserRouter>
 );
