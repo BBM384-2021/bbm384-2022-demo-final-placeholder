@@ -66,6 +66,13 @@ const GetSimilarConnections = ( input, user_id, setResults ) => {
     }).catch( (error) => console.log(error));
 };
 
+export function handleProfileBannerClick(user) {
+    return () => {
+        // const user_prof_id = user.cs_mail.split('@')[0]
+        window.open("/in/" + user.id, "_blank");
+    };
+}
+
 export default function SearchBar () {
     const [inputKey, setInputKey] = useState("");
     const [results, setResults] = useState([]);
@@ -74,12 +81,6 @@ export default function SearchBar () {
     useEffect( () => {
         GetSimilarConnections(inputKey.target?.value, 100, setResults);
     },[inputKey])
-
-    const handleProfileBannerClick = (user) => () =>
-    {
-        const user_prof_id = user.cs_mail.split('@')[0]
-        window.open("/in/" + user.id, "_blank");
-    }
 
     return (
     <div style={{width:'400px', display:'flex', flexFlow:'column', justifyContent:'flex-start',
@@ -104,6 +105,7 @@ export default function SearchBar () {
                             withStatus={false}
                             isChatBanner={false}
                             user={user_elem}
+                            isPostBanner={false}
                             onClick = {handleProfileBannerClick}
                             key={user_elem.id}
                         />);
