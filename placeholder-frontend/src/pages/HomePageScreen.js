@@ -15,7 +15,6 @@ export default function HomePageScreen({ user }) {
         marginRight: "10px",
         flexDirection: "column",
         height:'100%',
-        overflow:'hidden'
       }}
     >
       <TopBar userObj={user} />
@@ -32,8 +31,9 @@ export default function HomePageScreen({ user }) {
           <EventSideBar />
         </div>
 
-        <div style={{ top: '18%', position: 'absolute', margin:'0px 200px', width:'62%', height: '100%'}}>
-          <MainFeed />
+        <div style={{ top: '18%', position: 'absolute', margin:'0px 200px', width:'62%', height: '100%', 
+        zIndex: 1}}>
+          <MainFeed user={user}/>
         </div>
         
         <div style={{ top: '18%', right:10, position:'fixed', width:'18%', height: '100%', maxHeight:'80%'}}>

@@ -97,7 +97,7 @@ export default function SearchBar () {
             </SearchIconWrapper>
         </Search>
         {results.length > 0 &&
-            <Box sx={{width:'100%', backgroundColor:'white'}}>
+            <Box sx={{width:'100%', backgroundColor:'white', display:'flex', flexDirection:'column'}}>
                 {
                     results.map((user_elem) => {
                         return (<ProfileBanner 

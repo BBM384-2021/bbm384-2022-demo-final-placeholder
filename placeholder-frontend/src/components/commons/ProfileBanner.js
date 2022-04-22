@@ -9,9 +9,8 @@ export default function ProfileBanner( {withoutName, withStatus, contentType,
                                         user, onClick }) 
 {
     const contentEnum = contentType === 'post' ? 0 : (contentType === 'event' ? 1 : 2);
-    console.log(contentEnum);
     return (
-        <Box className='profileBanner' component={ 'button' } onClick={onClick(user)}>
+        <Box className='profileBanner' component={ 'button' } onClick={onClick}>
                 <div style={{display:'flex', alignItems:'center'}}>
                     <img className='profileBanner---profilePic'
                     src={profilePic} alt="" style={{ margin: '0px 10px 0px 5px'}}/>
