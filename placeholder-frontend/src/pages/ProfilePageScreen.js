@@ -23,18 +23,25 @@ export default function ProfilePageScreen() {
       <TopBar />
       <div
         style={{
-          display: "flex",
-          height: "80vh",
+          height: "100%",
           margin: "0px",
-          justifyContent: "space-between",
           paddingTop: "2%",
-          fontFamily: "Poppins",
-          flex: "auto",
+          fontFamily: "Poppins"
         }}
       >
-        <EventSideBar />
-        <Profile user_id={user_id} />
-        <ChatSideBar />
+        <div style={{ top: '18%', position:'absolute', width:'15%', height: '100%', maxHeight:'80%'}}>
+          <EventSideBar />
+        </div>
+
+        <div style={{ top: '18%', position: 'absolute', margin:'0px 250px', width:'62%', height: '100%', 
+        zIndex: 1}}>
+
+          <Profile user_id={user_id} />
+        </div>
+        
+        <div style={{ top: '18%', right:10, position:'fixed', width:'18%', height: '100%', maxHeight:'80%'}}>
+          <ChatSideBar />
+        </div>
       </div>
     </Box>
   );

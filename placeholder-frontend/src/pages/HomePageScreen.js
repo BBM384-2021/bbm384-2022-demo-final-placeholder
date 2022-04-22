@@ -33,6 +33,7 @@ export default function HomePageScreen({ user }) {
 
         <div style={{ top: '18%', position: 'absolute', margin:'0px 200px', width:'62%', height: '100%', 
         zIndex: 1}}>
+
           <MainFeed user={user}/>
         </div>
         

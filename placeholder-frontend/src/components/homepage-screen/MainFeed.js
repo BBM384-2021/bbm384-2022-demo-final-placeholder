@@ -9,8 +9,6 @@ export default function MainFeed( {user} ) {
   useEffect(() => {
     getMainFeed(user.id, setContents);
   }, [user.id]);
-  
-  console.log(contents);
 
   return (
     <Box 
