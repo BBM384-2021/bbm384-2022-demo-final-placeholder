@@ -4,12 +4,15 @@ import Box from '@mui/material/Box';
 export default function ChatSideBar() {
 
   return (
-    <Box 
+    <Box
+      component={'div'}
       sx={{
-        width:'25%',
+        width:'100%',
+        height: '100%',
         backgroundColor:'white',
         borderRadius:'17px',
-        display:'flex'
+        display:'flex',
+        overflow: 'auto',
       }}
     >
       <div style={{ marginLeft: '31px'}}>

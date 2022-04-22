@@ -9,28 +9,37 @@ import MainFeed from "../components/homepage-screen/MainFeed";
 export default function HomePageScreen({ user }) {
   return (
     <Box
+      component={'div'}
       sx={{
-        display: "flex",
         marginLeft: "10px",
         marginRight: "10px",
         flexDirection: "column",
+        height:'100%',
+        overflow:'hidden'
       }}
     >
       <TopBar userObj={user} />
       <div
         style={{
-          display: "flex",
-          height: "80vh",
+          height: "100%",
           margin: "0px",
-          justifyContent: "space-between",
           paddingTop: "2%",
           fontFamily: "Poppins",
-          flex: "auto",
         }}
       >
-        <EventSideBar />
-        <MainFeed />
-        <ChatSideBar />
+
+        <div style={{ top: '18%', position:'absolute', width:'15%', height: '100%', maxHeight:'80%'}}>
+          <EventSideBar />
+        </div>
+
+        <div style={{ top: '18%', position: 'absolute', margin:'0px 200px', width:'62%', height: '100%'}}>
+          <MainFeed />
+        </div>
+        
+        <div style={{ top: '18%', right:10, position:'fixed', width:'18%', height: '100%', maxHeight:'80%'}}>
+          <ChatSideBar />
+        </div>
+        
       </div>
     </Box>
   );

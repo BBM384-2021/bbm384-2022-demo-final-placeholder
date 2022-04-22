@@ -9,16 +9,18 @@ export default function MainFeed() {
       sx={{
         marginLeft: '30px',
         marginRight: '30px',
-        width: '75%',
+        width: '100%',
         backgroundColor:'white',
-        borderRadius:'17px',
+        borderRadius:'20px',
         display:'flex',
-        flexDirection : 'column'
+        flexDirection : 'column',
+        paddingInline : '10px',
       }}
     >
-      <div style={{ marginLeft: '31px'}}>
+      <div style={{}}>
         <h3 style={{ color:'#888888'}}>Main Feed</h3>
       </div>
+      <CardPreview contentType={'event'}/>
       <CardPreview contentType={'event'}/>
       
     </Box>
