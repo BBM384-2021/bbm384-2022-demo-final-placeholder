@@ -7,6 +7,7 @@ import ChatSideBar from "../components/homepage-screen/ChatSideBar";
 import MainFeed from "../components/homepage-screen/MainFeed";
 
 export default function HomePageScreen({ user }) {
+  const flexDisplay = true;
   return (
     <Box
       component={'div'}
@@ -24,22 +25,36 @@ export default function HomePageScreen({ user }) {
           margin: "0px",
           paddingTop: "2%",
           fontFamily: "Poppins",
+          display : "flex",
+          justifyContent : "space-between"
         }}
       >
 
-        <div style={{ top: '18%', position:'absolute', width:'15%', height: '100%', maxHeight:'80%'}}>
+      {flexDisplay &&
+        <>
           <EventSideBar />
-        </div>
-
-        <div style={{ top: '18%', position: 'absolute', margin:'0px 200px', width:'62%', height: '100%', 
-        zIndex: 1}}>
-
           <MainFeed user={user}/>
-        </div>
-        
-        <div style={{ top: '18%', right:10, position:'fixed', width:'18%', height: '100%', maxHeight:'80%'}}>
           <ChatSideBar />
-        </div>
+        </>
+
+      }
+      {!flexDisplay &&
+        <>
+          <div style={{ top: '18%', position:'absolute', width:'15%', height: '100%', maxHeight:'80%'}}>
+            <EventSideBar />
+          </div>
+
+          <div style={{ top: '18%', position: 'absolute', margin:'0px 200px', width:'62%', height: '100%', 
+          zIndex: 1}}>
+            <MainFeed user={user}/>
+          </div>
+          
+          <div style={{ top: '18%', right:10, position:'fixed', width:'18%', height: '100%', maxHeight:'80%'}}>
+            <ChatSideBar />
+          </div>
+        </>
+      }
+
         
       </div>
     </Box>
