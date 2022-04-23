@@ -106,7 +106,7 @@ export default function SearchBar () {
                             isChatBanner={false}
                             user={user_elem}
                             isPostBanner={false}
-                            onClick = {handleProfileBannerClick}
+                            onClick = {handleProfileBannerClick(user_elem)}
                             key={user_elem.id}
                         />);
                     })
