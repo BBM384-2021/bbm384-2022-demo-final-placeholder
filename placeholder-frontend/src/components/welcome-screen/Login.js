@@ -14,6 +14,7 @@ import {
   Typography,
   Container,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 
 import IconTextField from "../commons/IconTextField";
@@ -49,6 +50,7 @@ const BaseLoginURL = "https://placeholder-backend.herokuapp.com/user/login";
 export default function Login({ setLogin, setUser }) {
   const [error, setError] = useState("");
   const [userData, setUserData] = useState({ cs_mail: "", user_password: "" });
+  const [isLoading, setLoading] = useState(false);
 
   const validate = (fieldValues) => {
     console.log("user_password" in fieldValues);
@@ -63,13 +65,12 @@ export default function Login({ setLogin, setUser }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event);
+    console.log("loading...", event);
     const data = new FormData(event.currentTarget);
     console.log({
       cs_mail: data.get("cs_mail"),
       user_password: data.get("user_password"),
     });
-    console.log(error);
     if (validate(data)) {
       console.log("login success");
 
@@ -105,6 +106,7 @@ export default function Login({ setLogin, setUser }) {
           console.log("error axios: ", error.response);
         });
     }
+    setLoading(false);
   };
 
   return (
@@ -125,7 +127,10 @@ export default function Login({ setLogin, setUser }) {
 
             <Box
               component="form"
-              onSubmit={handleSubmit}
+              onSubmit={(event) => {
+                setLoading(true);
+                handleSubmit(event);
+              }}
               noValidate
               sx={{ mt: 1 }}
             >
@@ -154,22 +159,26 @@ export default function Login({ setLogin, setUser }) {
                 iconEnd={<LockOutlined />}
               />
               <Box display="flex" justifyContent="space-between">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    backgroundColor: Colors.hacettepe,
-                    ":hover": {
-                      background: Colors.whiteShaded,
-                      color: "#000",
-                    },
-                    mt: 3,
-                    mb: 2,
-                    width: "40%",
-                  }}
-                >
-                  Login
-                </Button>
+                {isLoading ? (
+                  <CircularProgress sx={{ mt: 3, mb: 2 }} color="inherit" />
+                ) : (
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      backgroundColor: Colors.hacettepe,
+                      ":hover": {
+                        background: Colors.whiteShaded,
+                        color: "#000",
+                      },
+                      mt: 3,
+                      mb: 2,
+                      width: "40%",
+                    }}
+                  >
+                    Login
+                  </Button>
+                )}
                 <button
                   onClick={() => {
                     setLogin(false);
