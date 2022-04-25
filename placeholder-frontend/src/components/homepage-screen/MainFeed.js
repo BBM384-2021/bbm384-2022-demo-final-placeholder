@@ -33,6 +33,7 @@ export default function MainFeed( {user} ) {
                 content={content}
                 contentType={"post"}
                 key={content.post.id}
+                user={user}
               />);
           })
       }

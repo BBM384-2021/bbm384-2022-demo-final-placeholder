@@ -6,7 +6,7 @@ import InteractionBar from "./InteractionBar";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { handleProfileBannerClick } from "../search-bar/SearchBar";
 
-export default function CardPreview ( { content, contentType } )
+export default function CardPreview ( { content, contentType, user } )
 {   
     return (
         <Card sx={{ height : '400px', margin : '10px', borderRadius:'10px', backgroundColor: Colors.whiteShaded}}>
@@ -22,7 +22,7 @@ export default function CardPreview ( { content, contentType } )
                         key={"postAuthor"+content.post.id+content.user.id}
                     />
                 </div>
-                <IconButton sx={{height:'40px', width:'40px'}}>
+                <IconButton sx={{height:'40px', width:'40px', marginRight:'20px'}}>
                     <MoreHorizIcon />
                 </IconButton>
             </Box>
@@ -37,7 +37,7 @@ export default function CardPreview ( { content, contentType } )
                     <span style={{fontWeight:'100'}}>{content.post.post_share_date}</span>
                 </div>
             </Box>
-            <InteractionBar isFavorite/>
+            <InteractionBar content={content} curr_user_id={user.id} />
 
         </Card>
     );

@@ -1,18 +1,43 @@
 import React, { useState } from "react";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import StarIcon from '@mui/icons-material/Star';
 import { IconButton } from "@mui/material";
 import "./InteractionBar.css"
+import { postLike, deleteLike } from "../../services/PostService";
 
-export default function InteractionBar ( {likeCount, commentCount, isFavorite, viewCount} )
+function isUserLikedPost ( likeArray, userID ) {
+    for (let i = 0; i < likeArray.length; i++)
+    {
+        if ( likeArray[i].like.user_id === userID )
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+export default function InteractionBar ( {content, curr_user_id} )
 {
-    const [likeFlag, setFlag] = useState(isFavorite);
+    const [likeObj, setLike] = useState({
+        "isLiked" : isUserLikedPost(content.likes, curr_user_id),
+        "likeCount" : content.likes.length});
 
-    const handleFavoriteClick = () => {
-        setFlag(!likeFlag);
+    const onLikeClick = () => {
+        setLike({
+            "isLiked" : !likeObj["isLiked"],
+            "likeCount" : !likeObj["isLiked"] ? likeObj.likeCount + 1 : likeObj.likeCount - 1
+        });
+        if (!likeObj["isLiked"]) {
+            console.log("like is sended to the backend!");
+            postLike(curr_user_id, content.post.id);
+        } else {
+            console.log("like is taken from the backend");
+            deleteLike(curr_user_id, content.post.id);
+        }
+        
     };
 
     return (
@@ -20,37 +45,26 @@ export default function InteractionBar ( {likeCount, commentCount, isFavorite, v
             >
             <div className="interaction-bar-row" style={{display: 'flex', flexDirection: 'row', marginLeft:'30px'}}>
                 <div>
-                    <IconButton>
-                        <FavoriteIcon />
+                    <IconButton
+                        onClick={onLikeClick}
+                        variant="contained">
+                        {likeObj.isLiked && 
+                            <FavoriteIcon htmlColor="red"/>
+                        }
+                        {!likeObj.isLiked &&
+                            <FavoriteBorderIcon />
+                        }
                     </IconButton>
-                    3
+                    {likeObj.likeCount}
                 </div>
 
                 <div>
                     <IconButton>
                         <ModeCommentIcon />
                     </IconButton>
-                    5
+                    {content.comments.length}
                 </div>
 
-                <div>
-                    <IconButton
-                        onClick={handleFavoriteClick}
-                        variant="contained"
-                    >
-                        {likeFlag && 
-                            <StarIcon htmlColor="#fcba03"/>
-                        }
-                        {!likeFlag &&
-                            <StarOutlineIcon />
-                        }
-                    </IconButton>
-                </div>
-
-            </div>
-            <div style={{display: 'flex', flexDirection: 'row', marginRight:'30px'}}>
-                <VisibilityIcon sx={{ marginRight:'5px' }}/>
-                82
             </div>
 
         </div>

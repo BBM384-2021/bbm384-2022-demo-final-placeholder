@@ -42,7 +42,7 @@ const getProfilePage = ( user_id, setUser ) => {
 export default function Profile( {user_id} ) {
     const [user, setUser] = useState(null);
 
-    useEffect( () => getProfilePage(user_id, setUser), user_id);
+    useEffect( () => getProfilePage(user_id, setUser), [user_id]);
 
     if (!user)
     {
