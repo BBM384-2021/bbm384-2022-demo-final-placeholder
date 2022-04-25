@@ -8,10 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class PostDAO {
 
@@ -29,26 +26,28 @@ public class PostDAO {
         if(queryResult.size() != 0){
             HashSet<Integer> postIdSet = new HashSet<>();
             ArrayList<Tag> currentTags = new ArrayList<>();
-            Post currentPost = null;
-            User currentUser = null;
+            Post prevPost = null;
+            User prevUser = null;
             JsonParser jsonParser = new JsonParser();
             for(Object o : queryResult){
                 String jsonStr = gson.toJson(o);
                 JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
-                currentPost = gson.fromJson(jsonArray.get(2), Post.class);
+                Post currentPost = gson.fromJson(jsonArray.get(2), Post.class);
                 Tag t = gson.fromJson(jsonArray.get(0), Tag.class);
+                User currentUser;
                 if(isMainFeed){
                     currentUser =  gson.fromJson(jsonArray.get(4), User.class);
+                }
+                else{
+                    currentUser = gson.fromJson(jsonArray.get(3),User.class);
                 }
 
                 if(!postIdSet.contains(currentPost.getId())){
                     if(postIdSet.size() != 0){
                         HashMap<String,Object> currentPostWithTags = new HashMap<>();
-                        currentPostWithTags.put("post",currentPost);
+                        currentPostWithTags.put("post",prevPost);
                         currentPostWithTags.put("tags", currentTags);
-                        if(isMainFeed){
-                            currentPostWithTags.put("user",currentUser);
-                        }
+                        currentPostWithTags.put("user",prevUser);
                         result.add(currentPostWithTags);
                     }
                     postIdSet.add(currentPost.getId());
@@ -56,15 +55,16 @@ public class PostDAO {
 
                 }
                 currentTags.add(t);
+                prevPost = currentPost;
+                prevUser = currentUser;
             }
             HashMap<String,Object> currentPostWithTags = new HashMap<>();
-            currentPostWithTags.put("post",currentPost);
+            currentPostWithTags.put("post",prevPost);
             currentPostWithTags.put("tags", currentTags);
-            if(isMainFeed){
-                currentPostWithTags.put("user",currentUser);
-            }
+            currentPostWithTags.put("user",prevUser);
             result.add(currentPostWithTags);
         }
+        Collections.reverse(result);
     }
 
     public static List<Object> getAllPostsOfAUser(String user_id){
@@ -75,7 +75,7 @@ public class PostDAO {
         List<Object> queryResult;
         try{
             session.beginTransaction();
-            queryResult = session.createQuery(String.format("from Tag t INNER JOIN PostTag pt ON t.id = pt.tag_id INNER JOIN Post p ON p.id = pt.post_id WHERE p.user_id = '%s'",user_id)).getResultList();
+            queryResult = session.createQuery(String.format("from Tag t INNER JOIN PostTag pt ON t.id = pt.tag_id INNER JOIN Post p ON p.id = pt.post_id INNER JOIN User u ON u.id = p.user_id WHERE p.user_id = '%s'",user_id)).getResultList();
             extractPostList(result, queryResult,false);
             session.getTransaction().commit();
 
@@ -99,7 +99,7 @@ public class PostDAO {
         List<Object> queryResult;
         try{
             session.beginTransaction();
-            queryResult = session.createQuery(String.format("from Tag t INNER JOIN PostTag pt ON t.id = pt.tag_id INNER JOIN Post p ON p.id = pt.post_id")).getResultList();
+            queryResult = session.createQuery(String.format("from Tag t INNER JOIN PostTag pt ON t.id = pt.tag_id INNER JOIN Post p ON p.id = pt.post_id INNER JOIN User u ON u.id = p.user_id")).getResultList();
             extractPostList(result, queryResult,false);
             session.getTransaction().commit();
 
