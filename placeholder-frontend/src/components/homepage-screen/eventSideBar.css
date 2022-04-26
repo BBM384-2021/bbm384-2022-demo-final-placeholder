@@ -1,0 +1,54 @@
+/* .eventContainer{
+    flex: 3;
+    width:'25%';
+    background-color:'white';
+    border-radius:'17px';
+    display:'flex';
+} */
+.eventSidebar {
+  background-color: white;
+  flex: 3;
+  height: calc(100vh - 50px);
+  overflow-y: scroll;
+  position: sticky;
+  top: 50px;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(179, 179, 179);
+}
+
+.eventWrapper {
+  padding: 20px;
+}
+
+.eventList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.eventListItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.eventIcon {
+  margin-right: 15px;
+}
+
+.eventButton {
+  width: 150px;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 500;
+}
