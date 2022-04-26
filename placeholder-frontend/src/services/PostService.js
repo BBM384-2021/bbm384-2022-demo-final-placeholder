@@ -20,7 +20,7 @@ export function getMainFeed ( user_id, setPosts ) {
     }).catch( (error) => console.log(error));
 };
 
-export function postLike ( user_id, post_id ) {
+export function postLike ( user_id, post_id, setLikeLock ) {
     axios.post(baseURL + "/likePost", {
         "post_id" : post_id,
         "user_id" : user_id
@@ -30,10 +30,12 @@ export function postLike ( user_id, post_id ) {
         } else {
             // !TODO! print error message
         }
+        // open the lock since it is finished
+        setLikeLock(false);
     }).catch( (error) => console.log(error) );
 };
 
-export function deleteLike ( user_id, post_id ) {
+export function deleteLike ( user_id, post_id, setLikeLock ) {
     axios.delete(baseURL + "/removeLike", {
         data:{
             "post_id" : post_id,
@@ -45,5 +47,8 @@ export function deleteLike ( user_id, post_id ) {
         } else {
             // !TODO! print error message 
         }
+        
+        // open the lock since it is finished
+        setLikeLock(false);
     }).catch( (error) => console.log(error) );
 }
