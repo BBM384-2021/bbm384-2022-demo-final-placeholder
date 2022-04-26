@@ -3,7 +3,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IconButton } from "@mui/material";
 import "./InteractionBar.css"
 import { postLike, deleteLike } from "../../services/PostService";
@@ -41,30 +40,26 @@ export default function InteractionBar ( {content, curr_user_id} )
     };
 
     return (
-        <div style={{marginTop: '30px', display:'flex', justifyContent:'space-between',flexDirection:'row'}}
-            >
-            <div className="interaction-bar-row" style={{display: 'flex', flexDirection: 'row', marginLeft:'30px'}}>
-                <div>
-                    <IconButton
-                        onClick={onLikeClick}
-                        variant="contained">
-                        {likeObj.isLiked && 
-                            <FavoriteIcon htmlColor="red"/>
-                        }
-                        {!likeObj.isLiked &&
-                            <FavoriteBorderIcon />
-                        }
-                    </IconButton>
-                    {likeObj.likeCount}
-                </div>
+        <div className="interaction-bar-row" style={{display: 'flex', flexDirection: 'row', marginLeft:'30px'}}>
+            <div>
+                <IconButton
+                    onClick={onLikeClick}
+                    variant="contained">
+                    {likeObj.isLiked && 
+                        <FavoriteIcon htmlColor="red"/>
+                    }
+                    {!likeObj.isLiked &&
+                        <FavoriteBorderIcon />
+                    }
+                </IconButton>
+                {likeObj.likeCount}
+            </div>
 
-                <div>
-                    <IconButton>
-                        <ModeCommentIcon />
-                    </IconButton>
-                    {content.comments.length}
-                </div>
-
+            <div>
+                <IconButton>
+                    <ModeCommentIcon />
+                </IconButton>
+                {content.comments.length}
             </div>
 
         </div>

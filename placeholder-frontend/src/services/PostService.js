@@ -7,7 +7,7 @@ export function getMainFeed ( user_id, setPosts ) {
     axios.get(baseURL + "/getMainFeed", {
         params: {
             "user_id": user_id,
-            "tags":"11,21"
+            "tags":""
         }
     }).then( (response) => {
         if (response.data.code === 200) { // success
