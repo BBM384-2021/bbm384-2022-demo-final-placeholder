@@ -1,0 +1,11 @@
+.feedWrapper {
+  flex: 6;
+  margin: 10% 0;
+  width: "75%";
+  background-color: "white";
+  border-radius: "17px";
+}
+
+.feedContainer {
+  padding: 20px;
+}

@@ -1,0 +1,10 @@
+.homeContainer {
+  display: "flex";
+  flex-direction: row;
+  height: "70vh";
+  margin: "0px";
+  justify-content: "space-between";
+  padding-top: "2%";
+  font-family: "Poppins";
+  flex: "auto";
+}
