@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
 import { getUser } from "../../services/UserService";
+import ErrorPage from "../../pages/error/ErrorPage";
+import ProfileHeader from "./ProfileHeader";
 // kept them here since we're going to need these to be dynamic pictures
 import cover from "./assets/cover.png";
 import profilePic from "./assets/1.png";
@@ -19,7 +21,6 @@ import {
   vectorFeed,
 } from "./assets/index";
 import "./Profile.css";
-import ErrorPage from "../../pages/error/ErrorPage";
 
 export default function Profile({ user_id }) {
   const [user, setUser] = useState(null);
@@ -50,6 +51,7 @@ export default function Profile({ user_id }) {
 
   return (
     <div className="profileContainer">
+      <ProfileHeader></ProfileHeader>
       <img src={cover} className="coverImage" alt="" />
 
       <div className="profileDetails">
@@ -59,11 +61,7 @@ export default function Profile({ user_id }) {
             <div>
               <h3>
                 {user.full_name}{" "}
-                {isOwnedProfile ? (
-                  <span> is my profile</span>
-                ) : (
-                  <span>false</span>
-                )}
+                {isOwnedProfile ? <span> is my profile</span> : <></>}
               </h3>
               <h4>54 connections</h4>
               <a href="https://github.com/mavibirdesmi">
@@ -110,8 +108,8 @@ export default function Profile({ user_id }) {
         </div>
       </div>
 
-      <div className="profileInfo">
-        <div className="infoColumn"></div>
+      <div className="profileFeedContainer">
+        {/* <div className="infoColumn"></div> */}
 
         <div className="feedColumn">
           <div className="postContainer">

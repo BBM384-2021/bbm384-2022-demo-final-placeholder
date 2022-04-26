@@ -20,13 +20,6 @@ export default function HomePageScreen({ user }) {
       <TopBar userObj={user} />
       <div
         className="homeContainer"
-        style={{
-          display: "flex",
-          margin: "0px",
-          justifyContent: "space-between",
-          paddingTop: "2%",
-          fontFamily: "Poppins",
-        }}
       >
         <EventSideBar />
         <MainFeed />
