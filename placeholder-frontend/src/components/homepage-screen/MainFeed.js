@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
+
 import CardPreview from '../commons/CardPreview';
+
 import { getMainFeed } from '../../services/PostService';
+
 
 export default function MainFeed( {user} ) {
   const [contents, setContents] = useState([]);
@@ -29,12 +32,17 @@ export default function MainFeed( {user} ) {
       
       {contents.length > 0 &&
           contents.map((content) => {
-              return (<CardPreview
-                content={content}
-                contentType={"post"}
-                key={content.post.id}
-                user={user}
-              />);
+              console.log(content.post.id);
+              return (
+              <>
+                <CardPreview
+                  content={content}
+                  contentType={"post"}
+                  key={content.post.id}
+                  user={user}
+                />
+              </>
+              );
           })
       }
       

@@ -48,7 +48,8 @@ export default function InteractionBar ( {content, curr_user_id} )
     };
 
     return (
-        <div className="interaction-bar-row" style={{display: 'flex', flexDirection: 'row', marginLeft:'30px'}}>
+        <div className="interaction-bar-row" style={{display: 'flex', flexDirection: 'row', marginLeft:'30px',
+        fontFamily: 'Poppins'}}>
             <div>
                 <IconButton
                     onClick={onLikeClick}

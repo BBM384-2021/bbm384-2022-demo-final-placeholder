@@ -7,5 +7,6 @@ export const Colors = {
   activeChat: "#49BF4E",
   awayChat: "#F0F339",
   pasiveChat: "#CECECE",
+  postPopup : "#A5A5A5",
   black: "#000",
 };
