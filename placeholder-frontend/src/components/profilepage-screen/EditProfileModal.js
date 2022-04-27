@@ -7,12 +7,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup'
 
 const defaultInputValues = {
-    userId: '',
+    name: '',
+    surname: '',
     email: '',
-    phoneNumber: ''
+    githubLink: '',
+    linkedinLink: ''
 };
 
-const EditProfileModal = ({ open, onClose, addNewUser }) => {
+const EditProfileModal = ({ open, onClose, editUserInfo }) => {
     const [values, setValues] = useState(defaultInputValues);
 
     const modalStyles = {
@@ -27,7 +29,6 @@ const EditProfileModal = ({ open, onClose, addNewUser }) => {
         },
     };
 
-    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
     const validationSchema = Yup.object().shape({
         userId: Yup.string()
@@ -37,7 +38,7 @@ const EditProfileModal = ({ open, onClose, addNewUser }) => {
             .required('Email is required')
             .email('Email is invalid.'),
         phoneNumber: Yup.string()
-            .matches(phoneRegExp, 'Phone number is not valid'),
+
     });
 
     const {
@@ -45,11 +46,10 @@ const EditProfileModal = ({ open, onClose, addNewUser }) => {
         handleSubmit,
         formState: { errors },
     } = useForm({
-        resolver: yupResolver(validationSchema)
     });
 
-    const addUser = (data) => {
-        addNewUser(data);
+    const editUser = (data) => {
+        editUserInfo(data);
     };
 
     const handleChange = (value) => {
@@ -63,15 +63,26 @@ const EditProfileModal = ({ open, onClose, addNewUser }) => {
     const getContent = () => (
         <Box sx={modalStyles.inputFields}>
             <TextField
-                placeholder="User ID"
-                name="userId"
-                label="User ID"
+                placeholder="Name"
+                name="name"
+                label="Name"
                 required
-                {...register('userId')}
-                error={!!errors.userId}
-                helperText={errors.userId?.message}
-                value={values.userId}
-                onChange={(event) => handleChange({ ...values, userId: event.target.value })}
+                {...register('name')}
+                error={!!errors.name}
+                helperText={errors.name?.message}
+                value={values.name}
+                onChange={(event) => handleChange({ ...values, name: event.target.value })}
+            />
+            <TextField
+                placeholder="Surname"
+                name="surname"
+                label="Surname"
+                required
+                {...register('surname')}
+                error={!!errors.surname}
+                helperText={errors.surname?.message}
+                value={values.surname}
+                onChange={(event) => handleChange({ ...values, surname: event.target.value })}
             />
             <TextField
                 placeholder="Email"
@@ -85,27 +96,39 @@ const EditProfileModal = ({ open, onClose, addNewUser }) => {
                 onChange={(event) => handleChange({ ...values, email: event.target.value })}
             />
             <TextField
-                placeholder="Phone number"
-                name="phoneNumber"
-                label="Phone number"
+                placeholder="Github link"
+                name="githubLink"
+                label="Github Link"
                 required
-                {...register('phoneNumber')}
-                error={!!errors.phoneNumber}
-                helperText={errors.phoneNumber?.message}
-                value={values.phoneNumber}
-                onChange={(event) => handleChange({ ...values, phoneNumber: event.target.value })}
+                {...register('githubLink')}
+                error={!!errors.githubLink}
+                helperText={errors.githubLink?.message}
+                value={values.githubLink}
+                onChange={(event) => handleChange({ ...values, githubLink: event.target.value })}
+            />
+            <TextField
+                placeholder="Linkedin link"
+                name="linkedinLink"
+                label="Linkedin link"
+                required
+                {...register('linkedinLink')}
+                error={!!errors.linkedinLink}
+                helperText={errors.linkedinLink?.message}
+                value={values.linkedinLink}
+                onChange={(event) => handleChange({ ...values, linkedinLink: event.target.value })}
             />
         </Box>
     );
 
     return (
         <BasicModal
+
             open={open}
             onClose={onClose}
-            title="New user"
-            subTitle="Fill out inputs and hit 'submit' button."
+            title="Edit Profile"
+            subTitle="Fill out new info and hit 'submit' button."
             content={getContent()}
-            onSubmit={handleSubmit(addUser)}
+            onSubmit={handleSubmit(editUser)}
         />
 
     )

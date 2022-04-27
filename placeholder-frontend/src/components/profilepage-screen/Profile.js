@@ -3,6 +3,7 @@ import "./Profile.css"
 import axios from "axios"
 
 import BasicModal from "../commons/BasicModal"
+import EditProfileModal from "./EditProfileModal"
 
 import cover from "./assets/cover.png";
 import profilePic from "./assets/1.png";
@@ -79,7 +80,7 @@ export default function Profile( {user_id} ) {
                     <a> <img src={vectorMore} className="more" alt=""/> </a>
 
 
-                    <BasicModal open={open} onClose={() => setOpen(false)}/>
+                    <EditProfileModal open={open} onClose={() => setOpen(false)}/>
 
 
                 </div>

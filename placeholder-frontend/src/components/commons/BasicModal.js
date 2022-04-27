@@ -1,9 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
-import {Input} from "@mui/material";
 import {modalStyles} from "./styles";
 import CommonButton from "./CommonButton";
 
@@ -25,12 +23,14 @@ const BasicModal = ({ open, onClose, title, subTitle, content, onSubmit }) => {
                 {content}
                 <Box sx={modalStyles.buttons}>
                     <CommonButton
+                        color="error"
                         variant="contained"
                         onClick={onSubmit}
                     >
                         Submit
                     </CommonButton>
-                    <CommonButton onClick={onClose}>Cancel</CommonButton>
+                    <CommonButton color="error"
+                                  onClick={onClose}>Cancel</CommonButton>
                 </Box>
             </Box>
         </Modal>
