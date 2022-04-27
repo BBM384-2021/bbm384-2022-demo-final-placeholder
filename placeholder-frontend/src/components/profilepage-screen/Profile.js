@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react'
 import "./Profile.css"
 import axios from "axios"
 
+import BasicModal from "../commons/BasicModal"
+
 import cover from "./assets/cover.png";
 import profilePic from "./assets/1.png";
 
@@ -42,6 +44,12 @@ const getProfilePage = ( user_id, setUser ) => {
 export default function Profile( {user_id} ) {
     const [user, setUser] = useState(null);
 
+    const editProfile = () => {
+        setOpen(true);
+    }
+    const [open, setOpen] = useState(false);
+
+
     useEffect( () => getProfilePage(user_id, setUser), user_id);
 
     if (!user)
@@ -67,25 +75,13 @@ export default function Profile( {user_id} ) {
                 </div>
                 <div className="profileDetailRight">
                     <a> <img src={vectorAdd} className="more" alt=""/> </a>
-                    <a id="modalBtn" className="modalButton"> <img src={vectorPencil} className="githubImage" alt=""/> </a>
+                    <a id="modalBtn" className="modalButton" onClick={editProfile}> <img src={vectorPencil} className="githubImage" alt=""/> </a>
                     <a> <img src={vectorMore} className="more" alt=""/> </a>
 
-                    <div id="simpleModal" className="modal">
-                        <div className="modalContent">
-                            <span className="closeBtn">&times;</span>
-                            <h2>Edit profile</h2>
-                            <form>
-                                <label>Name</label>
-                                <input type="text" placeholder="Name..."/>
-                                <label>Surname</label>
-                                <input type="text" placeholder="Surname..."/>
-                                <label>Github</label>
-                                <input type="text" placeholder="Github..."/>
-                                <label>Linkedin</label>
-                                <input type="text" placeholder="Linkedin..."/>
-                            </form>
-                        </div>
-                    </div>
+
+                    <BasicModal open={open} onClose={() => setOpen(false)}/>
+
+
                 </div>
             </div>
 
