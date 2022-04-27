@@ -22,7 +22,7 @@ export default function CardContent ( {content, enableShortView, handleModalOpen
         width: enableShortView ? '50vw' : '60vw',
         backgroundColor: Colors.white, boxShadow: '0px 3px 5px 0px ' + Colors.whiteShadow,   
         display:'flex', justifyContent:'space-between', flexDirection:'column', position:'relative',
-        height:'60%', fontFamily:'Poppins'}}>
+        height: enableShortView ? '60%' : 'auto', fontFamily:'Poppins'}}>
             <div style={{ height:'80%',
             overflow: enableShortView ? 'hidden' : 'none'}} ref={refText}>
                 <Typography gutterBottom sx={{paddingLeft:'30px', paddingRight:'15px',

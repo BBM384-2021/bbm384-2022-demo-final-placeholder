@@ -10,14 +10,12 @@ export default function CardView( {content, contentType, refPreview, user} ) {
         
         <Card sx={{
             position : 'fixed',
-            left : '50%',
-            transform : 'translate(-50%, 20%)',
+            maxWidth : '65vw',
+            position : 'absolue',
+            transform : 'translate(25%, 10%)',
             backgroundColor: Colors.whiteShaded,
             margin : '10px',
             borderRadius:'10px',
-            display:'flex',
-            justifyContent:'space-between',
-            flexDirection:'column'
         }}>
             <CardTitle content={content} contentType={contentType} />
             <CardContent content={content} enableShortView={false}/>

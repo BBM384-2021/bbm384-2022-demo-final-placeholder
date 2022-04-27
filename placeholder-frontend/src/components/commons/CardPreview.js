@@ -28,6 +28,7 @@ export default function CardPreview ( { content, contentType, user } )
             <Modal
                 open={open}
                 onClose={handleClose}
+                sx={{overflow:'scroll'}}
             >
                 <CardView contentType={contentType} content={content} refPreview={refBody}
                     user={user}
