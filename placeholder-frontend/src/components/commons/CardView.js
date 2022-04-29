@@ -9,7 +9,6 @@ export default function CardView( {content, contentType, refPreview, user} ) {
     return (
         
         <Card sx={{
-            position : 'fixed',
             maxWidth : '65vw',
             position : 'absolue',
             transform : 'translate(25%, 10%)',
