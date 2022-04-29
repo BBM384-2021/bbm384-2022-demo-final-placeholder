@@ -41,17 +41,21 @@ const getProfilePage = ( user_id, setUser ) => {
     }).catch( (error) => console.log(error));
 };
 
-
 export default function Profile( {user_id} ) {
     const [user, setUser] = useState(null);
+
+    const [isEdit, setIsEdit] = useState(false);
 
     const editProfile = () => {
         setOpen(true);
     }
+
     const [open, setOpen] = useState(false);
 
-
-    useEffect( () => getProfilePage(user_id, setUser), user_id);
+    useEffect( () => {
+        getProfilePage(user_id, setUser);
+        setIsEdit(false);
+        },[isEdit] );
 
     if (!user)
     {
@@ -79,9 +83,7 @@ export default function Profile( {user_id} ) {
                     <a id="modalBtn" className="modalButton" onClick={editProfile}> <img src={vectorPencil} className="githubImage" alt=""/> </a>
                     <a> <img src={vectorMore} className="more" alt=""/> </a>
 
-
-                    <EditProfileModal open={open} onClose={() => setOpen(false)}/>
-
+                    <EditProfileModal open={open} user={user} setIsEdit={setIsEdit} onClose={() => setOpen(false)}/>
 
                 </div>
             </div>

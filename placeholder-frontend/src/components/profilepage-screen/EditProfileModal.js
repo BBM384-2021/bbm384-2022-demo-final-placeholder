@@ -3,18 +3,19 @@ import BasicModal from '../commons/BasicModal'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup'
+import axios from "axios"
 
 const defaultInputValues = {
-    name: '',
-    surname: '',
+    fullName: '',
+    phone: '',
     email: '',
+    company: '',
     githubLink: '',
     linkedinLink: ''
 };
 
-const EditProfileModal = ({ open, onClose, editUserInfo }) => {
+const EditProfileModal = ({ open, onClose, editUserInfo, user, setIsEdit }) => {
     const [values, setValues] = useState(defaultInputValues);
 
     const modalStyles = {
@@ -43,7 +44,6 @@ const EditProfileModal = ({ open, onClose, editUserInfo }) => {
 
     const {
         register,
-        handleSubmit,
         formState: { errors },
     } = useForm({
     });
@@ -51,6 +51,37 @@ const EditProfileModal = ({ open, onClose, editUserInfo }) => {
     const editUser = (data) => {
         editUserInfo(data);
     };
+
+    const validate = (data) => {
+        return true;
+    };
+
+    const handleSubmit = () => {
+        console.log(user)
+        if (validate(values)) {
+            axios
+                .patch('https://placeholder-backend.herokuapp.com/user/updateUser', {
+                    "id":user.id,
+                    "full_name":values.fullName,
+                    "user_type":user.user_type,
+                    "cs_mail":values.email,
+                    "phone":values.phone,
+                    "company":values.company
+                })
+                .then((response) => {
+                    console.log(response)
+                    if (response.data.code === 200) {
+                        // success
+                        console.log('success');
+                        setIsEdit(true);
+                    } else {
+                    }
+                })
+                .catch((error) => {
+                    console.log(error.response.request);
+                });
+        }
+    }
 
     const handleChange = (value) => {
         setValues(value)
@@ -63,26 +94,26 @@ const EditProfileModal = ({ open, onClose, editUserInfo }) => {
     const getContent = () => (
         <Box sx={modalStyles.inputFields}>
             <TextField
-                placeholder="Name"
-                name="name"
-                label="Name"
+                placeholder="FullName"
+                name="fullName"
+                label="FullName"
                 required
-                {...register('name')}
-                error={!!errors.name}
-                helperText={errors.name?.message}
-                value={values.name}
-                onChange={(event) => handleChange({ ...values, name: event.target.value })}
+                {...register('fullName')}
+                error={!!errors.fullName}
+                helperText={errors.fullName?.message}
+                value={values.fullName}
+                onChange={(event) => handleChange({ ...values, fullName: event.target.value })}
             />
             <TextField
-                placeholder="Surname"
-                name="surname"
-                label="Surname"
+                placeholder="Phone"
+                name="phone"
+                label="Phone"
                 required
-                {...register('surname')}
-                error={!!errors.surname}
-                helperText={errors.surname?.message}
-                value={values.surname}
-                onChange={(event) => handleChange({ ...values, surname: event.target.value })}
+                {...register('phone')}
+                error={!!errors.phone}
+                helperText={errors.phone?.message}
+                value={values.phone}
+                onChange={(event) => handleChange({ ...values, phone: event.target.value })}
             />
             <TextField
                 placeholder="Email"
@@ -94,6 +125,17 @@ const EditProfileModal = ({ open, onClose, editUserInfo }) => {
                 helperText={errors.email?.message}
                 value={values.email}
                 onChange={(event) => handleChange({ ...values, email: event.target.value })}
+            />
+            <TextField
+                placeholder="Company"
+                name="company"
+                label="Company"
+                required
+                {...register('company')}
+                error={!!errors.company}
+                helperText={errors.company?.message}
+                value={values.company}
+                onChange={(event) => handleChange({ ...values, company: event.target.value })}
             />
             <TextField
                 placeholder="Github link"
@@ -122,13 +164,12 @@ const EditProfileModal = ({ open, onClose, editUserInfo }) => {
 
     return (
         <BasicModal
-
             open={open}
             onClose={onClose}
             title="Edit Profile"
             subTitle="Fill out new info and hit 'submit' button."
             content={getContent()}
-            onSubmit={handleSubmit(editUser)}
+            onSubmit={handleSubmit}
         />
 
     )
