@@ -225,7 +225,7 @@ public class PostDAO {
         try{
             session.beginTransaction();
             session.save(post);
-            posts = session.createQuery(String.format("from Post p WHERE p.post_body = '%s'",post.getPost_body())).getResultList();
+            posts = session.createQuery(String.format("from Post p WHERE p.user_id = '%s' and p.post_share_date = '%s'",post.getUser_id(),post.getPost_share_date())).getResultList();
             if(posts.size() == 0){
                 session.getTransaction().commit();
                 return null;
@@ -274,6 +274,8 @@ public class PostDAO {
             session.createQuery("delete from Post p where p.id = "+id).executeUpdate();
             session.getTransaction().commit();
             PostTagDAO.deleteAllTagsFromPost(id);
+            deleteAllLikesFromPost(id);
+            deleteAllCommentsFromPost(id);
         }
         catch (Exception e){
             System.out.println(e);
@@ -460,6 +462,67 @@ public class PostDAO {
 
         return 200;
 
+    }
+
+    public static int deleteAllPostsOfAUser(String user_id){
+
+        try{
+            List<Object> posts = getAllPostsOfAUser(user_id);
+            for(Object o : posts){
+                HashMap<String,Object> mapObject = ( HashMap<String,Object>) o;
+                Post p =(Post) mapObject.get("post");
+                deletePost(Integer.toString(p.getId()));
+            }
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+
+        return 200;
+    }
+
+    public static int deleteAllLikesFromPost(String post_id){
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try{
+            session.beginTransaction();
+            session.createQuery("delete from Like l where l.post_id = "+post_id).executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
+
+        return 200;
+    }
+
+    public static int deleteAllCommentsFromPost(String post_id){
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try{
+            session.beginTransaction();
+            session.createQuery("delete from Comment c where c.post_id = "+post_id).executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
+
+        return 200;
     }
 
 

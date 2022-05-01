@@ -100,7 +100,7 @@ public class PostController {
     }
 
     @GetMapping("/post/getMainFeed")
-    public Object getMainFeed(@RequestParam(value = "user_id",defaultValue = "") String user_id, @RequestParam(value = "tags",defaultValue = "[]") String tagsString){
+    public Object getMainFeed(@RequestParam(value = "user_id",defaultValue = "") String user_id, @RequestParam(value = "tags",defaultValue = "") String tagsString){
         if(user_id.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
