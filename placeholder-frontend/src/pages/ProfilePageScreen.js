@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { createTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 
 import TopBar from "../components/topbar/Topbar";

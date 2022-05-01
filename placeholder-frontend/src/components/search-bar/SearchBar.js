@@ -1,4 +1,4 @@
-import { useState, onChange, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
@@ -6,8 +6,6 @@ import Box from '@mui/material/Box';
 import axios from "axios"
 
 import ProfileBanner from "../commons/ProfileBanner"
-
-import { height } from '@mui/system';
 
 const baseSearchURL = "https://placeholder-backend.herokuapp.com/user/searchUser"
 const Search = styled('div')(({ theme }) => ({
