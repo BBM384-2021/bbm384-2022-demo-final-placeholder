@@ -25,6 +25,7 @@ export default function MainFeed( {user} ) {
         display:'flex',
         flexDirection : 'column',
         paddingInline : '10px',
+        height: "fit-content",
       }}
     >
       <div style={{}}>

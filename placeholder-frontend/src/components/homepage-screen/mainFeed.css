@@ -4,6 +4,8 @@
   width: "75%";
   background-color: "white";
   border-radius: "17px";
+  height: fit-content;
+  overflow-y: visible;
 }
 
 .feedContainer {
