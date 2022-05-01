@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import axios from "axios";
 
 import WelcomeScreen from "./pages/WelcomeScreen";
@@ -25,14 +25,14 @@ client.interceptors.response.use(
 );
 
 function App() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   // const { data, error, loading } = useAxios({
   //   url: "https://jsonplaceholder.typicode.com/posts/1"
   // });
 
   useEffect(() => {
     if (localStorage.getItem('user')) {
-      setUser(JSON.parse(localStorage.getItem('user')))
+      setUser(JSON.parse(localStorage.getItem('user')));
     }
   }, [])
 
