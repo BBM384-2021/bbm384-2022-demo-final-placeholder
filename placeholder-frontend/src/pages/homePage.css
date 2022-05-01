@@ -1,0 +1,16 @@
+.homeContainer {
+  font-family: Poppins;
+  display: flex;
+  flex: auto;
+  position: fixed;
+  flex-direction: row;
+  justify-content: space-between;
+  height: calc(100vh - 120px);
+  margin-top: 90px;
+  bottom:10px;
+  /* margin-left: 50px; */
+  /* margin-right: 50px; */
+  padding-top: 2%;
+  width: calc(100vw - 40px);
+  /* background-color: blueviolet; */
+}

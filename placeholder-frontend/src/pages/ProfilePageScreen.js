@@ -7,7 +7,6 @@ import EventSideBar from "../components/homepage-screen/EventSideBar";
 import ChatSideBar from "../components/homepage-screen/ChatSideBar";
 import Profile from "../components/profilepage-screen/Profile";
 
-
 export default function ProfilePageScreen() {
   const { user_id } = useParams();
   return (

@@ -5,6 +5,7 @@ import TopBar from "../components/topbar/Topbar";
 import EventSideBar from "../components/homepage-screen/EventSideBar";
 import ChatSideBar from "../components/homepage-screen/ChatSideBar";
 import MainFeed from "../components/homepage-screen/MainFeed";
+import "./homePage.css";
 
 export default function HomePageScreen({ user }) {
   const flexDisplay = true;
@@ -20,14 +21,7 @@ export default function HomePageScreen({ user }) {
     >
       <TopBar userObj={user} />
       <div
-        style={{
-          height: "100%",
-          margin: "0px",
-          paddingTop: "2%",
-          fontFamily: "Poppins",
-          display : "flex",
-          justifyContent : "space-between"
-        }}
+        className="homeContainer"
       >
 
       {flexDisplay &&

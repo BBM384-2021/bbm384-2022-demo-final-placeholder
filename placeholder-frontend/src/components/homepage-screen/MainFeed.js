@@ -16,6 +16,7 @@ export default function MainFeed( {user} ) {
   return (
     <Box 
       sx={{
+        flex: '6',
         marginLeft: '30px',
         marginRight: '30px',
         width: '100%',
