@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Link as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -52,7 +50,6 @@ function Copyright(props) {
 
 //in case we need a dark theme in the future
 const theme = createTheme();
-const BaseLoginURL = "https://placeholder-backend.herokuapp.com/user/login";
 
 export default function Register({ setLogin, setUser }) {
   const [error, setError] = useState("");

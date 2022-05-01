@@ -1,4 +1,4 @@
-import { useState, onChange, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
@@ -6,8 +6,6 @@ import Box from '@mui/material/Box';
 import axios from "axios"
 
 import ProfileBanner from "../commons/ProfileBanner"
-
-import { height } from '@mui/system';
 
 const baseSearchURL = "https://placeholder-backend.herokuapp.com/user/searchUser"
 const Search = styled('div')(({ theme }) => ({
@@ -66,6 +64,13 @@ const GetSimilarConnections = ( input, user_id, setResults ) => {
     }).catch( (error) => console.log(error));
 };
 
+export function handleProfileBannerClick(user) {
+    return () => {
+        // const user_prof_id = user.cs_mail.split('@')[0]
+        window.open("/in/" + user.id, "_blank");
+    };
+}
+
 export default function SearchBar () {
     const [inputKey, setInputKey] = useState("");
     const [results, setResults] = useState([]);
@@ -74,12 +79,6 @@ export default function SearchBar () {
     useEffect( () => {
         GetSimilarConnections(inputKey.target?.value, 100, setResults);
     },[inputKey])
-
-    const handleProfileBannerClick = (user) => () =>
-    {
-        const user_prof_id = user.cs_mail.split('@')[0]
-        window.open("/in/" + user.id, "_blank");
-    }
 
     return (
     <div style={{width:'400px', display:'flex', flexFlow:'column', justifyContent:'flex-start',
@@ -96,7 +95,7 @@ export default function SearchBar () {
             </SearchIconWrapper>
         </Search>
         {results.length > 0 &&
-            <Box sx={{width:'100%', backgroundColor:'white'}}>
+            <Box sx={{width:'100%', backgroundColor:'white', display:'flex', flexDirection:'column'}}>
                 {
                     results.map((user_elem) => {
                         return (<ProfileBanner 
@@ -104,7 +103,8 @@ export default function SearchBar () {
                             withStatus={false}
                             isChatBanner={false}
                             user={user_elem}
-                            onClick = {handleProfileBannerClick}
+                            isPostBanner={false}
+                            onClick = {handleProfileBannerClick(user_elem)}
                             key={user_elem.id}
                         />);
                     })
