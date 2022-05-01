@@ -5,7 +5,7 @@ import Login from "../components/welcome-screen/Login";
 import Register from "../components/welcome-screen/Register";
 
 import { ReactComponent as LinkedHuIcon } from "../img/linhu_logo.svg";
-import "./welcomeScreen.css";
+import "./WelcomeScreen.css";
 
 
 export default function WelcomeScreen({ setUser }) {
