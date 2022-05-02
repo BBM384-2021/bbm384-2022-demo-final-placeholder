@@ -3,15 +3,16 @@
 .comment-profile-banner-wrapper {
     width:fit-content;
     border-radius:15px;
+    padding-top: 10px;
     margin-left: 15px;
+    min-width: 30%;
 }
 
 .comment-box {
     background-color: var(--white);
     border-radius: 15px;
-    display: flex;
-    align-items: center;
     margin-left: 30px;
+    margin-bottom: 10px;
     min-height: 80px;
     width: 60vw;
     box-shadow: 0px 3px 5px 0px var(--whiteShadow);
@@ -21,4 +22,7 @@
     font-family: 'Poppins';
     font-size: medium;
     margin-left: 20px;
+    padding-bottom: 10px;
+    margin-right: 20px;
+    text-align: start;
 }
