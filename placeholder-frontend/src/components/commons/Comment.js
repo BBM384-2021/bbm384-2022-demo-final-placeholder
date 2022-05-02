@@ -18,6 +18,7 @@ export default function Comment ( {comment} ) {
                     withStatus={true}
                     contentType={"comment"}
                     user={comment.user}
+                    status={comment.comment.share_date}
                 />
             </div>
             <p>

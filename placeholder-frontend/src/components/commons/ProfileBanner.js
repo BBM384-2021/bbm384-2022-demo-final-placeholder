@@ -14,7 +14,7 @@ function handleProfileBannerClick(user) {
 }
 
 export default function ProfileBanner( {withoutName, withStatus, contentType,
-                                        user}) {
+                                        user, status}) {
     const styleClassName = "profileBanner-" +  contentType;
     const contentEnum = contentType === 'post' ? 0 : (contentType === 'event' ? 1 : 2);
     return (
@@ -31,7 +31,7 @@ export default function ProfileBanner( {withoutName, withStatus, contentType,
                         }
 
                         {withStatus &&   
-                        <span>April 15 2022, 13:40 pm</span>
+                        <span>{status}</span>
                         }
                     </div>
 
