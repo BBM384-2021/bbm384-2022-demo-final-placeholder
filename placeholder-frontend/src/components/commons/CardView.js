@@ -12,7 +12,7 @@ export default function CardView( {content, contentType, user} ) {
         <Card sx={{
             maxWidth : '65vw',
             position : 'absolue',
-            transform : 'translate(25%, 5%)',
+            transform : 'translate(15vw, 7vh)',
             backgroundColor: Colors.whiteShaded,
             borderRadius:'10px',
             paddingBottom: '100px'
