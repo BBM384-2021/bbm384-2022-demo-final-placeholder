@@ -6,7 +6,7 @@ import InteractionBar from "./InteractionBar";
 import CommentSection from "./CommentSection";
 import { Colors } from "../../Colors";
 
-export default function CardView( {content, contentType, refPreview, user} ) {
+export default function CardView( {content, contentType, user} ) {
     return (
         
         <Card sx={{

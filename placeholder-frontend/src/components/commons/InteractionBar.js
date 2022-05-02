@@ -18,7 +18,7 @@ function isUserLikedPost ( likeArray, userID ) {
     return false;
 }
 
-export default function InteractionBar ( {content, curr_user_id} )
+export default function InteractionBar ( {content, curr_user_id, setOpen} )
 {
     const [likeObj, setLike] = useState({
         "isLiked" : isUserLikedPost(content.likes, curr_user_id),
@@ -65,7 +65,8 @@ export default function InteractionBar ( {content, curr_user_id} )
             </div>
 
             <div>
-                <IconButton>
+                <IconButton
+                    onClick={setOpen}>
                     <ModeCommentIcon />
                 </IconButton>
                 {content.comments.length}

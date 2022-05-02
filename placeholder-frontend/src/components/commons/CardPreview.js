@@ -10,27 +10,25 @@ import CardContent from "./CardContent";
 const textLengthLimit = 650;
 
 export default function CardPreview ( { content, contentType, user } )
-{
-    const refBody = createRef();
-    
+{    
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     return (
-        <Card ref={refBody} 
+        <Card
         sx={{ height:'420px', margin : '10px', borderRadius:'10px', backgroundColor: Colors.whiteShaded,
         display:'flex', justifyContent:'space-between', flexDirection:'column'}}>
             <CardTitle content={content} contentType={contentType} />
             <CardContent content={content} enableShortView={true} handleModalOpen={handleOpen}/>
-            <InteractionBar content={content} curr_user_id={user.id} />
+            <InteractionBar content={content} curr_user_id={user.id} setOpen={setOpen}/>
             
             <Modal
                 open={open}
                 onClose={handleClose}
                 sx={{overflow:'scroll'}}
             >
-                <CardView contentType={contentType} content={content} refPreview={refBody}
+                <CardView contentType={contentType} content={content}
                     user={user}
                 />
             </Modal>

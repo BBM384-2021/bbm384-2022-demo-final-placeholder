@@ -28,6 +28,10 @@
     cursor: pointer;
 }
 
+.send-comment-button:disabled {
+    cursor: not-allowed;
+}
+
 .send-comment-button {
     height: fit-content;
     margin-right: 15px;
