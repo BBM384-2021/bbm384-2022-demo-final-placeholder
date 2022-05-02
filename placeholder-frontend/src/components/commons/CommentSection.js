@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import CommentBar from "./CommentBar";
 import Comment from "./Comment";
 import { createComment } from "../../services/CommentService";
@@ -18,6 +18,21 @@ export default function CommentSection ( {comments, user_id, post_id} ) {
             );
         };
     }
+
+    const compareComments = (comment1, comment2) => {
+        // sort from latest to oldest
+        const date1 = new Date(comment1.comment.share_date);
+        const date2 = new Date(comment2.comment.share_date);
+        if (date1 < date2) {
+            return 1;
+        } else if (date1 > date2) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+
+    comments.sort(compareComments);
 
     return (
         <div>
