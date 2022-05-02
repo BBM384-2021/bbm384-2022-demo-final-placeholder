@@ -93,7 +93,6 @@ export default function SearchBar () {
                     results.map((user_elem) => {
                         return (<ProfileBanner 
                             withoutName={false}
-                            withStatus={false}
                             isChatBanner={false}
                             user={user_elem}
                             isPostBanner={false}

@@ -13,9 +13,10 @@ function handleProfileBannerClick(user) {
     };
 }
 
-export default function ProfileBanner( {withoutName, withStatus, contentType,
+export default function ProfileBanner( {withoutName, contentType,
                                         user, status}) {
     const styleClassName = "profileBanner-" +  contentType;
+    const withStatus = status === undefined ? false : true;
     const contentEnum = contentType === 'post' ? 0 : (contentType === 'event' ? 1 : 2);
     return (
         <Box className={'profileBanner ' + styleClassName} component={ 'button' } onClick={handleProfileBannerClick(user)}>

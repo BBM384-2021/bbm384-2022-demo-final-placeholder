@@ -10,7 +10,6 @@ export default function CardTitle( {content, contentType} ) {
             <div style={{width:'60%', borderRadius: '25px'}}>
                 <ProfileBanner
                     withoutName={false}
-                    withStatus={false}
                     user={content.user}
                     contentType={contentType}
                     key={"postAuthor"+content.post.id+content.user.id}

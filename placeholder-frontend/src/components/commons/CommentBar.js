@@ -5,7 +5,6 @@ import "./commentBar.css"
 import { Colors } from "../../Colors";
 
 export default function CommentBar ( {} ) {
-
     const [commentInput, setCommentInput] = useState("");
     const handleCommentChange = (event) => {
         setCommentInput(event.target.value);
