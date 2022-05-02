@@ -32,14 +32,12 @@ export default function CommentSection ( {comments, user_id, post_id} ) {
         }
     }
 
-    comments.sort(compareComments);
-
     return (
         <div>
             <CommentBar onClick={handleCreateComment} waitResponse={waitResponse}/>
             <div>
                 {comments.length > 0 &&
-                    comments.map((comment) => {
+                    comments.sort(compareComments).map((comment) => {
                         const commentTime = new Date(comment.comment.share_date)
                         const diffTimeMS = (currTime - commentTime);
                         return (
