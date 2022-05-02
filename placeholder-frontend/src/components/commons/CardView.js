@@ -7,7 +7,6 @@ import CommentSection from "./CommentSection";
 import { Colors } from "../../Colors";
 
 export default function CardView( {content, contentType, refPreview, user} ) {
-    console.log(content);
     return (
         
         <Card sx={{
@@ -21,7 +20,7 @@ export default function CardView( {content, contentType, refPreview, user} ) {
             <CardTitle content={content} contentType={contentType} />
             <CardContent content={content} enableShortView={false}/>
             <InteractionBar content={content} curr_user_id={user.id}/>
-            <CommentSection comments={content.comments}/>
+            <CommentSection comments={content.comments} user_id={user.id} post_id={content.post.id}/>
         </Card>
     );
 }

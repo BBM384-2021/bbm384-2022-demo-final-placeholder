@@ -1,13 +1,27 @@
-import React from "react"
+import React, { useState } from "react"
 import CommentBar from "./CommentBar";
 import Comment from "./Comment";
+import { createComment } from "../../services/CommentService";
 
-export default function CommentSection ( {comments} ) {
+export default function CommentSection ( {comments, user_id, post_id} ) {
     const currTime = new Date();
+    const [waitResponse, setWaitResponse] = useState(false);
+
+    const handleCreateComment = (commentBody) => {
+        return () => {
+            setWaitResponse(true);
+            createComment(
+                user_id,
+                post_id,
+                commentBody,
+                setWaitResponse
+            );
+        };
+    }
 
     return (
         <div>
-            <CommentBar />
+            <CommentBar onClick={handleCreateComment} waitResponse={waitResponse}/>
             <div>
                 {comments.length > 0 &&
                     comments.map((comment) => {
