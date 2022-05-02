@@ -5,28 +5,40 @@ import calenderPic from '../../img/calendar.png'
 import { Colors } from '../../Colors'
 import "./ProfileBanner.css"
 
+
+function handleProfileBannerClick(user) {
+    return () => {
+        // const user_prof_id = user.cs_mail.split('@')[0]
+        window.open("/in/" + user.id, "_blank");
+    };
+}
+
 export default function ProfileBanner( {withoutName, withStatus, contentType,
-                                        user, onClick }) 
-{
+                                        user}) {
+    const styleClassName = "profileBanner-" +  contentType;
     const contentEnum = contentType === 'post' ? 0 : (contentType === 'event' ? 1 : 2);
     return (
-        <Box className='profileBanner' component={ 'button' } onClick={onClick}>
+        <Box className={'profileBanner ' + styleClassName} component={ 'button' } onClick={handleProfileBannerClick(user)}>
                 <div style={{display:'flex', alignItems:'center'}}>
                     <img className='profileBanner---profilePic'
                     src={profilePic} alt="" style={{ margin: '0px 10px 0px 5px'}}/>
-                    {!withoutName &&
-                        <p style={{margin: '0px', wordWrap: 'normal'}}>
-                            <strong> {user.full_name} </strong> 
-                                {(contentEnum < 2) && (contentEnum === 0 ? "shared a post" : "shared an event")}
-                        </p>
-                    }
+                    <div>
+                        {!withoutName &&
+                            <p style={{margin: '0px', wordWrap: 'normal'}}>
+                                <strong> {user.full_name} </strong> 
+                                    {(contentEnum < 2) && (contentEnum === 0 ? "shared a post" : "shared an event")}
+                            </p>
+                        }
+
+                        {withStatus &&   
+                        <span>April 15 2022, 13:40 pm</span>
+                        }
+                    </div>
+
                 </div>
                 
                 {contentEnum === 1 &&
                     <img className="pBanner---calender" src={calenderPic} alt="calender"/>
-                }
-                {withStatus &&   
-                    <span>April 15 2022, 13:40 pm</span>
                 }
         </Box>
   )

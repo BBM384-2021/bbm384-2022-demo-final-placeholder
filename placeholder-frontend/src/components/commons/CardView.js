@@ -3,22 +3,25 @@ import { Card } from "@mui/material"
 import CardTitle from "./CardTitle";
 import CardContent from "./CardContent";
 import InteractionBar from "./InteractionBar";
+import CommentSection from "./CommentSection";
 import { Colors } from "../../Colors";
 
 export default function CardView( {content, contentType, refPreview, user} ) {
+    console.log(content);
     return (
         
         <Card sx={{
             maxWidth : '65vw',
             position : 'absolue',
-            transform : 'translate(25%, 10%)',
+            transform : 'translate(25%, 5%)',
             backgroundColor: Colors.whiteShaded,
-            margin : '10px',
             borderRadius:'10px',
+            paddingBottom: '100px'
         }}>
             <CardTitle content={content} contentType={contentType} />
             <CardContent content={content} enableShortView={false}/>
             <InteractionBar content={content} curr_user_id={user.id}/>
+            <CommentSection comments={content.comments}/>
         </Card>
     );
 }

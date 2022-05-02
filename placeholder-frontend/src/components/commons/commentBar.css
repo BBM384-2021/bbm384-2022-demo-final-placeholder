@@ -1,0 +1,37 @@
+.comment-bar-input {
+    border:0;
+    outline:0;
+    width: 50vw;
+    height: 100px;
+    border-radius: '25px';
+    margin-left: 30px;
+    margin-top: 10px;
+    font-size: medium;
+    font-family: 'Poppins';
+    resize: none;
+}
+
+.comment-bar-input:focus {
+    outline:none!important;
+}
+
+.send-comment-button > img{
+    width: 40px;
+    filter: contrast(0);
+}
+
+.send-comment-button:hover > img {
+    filter: none;
+}
+
+.send-comment-button:hover {
+    cursor: pointer;
+}
+
+.send-comment-button {
+    height: fit-content;
+    margin-right: 15px;
+    border: none;
+    background: none;
+}
+
