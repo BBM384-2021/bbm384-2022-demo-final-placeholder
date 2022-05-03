@@ -7,8 +7,6 @@ import CardView from "./CardView";
 import CardTitle from "./CardTitle";
 import CardContent from "./CardContent";
 
-const textLengthLimit = 650;
-
 export default function CardPreview ( { content, contentType, user } )
 {    
     const [open, setOpen] = useState(false);
