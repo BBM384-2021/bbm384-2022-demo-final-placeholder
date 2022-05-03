@@ -31,12 +31,11 @@ export default function CommentBar ( {onClick, waitResponse} ) {
                 onChange={handleCommentChange} value={commentInput}
             />
             <button className="send-comment-button" onClick={onClick(commentInput)} disabled={waitResponse}>
-                {waitResponse &&
+                {waitResponse ?
                     <CircularProgress />
-                }
-                {!waitResponse &&
+                    :
                     <img src={sendIcon} alt={"sendCommentIcon"}/>
-                }  
+                }
             </button>
         </Box>
     );

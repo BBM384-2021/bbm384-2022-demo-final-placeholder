@@ -37,7 +37,7 @@ export default function CardContent ( {content, enableShortView, handleModalOpen
                 }
             </div>
             <div style={{display:'flex', justifyContent:'space-between', margin:'0px 20px 10px 30px'}}>
-                <strong>Files Attached (1)</strong>
+                {/* <strong>Files Attached (1)</strong> */}
                 <span style={{fontWeight:'100'}}>{content.post.post_share_date}</span>
             </div>
 
