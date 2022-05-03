@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { getUser } from "../../services/UserService";
-import ErrorPage from "../../pages/error/ErrorPage";
 import ProfileHeader from "./ProfileHeader";
 import LinearIndeterminate from "../commons/LinearIndeterminateLoading";
 
