@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { getUser } from "../../services/UserService";
 import ErrorPage from "../../pages/error/ErrorPage";
@@ -22,7 +23,8 @@ import {
 } from "./assets/index";
 import "./Profile.css";
 
-export default function Profile({ user_id }) {
+export default function Profile() {
+  const { user_id } = useParams();
   const [user, setUser] = useState(null);
   const [sessionUser, setSessionUser] = useState(null);
   const [isOwnedProfile, setOwnedProfile] = useState(false);
