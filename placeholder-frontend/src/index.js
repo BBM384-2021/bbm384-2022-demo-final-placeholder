@@ -6,7 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 
 import App from "./App";
 import HomePageScreen from "./pages/HomePageScreen";
-import ErrorPage from "./pages/error/ErrorPage";
 
 import "./index.css";
 
@@ -15,10 +14,9 @@ const root = createRoot(container);
 
 root.render(
   <>
-    <BrowserRouter>
+    <BrowserRouter forceRefresh={true}>
       <Routes>
         <Route path="*" element={<App />}></Route>
-        {/* <Route path="*" element={<ErrorPage />} /> */}
       </Routes>
     </BrowserRouter>
   </>

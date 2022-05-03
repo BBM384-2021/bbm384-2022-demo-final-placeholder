@@ -7,6 +7,8 @@ import EventSideBar from "../components/homepage-screen/EventSideBar";
 import ChatSideBar from "../components/homepage-screen/ChatSideBar";
 import MainFeed from "../components/homepage-screen/MainFeed";
 import Profile from "../components/profilepage-screen/Profile";
+import ErrorPage from "./error/ErrorPage";
+
 import "./homePage.css";
 
 export default function HomePageScreen({ user }) {
@@ -30,6 +32,7 @@ export default function HomePageScreen({ user }) {
             <Routes>
               <Route path="/" element={<MainFeed user={user} />} />
               <Route path="/in/:user_id" element={<Profile />} />
+              <Route path="*" element={<ErrorPage />} />
             </Routes>
 
             <ChatSideBar />

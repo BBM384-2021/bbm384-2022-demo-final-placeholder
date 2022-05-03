@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { getUser } from "../../services/UserService";
 import ErrorPage from "../../pages/error/ErrorPage";
 import ProfileHeader from "./ProfileHeader";
+import LinearIndeterminate from "../commons/LinearIndeterminateLoading";
+
 // kept them here since we're going to need these to be dynamic pictures
 import cover from "./assets/cover.png";
 import profilePic from "./assets/1.png";
@@ -46,7 +48,7 @@ export default function Profile() {
   if (!user) {
     return (
       <div className="profileContainer">
-        <ErrorPage></ErrorPage>
+        <LinearIndeterminate></LinearIndeterminate>
       </div>
     );
   }
