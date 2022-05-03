@@ -18,3 +18,18 @@ export function createComment ( curr_user_id, post_id, comment_body, setWaitResp
         // open the lock since it is finished
     }).catch( (error) => console.log(error) );
 };
+
+export function updateComment ( comment_id, body, setWaitResponse, setIsEdit ) {
+    axios.patch(baseURL + "/updateComment", {
+        "body" : body,
+        "id" : comment_id
+    }).then( (response) => {
+        console.log(response);
+        if (response.data.code === 200) {
+            setIsEdit(false);
+        } else {
+            // TODO print error message
+        }
+        setWaitResponse(false);
+    }).catch( (error) => console.log(error) );
+}

@@ -1,10 +1,11 @@
 import React, { useState } from "react"
-import { Box, IconButton, Menu, MenuItem } from "@mui/material"
+import { Box, IconButton, Menu, MenuItem, CircularProgress } from "@mui/material"
 import ProfileBanner from "./ProfileBanner";
 import "./comment.css"
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DoneIcon from '@mui/icons-material/Done';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { updateComment } from "../../services/CommentService";
 
 function convertMs2TimeString(time) {
     if (time / 1000 < 60) { // if less than a minute
@@ -21,10 +22,19 @@ function convertMs2TimeString(time) {
 
 export default function Comment ( {comment, timeDiffMS, enableCommentOptions} ) {
     
+    const [waitResponse, setWaitResponse] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const handleEditClick = () => {
         setIsEdit(true);
         handleClose();
+    }
+    const handleEditCancelClick = () => {
+        setIsEdit(false);
+        setCommentInput(comment.comment.body);
+    }
+    const handleEditDoneClick = () => {
+        setWaitResponse(true);
+        updateComment(comment.comment.id, commentInput, setWaitResponse, setIsEdit);
     }
 
     const [commentInput, setCommentInput] = useState(comment.comment.body);
@@ -75,10 +85,14 @@ export default function Comment ( {comment, timeDiffMS, enableCommentOptions} ) 
                     <textarea className="comment-edit-body" maxLength={1000} placeholder={"Edit your comment"}
                     onChange={handleCommentChange} value={commentInput} />
                     <div className="comment-edit-icon-wrapper">
-                        <IconButton>
-                            <DoneIcon htmlColor="green"/>
+                        <IconButton onClick={handleEditDoneClick} disabled={waitResponse}>
+                            {waitResponse ?
+                                <CircularProgress />
+                                :
+                                <DoneIcon htmlColor="green"/>
+                            }
                         </IconButton>
-                        <IconButton >
+                        <IconButton onClick={handleEditCancelClick}>
                             <CancelIcon htmlColor="red"/>
                         </IconButton>
                     </div>
