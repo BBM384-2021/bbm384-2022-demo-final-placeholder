@@ -5,7 +5,7 @@ import "./comment.css"
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DoneIcon from '@mui/icons-material/Done';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { updateComment } from "../../services/CommentService";
+import { updateComment, deleteComment } from "../../services/CommentService";
 
 function convertMs2TimeString(time) {
     if (time / 1000 < 60) { // if less than a minute
@@ -24,6 +24,8 @@ export default function Comment ( {comment, timeDiffMS, enableCommentOptions} ) 
     
     const [waitResponse, setWaitResponse] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+
+    // ========================= HANDLE COMMENT OPTION CLICKS ==================== \\
     const handleEditClick = () => {
         setIsEdit(true);
         handleClose();
@@ -36,6 +38,12 @@ export default function Comment ( {comment, timeDiffMS, enableCommentOptions} ) 
         setWaitResponse(true);
         updateComment(comment.comment.id, commentInput, setWaitResponse, setIsEdit);
     }
+
+    const handleRemoveClick = () => {
+        deleteComment(comment.comment.id);
+        handleClose();
+    }
+    // ==========================================================================
 
     const [commentInput, setCommentInput] = useState(comment.comment.body);
     const handleCommentChange = (event) => {
@@ -76,7 +84,7 @@ export default function Comment ( {comment, timeDiffMS, enableCommentOptions} ) 
                     onClose={handleClose}
                 >
                     <MenuItem onClick={handleEditClick}>Edit</MenuItem>
-                    <MenuItem onClick={handleClose}>Remove</MenuItem>
+                    <MenuItem onClick={handleRemoveClick}>Remove</MenuItem>
                 </Menu>
             </div>
 
