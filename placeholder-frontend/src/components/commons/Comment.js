@@ -20,7 +20,7 @@ function convertMs2TimeString(time) {
 };
 
 
-export default function Comment ( {comment, timeDiffMS, enableCommentOptions} ) {
+export default function Comment ( {comment, timeDiffMS, enableCommentOptions, setIsRefresh} ) {
     
     const [waitResponse, setWaitResponse] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
@@ -36,11 +36,19 @@ export default function Comment ( {comment, timeDiffMS, enableCommentOptions} ) 
     }
     const handleEditDoneClick = () => {
         setWaitResponse(true);
-        updateComment(comment.comment.id, commentInput, setWaitResponse, setIsEdit);
+        const editFinishFunction = () => {
+            setIsEdit(false)
+            setIsRefresh(true);
+            setWaitResponse(false);
+        }
+        updateComment(comment.comment.id, commentInput, editFinishFunction);
     }
 
     const handleRemoveClick = () => {
-        deleteComment(comment.comment.id);
+        const removeCommentFinishFunction = () => {
+            setIsRefresh(true);
+        }
+        deleteComment(comment.comment.id, removeCommentFinishFunction);
         handleClose();
     }
     // ==========================================================================

@@ -57,6 +57,7 @@ export default function CommentSection ({comments,
                                 key={comment.comment.post_id + "-" + comment.comment.id}
                                 timeDiffMS={diffTimeMS}
                                 enableCommentOptions={user_id === comment.user.id}
+                                setIsRefresh={setIsRefresh}
                             />
                         );
                     })

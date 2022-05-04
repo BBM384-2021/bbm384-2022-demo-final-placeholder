@@ -18,28 +18,27 @@ export function createComment ( curr_user_id, post_id, comment_body, finishFunct
     }).catch( (error) => console.log(error) );
 };
 
-export function updateComment ( comment_id, body, setWaitResponse, setIsEdit ) {
+export function updateComment ( comment_id, body, finishFunction ) {
     axios.patch(baseURL + "/updateComment", {
         "body" : body,
         "id" : comment_id
     }).then( (response) => {
         if (response.data.code === 200) {
-            setIsEdit(false);
+            finishFunction()
         } else {
             // TODO print error message
         }
-        setWaitResponse(false);
     }).catch( (error) => console.log(error) );
 }
 
-export function deleteComment ( comment_id ) {
+export function deleteComment ( comment_id, finishFunction ) {
     axios.delete(baseURL + "/deleteComment", {
         data:{
             "id" : comment_id
         }
     }).then( (response) => {
         if (response.data.code === 200) {
-            // console.log(response)
+            finishFunction();
         } else {
             // !TODO! print error message 
         }
