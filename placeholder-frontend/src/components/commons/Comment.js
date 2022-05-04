@@ -20,7 +20,8 @@ function convertMs2TimeString(time) {
 };
 
 
-export default function Comment ( {comment, timeDiffMS, enableCommentOptions, setIsRefresh} ) {
+export default function Comment ( {comment, timeDiffMS, enableCommentOptions, setIsRefresh,
+    setInteractionContent, interactionContent} ) {
     
     const [waitResponse, setWaitResponse] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
@@ -47,7 +48,8 @@ export default function Comment ( {comment, timeDiffMS, enableCommentOptions, se
     const handleRemoveClick = () => {
         const removeCommentFinishFunction = () => {
             setIsRefresh(true);
-        }
+        };
+        setInteractionContent({...interactionContent,  "commentCount" : interactionContent.commentCount - 1});
         deleteComment(comment.comment.id, removeCommentFinishFunction);
         handleClose();
     }

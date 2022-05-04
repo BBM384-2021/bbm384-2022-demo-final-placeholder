@@ -58,6 +58,8 @@ export default function CommentSection ({comments,
                                 timeDiffMS={diffTimeMS}
                                 enableCommentOptions={user_id === comment.user.id}
                                 setIsRefresh={setIsRefresh}
+                                interactionContent={interactionContent}
+                                setInteractionContent={setInteractionContent}
                             />
                         );
                     })
