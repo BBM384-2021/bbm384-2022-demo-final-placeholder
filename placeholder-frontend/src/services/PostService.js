@@ -52,3 +52,19 @@ export function deleteLike ( user_id, post_id, setLikeLock ) {
         setLikeLock(false);
     }).catch( (error) => console.log(error) );
 }
+
+export function getPost ( post_id, setState, finishFunction ) {
+    axios.get(baseURL + "/getPost", {
+        params: {
+            "post_id" : post_id
+        }
+    }).then( (response) => {
+        console.log(response);
+        if (response.data.code === 200) {
+            setState(response.data.post);
+        } else {
+
+        }
+        finishFunction();
+    })
+} 

@@ -3,7 +3,12 @@ import CommentBar from "./CommentBar";
 import Comment from "./Comment";
 import { createComment } from "../../services/CommentService";
 
-export default function CommentSection ( {comments, user_id, post_id, interactionContent, setInteractionContent} ) {
+export default function CommentSection ({comments,
+                                         user_id,
+                                         post_id,
+                                         interactionContent,
+                                         setInteractionContent,
+                                         setIsRefresh}) {
     const currTime = new Date();
     const [waitResponse, setWaitResponse] = useState(false);
 
@@ -12,6 +17,7 @@ export default function CommentSection ( {comments, user_id, post_id, interactio
             const setWaitNInteraction = () => {
                 setWaitResponse(false);
                 setInteractionContent({...interactionContent, "commentCount" : interactionContent.commentCount + 1})
+                setIsRefresh(true);
             }
 
             setWaitResponse(true);

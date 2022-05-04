@@ -1,4 +1,4 @@
-import React, { createRef, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Box, Typography, Modal } from "@mui/material"
 import { Colors } from "../../Colors"
 import InteractionBar from "./InteractionBar";
@@ -6,6 +6,7 @@ import "./cardPreview.css"
 import CardView from "./CardView";
 import CardTitle from "./CardTitle";
 import CardContent from "./CardContent";
+import { getPost } from "../../services/PostService";
 
 function isUserLikedPost ( likeArray, userID ) {
     for (let i = 0; i < likeArray.length; i++)
@@ -25,11 +26,27 @@ export default function CardPreview ( { content, contentType, user } )
     const handleClose = () => setOpen(false);
 
     const [stateContent, setStateContent] = useState(content);
+    const [isRefresh, setIsRefresh] = useState(false);
     const [interactionContent, setInteractionContent] = useState({
         "isLiked" : isUserLikedPost(content.likes, user.id),
         "likeCount" : content.likes.length,
         "commentCount" : content.comments.length
-    })
+    });
+
+    useEffect(() => {
+        const finishRefreshContent = () => {
+            setIsRefresh(false);
+        }
+        if (isRefresh)
+        {
+            getPost(
+                stateContent.post.id,
+                setStateContent,
+                finishRefreshContent
+            )
+        }
+    }, [isRefresh])
+
 
     return (
         <Card
@@ -57,6 +74,7 @@ export default function CardPreview ( { content, contentType, user } )
                     user={user}
                     interactionContent={interactionContent}
                     setInteractionContent={setInteractionContent}
+                    setIsRefresh={setIsRefresh}
                 />
             </Modal>
         </Card>
