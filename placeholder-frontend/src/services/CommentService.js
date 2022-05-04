@@ -2,7 +2,7 @@ import axios from "axios"
 
 const baseURL = "https://placeholder-backend.herokuapp.com/post";
 
-export function createComment ( curr_user_id, post_id, comment_body, setWaitResponse ) {
+export function createComment ( curr_user_id, post_id, comment_body, finishFunction ) {
     axios.post(baseURL + "/addComment", {
         "post_id" : post_id,
         "user_id" : curr_user_id,
@@ -10,7 +10,7 @@ export function createComment ( curr_user_id, post_id, comment_body, setWaitResp
         "share_date" : new Date().toISOString()
     }).then( (response) => {
         if (response.data.code === 200) {
-            setWaitResponse(false);
+            finishFunction();
         } else {
             // !TODO! print error message
         }

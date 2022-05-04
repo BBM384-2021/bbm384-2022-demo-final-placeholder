@@ -50,7 +50,10 @@ export default function CardPreview ( { content, contentType, user } )
                 onClose={handleClose}
                 sx={{overflow:'scroll'}}
             >
-                <CardView contentType={contentType} content={stateContent}
+                <CardView 
+                    contentType={contentType}
+                    content={stateContent}
+                    setContent={setStateContent}
                     user={user}
                     interactionContent={interactionContent}
                     setInteractionContent={setInteractionContent}
