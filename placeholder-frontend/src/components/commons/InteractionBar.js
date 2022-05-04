@@ -18,12 +18,8 @@ function isUserLikedPost ( likeArray, userID ) {
     return false;
 }
 
-export default function InteractionBar ( {content, curr_user_id, setOpen} )
-{
-    const [likeObj, setLike] = useState({
-        "isLiked" : isUserLikedPost(content.likes, curr_user_id),
-        "likeCount" : content.likes.length});
-    
+export default function InteractionBar ( {content, setContent, post_id, curr_user_id, setOpen} )
+{    
     const [likeLock, setLikeLock] = useState(false);
 
     const onLikeClick = () => {
@@ -33,16 +29,17 @@ export default function InteractionBar ( {content, curr_user_id, setOpen} )
         }
         setLikeLock(true);
 
-        setLike({
-            "isLiked" : !likeObj["isLiked"],
-            "likeCount" : !likeObj["isLiked"] ? likeObj.likeCount + 1 : likeObj.likeCount - 1
+        setContent({
+            ...content,
+            "isLiked" : !content.isLiked,
+            "likeCount" : !content.isLiked ? content.likeCount + 1 : content.likeCount - 1
         });
-        if (!likeObj["isLiked"]) {
+        if (!content.isLiked) {
             console.log("like is sended to the backend!");
-            postLike(curr_user_id, content.post.id, setLikeLock);
+            postLike(curr_user_id, post_id, setLikeLock);
         } else {
             console.log("like is taken from the backend");
-            deleteLike(curr_user_id, content.post.id, setLikeLock);
+            deleteLike(curr_user_id, post_id, setLikeLock);
         }
         
     };
@@ -54,22 +51,23 @@ export default function InteractionBar ( {content, curr_user_id, setOpen} )
                 <IconButton
                     onClick={onLikeClick}
                     variant="contained">
-                    {likeObj.isLiked && 
+                    {content.isLiked && 
                         <FavoriteIcon htmlColor="red"/>
                     }
-                    {!likeObj.isLiked &&
+                    {!content.isLiked &&
                         <FavoriteBorderIcon />
                     }
                 </IconButton>
-                {likeObj.likeCount}
+                {content.likeCount}
             </div>
 
             <div>
                 <IconButton
+                    disabled={setOpen===undefined}
                     onClick={setOpen}>
                     <ModeCommentIcon />
                 </IconButton>
-                {content.comments.length}
+                {content.commentCount}
             </div>
 
         </div>

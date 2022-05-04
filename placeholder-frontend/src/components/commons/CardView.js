@@ -6,7 +6,7 @@ import InteractionBar from "./InteractionBar";
 import CommentSection from "./CommentSection";
 import { Colors } from "../../Colors";
 
-export default function CardView( {content, contentType, user} ) {
+export default function CardView( {content, contentType, user, interactionContent, setInteractionContent} ) {
     return (
         
         <Card sx={{
@@ -19,7 +19,12 @@ export default function CardView( {content, contentType, user} ) {
         }}>
             <CardTitle content={content} contentType={contentType} />
             <CardContent content={content} enableShortView={false}/>
-            <InteractionBar content={content} curr_user_id={user.id}/>
+            <InteractionBar 
+                content={interactionContent}
+                curr_user_id={user.id}
+                setContent={setInteractionContent}
+                post_id={content.post.id}
+                />
             <CommentSection comments={content.comments} user_id={user.id} post_id={content.post.id}/>
         </Card>
     );
