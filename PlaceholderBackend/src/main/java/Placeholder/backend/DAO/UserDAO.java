@@ -189,8 +189,9 @@ public class UserDAO {
                             " u.linkedIn_url = '%s' ," +
                             " u.github_url = '%s' ," +
                             " u.alt_mail = '%s' ," +
-                            " u.profile_pic_path = '%s'  WHERE u.id = '%s' "
-                    ,user.getFull_name(),user.getUser_type(),user.getCs_mail(),user.getPhone(),user.getCompany(),user.getLinkedIn_url(),user.getGithub_url(),user.getAlt_mail(),user.getProfile_pic_path(),user.getId())).executeUpdate();
+                            " u.profile_pic_path = '%s' ," +
+                            " u.cover_url = '%s'  WHERE u.id = '%s' "
+                    ,user.getFull_name(),user.getUser_type(),user.getCs_mail(),user.getPhone(),user.getCompany(),user.getLinkedIn_url(),user.getGithub_url(),user.getAlt_mail(),user.getProfile_pic_path(),user.getCover_url(),user.getId())).executeUpdate();
             session.getTransaction().commit();
 
         }
