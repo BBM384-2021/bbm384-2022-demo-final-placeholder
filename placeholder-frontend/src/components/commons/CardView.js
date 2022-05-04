@@ -1,5 +1,5 @@
-import React from "react"
-import { Card } from "@mui/material"
+import React from "react";
+import { Card } from "@mui/material";
 import CardTitle from "./CardTitle";
 import CardContent from "./CardContent";
 import InteractionBar from "./InteractionBar";

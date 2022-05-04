@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-import ModeCommentIcon from '@mui/icons-material/ModeComment';
+import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import { IconButton } from "@mui/material";
-import "./InteractionBar.css"
+import "./InteractionBar.css";
 import { postLike, deleteLike } from "../../services/PostService";
 
-function isUserLikedPost ( likeArray, userID ) {
-    for (let i = 0; i < likeArray.length; i++)
-    {
-        if ( likeArray[i].like.user_id === userID )
-        {
-            return true;
-        }
+function isUserLikedPost(likeArray, userID) {
+  for (let i = 0; i < likeArray.length; i++) {
+    if (likeArray[i].like.user_id === userID) {
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 export default function InteractionBar ( {content, setContent, post_id, curr_user_id, setOpen} )

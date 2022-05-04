@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Box, Typography, Modal } from "@mui/material"
 import { Colors } from "../../Colors"
 import InteractionBar from "./InteractionBar";
-import "./cardPreview.css"
+import "./cardPreview.css";
 import CardView from "./CardView";
 import CardTitle from "./CardTitle";
 import CardContent from "./CardContent";

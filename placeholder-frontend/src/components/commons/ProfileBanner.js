@@ -1,9 +1,9 @@
-import { Box } from '@mui/material'
-import React from 'react'
-import profilePic from '../profilepage-screen/assets/1post.png'
-import calenderPic from '../../img/calendar.png'
-import { Colors } from '../../Colors'
-import "./ProfileBanner.css"
+import { Box } from "@mui/material";
+import React from "react";
+import profilePic from "../profilepage-screen/assets/1post.png";
+import calenderPic from "../../img/calendar.png";
+import { Colors } from "../../Colors";
+import "./ProfileBanner.css";
 
 
 function handleProfileBannerClick(user) {
