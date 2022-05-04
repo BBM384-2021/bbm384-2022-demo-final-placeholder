@@ -25,6 +25,7 @@ export default function MainFeed({ user }) {
           return (
             <>
               <CardPreview
+                className="cardContainer"
                 content={content}
                 contentType={"post"}
                 key={content.post.id}

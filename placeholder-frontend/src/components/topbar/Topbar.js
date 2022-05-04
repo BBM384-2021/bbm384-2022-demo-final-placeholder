@@ -30,8 +30,7 @@ import { ReactComponent as LinkedHuIcon } from "../../linhu_logo.svg";
 import ConfirmationDialog from "../commons/ConfirmationDialog";
 import { render } from "@testing-library/react";
 
-export default function TopBar(props) {
-  const { userObj } = props;
+export default function TopBar({ userObj, setUser }) {
   const history = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
@@ -49,8 +48,9 @@ export default function TopBar(props) {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    setAnchorEl(null);
+    localStorage.setItem("user", null);
+    // setAnchorEl(null);
+    setUser(null);
     history("/");
   };
 

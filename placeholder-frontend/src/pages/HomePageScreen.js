@@ -11,7 +11,7 @@ import ErrorPage from "./error/ErrorPage";
 
 import "./homePage.css";
 
-export default function HomePageScreen({ user }) {
+export default function HomePageScreen({ user, setUser }) {
   const flexDisplay = true;
   return (
     <Box
@@ -23,7 +23,7 @@ export default function HomePageScreen({ user }) {
         height: "100%",
       }}
     >
-      <TopBar userObj={user} />
+      <TopBar userObj={user} setUser={setUser} />
       <div className="homeContainer">
         {flexDisplay && (
           <>

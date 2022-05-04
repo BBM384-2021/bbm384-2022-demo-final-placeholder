@@ -5,7 +5,7 @@
   /* background-color: white; */
   border-radius: 20px;
   overflow-y: scroll;
-  display: flex;
+  display: flex-row;
   padding-inline: 10px;
 }
 /* 
