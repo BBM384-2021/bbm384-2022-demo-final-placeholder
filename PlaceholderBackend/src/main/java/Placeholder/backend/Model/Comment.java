@@ -22,13 +22,17 @@ public class Comment {
     @Column(name="body")
     private String body;
 
+    @Column(name="share_date")
+    private String share_date;
+
     public Comment(){}
 
-    public Comment(int id, int user_id, int post_id, String body) {
+    public Comment(int id, int user_id, int post_id, String body, String share_date) {
         this.id = id;
         this.user_id = user_id;
         this.post_id = post_id;
         this.body = body;
+        this.share_date = share_date;
     }
 
     public int getId() {
@@ -63,6 +67,14 @@ public class Comment {
         this.body = body;
     }
 
+    public String getShare_date() {
+        return share_date;
+    }
+
+    public void setShare_date(String share_date) {
+        this.share_date = share_date;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -70,6 +82,7 @@ public class Comment {
                 ", user_id=" + user_id +
                 ", post_id=" + post_id +
                 ", body='" + body + '\'' +
+                ", share_date='" + share_date + '\'' +
                 '}';
     }
 }
