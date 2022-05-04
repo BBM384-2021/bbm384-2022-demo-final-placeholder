@@ -16,7 +16,7 @@ export default function CardView( {content, setContent,
             transform : 'translate(15vw, 7vh)',
             backgroundColor: Colors.whiteShaded,
             borderRadius:'10px',
-            paddingBottom: '100px'
+            paddingBottom: '20px'
         }}>
             <CardTitle content={content} contentType={contentType} />
             <CardContent content={content} enableShortView={false}/>

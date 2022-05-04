@@ -22,7 +22,7 @@ export default function CardContent({
 
   return (
       <Box style={{ margin: '20px 20px 0px 30px', borderRadius: '25px',
-      width: enableShortView ? '50vw' : '60vw',
+      minWidth: enableShortView ? '40vw' : '60vw', maxWidth: '100%',
       backgroundColor: Colors.white, boxShadow: '0px 3px 5px 0px ' + Colors.whiteShadow,   
       display:'flex', justifyContent:'space-between', flexDirection:'column', position:'relative',
       height: enableShortView ? '60%' : 'auto', fontFamily:'Poppins'}}>
