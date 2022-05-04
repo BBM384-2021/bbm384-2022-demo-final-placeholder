@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link as RouterLink } from "react-router-dom";
+// import { Link as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { MailOutlined, LockOutlined } from "@mui/icons-material";
+import { MailOutlined, LockOutlined, Save } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
-  Button,
   CssBaseline,
   Card,
   Link,
@@ -14,8 +13,8 @@ import {
   Typography,
   Container,
   Alert,
-  CircularProgress,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 import IconTextField from "../commons/IconTextField";
 
@@ -66,6 +65,7 @@ export default function Login({ setLogin, setUser }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("loading...", event);
+    setLoading(true);
     const data = new FormData(event.currentTarget);
     console.log({
       cs_mail: data.get("cs_mail"),
@@ -92,6 +92,7 @@ export default function Login({ setLogin, setUser }) {
         )
         .then((response) => {
           console.log("response: ", response);
+          setLoading(false);
 
           if (response.data.code === 200) {
             // success
@@ -106,7 +107,6 @@ export default function Login({ setLogin, setUser }) {
           console.log("error axios: ", error.response);
         });
     }
-    setLoading(false);
   };
 
   return (
@@ -159,26 +159,27 @@ export default function Login({ setLogin, setUser }) {
                 iconEnd={<LockOutlined />}
               />
               <Box display="flex" justifyContent="space-between">
-                {isLoading ? (
-                  <CircularProgress sx={{ mt: 3, mb: 2 }} color="inherit" />
-                ) : (
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{
-                      backgroundColor: Colors.hacettepe,
-                      ":hover": {
-                        background: Colors.whiteShaded,
-                        color: "#000",
-                      },
-                      mt: 3,
-                      mb: 2,
-                      width: "40%",
-                    }}
-                  >
-                    Login
-                  </Button>
-                )}
+                <LoadingButton
+                  size="small"
+                  type="submit"
+                  // onClick={handleClick}
+                  // endIcon={<SendIcon />}
+                  loading={isLoading}
+                  variant="contained"
+                  sx={{
+                    backgroundColor: Colors.hacettepe,
+                    ":hover": {
+                      background: Colors.whiteShaded,
+                      color: "#000",
+                    },
+                    mt: 3,
+                    mb: 2,
+                    width: "40%",
+                  }}
+                >
+                  Login
+                </LoadingButton>
+
                 <button
                   onClick={() => {
                     setLogin(false);

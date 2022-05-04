@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { getUser } from "../../services/UserService";
-import ErrorPage from "../../pages/error/ErrorPage";
 import ProfileHeader from "./ProfileHeader";
+import LinearIndeterminate from "../commons/LinearIndeterminateLoading";
+
 // kept them here since we're going to need these to be dynamic pictures
 import cover from "./assets/cover.png";
 import profilePic from "./assets/1.png";
@@ -22,7 +24,8 @@ import {
 } from "./assets/index";
 import "./Profile.css";
 
-export default function Profile({ user_id }) {
+export default function Profile() {
+  const { user_id } = useParams();
   const [user, setUser] = useState(null);
   const [sessionUser, setSessionUser] = useState(null);
   const [isOwnedProfile, setOwnedProfile] = useState(false);
@@ -44,7 +47,7 @@ export default function Profile({ user_id }) {
   if (!user) {
     return (
       <div className="profileContainer">
-        <ErrorPage></ErrorPage>
+        <LinearIndeterminate></LinearIndeterminate>
       </div>
     );
   }

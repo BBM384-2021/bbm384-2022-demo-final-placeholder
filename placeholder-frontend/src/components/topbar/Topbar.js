@@ -1,68 +1,199 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import {
+  AppBar,
+  Avatar,
+  Tooltip,
+  Box,
+  Toolbar,
+  IconButton,
+  Badge,
+  SvgIcon,
+  Menu,
+  Divider,
+  MenuItem,
+  ListItemIcon,
+} from "@mui/material";
 
-import Badge from '@mui/material/Badge';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import {
+  AccountCircle,
+  Mail,
+  Notifications,
+  Settings,
+  PersonOutline,
+  PersonAdd,
+  Logout,
+} from "@mui/icons-material";
 
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import SettingsIcon from '@mui/icons-material/Settings';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { SvgIcon } from '@mui/material';
+import SearchBar from "../search-bar/SearchBar";
+import { ReactComponent as LinkedHuIcon } from "../../linhu_logo.svg";
+import ConfirmationDialog from "../commons/ConfirmationDialog";
+import { render } from "@testing-library/react";
 
-import { ReactComponent as LinkedHuIcon } from '../../linhu_logo.svg'
+export default function TopBar({ userObj, setUser }) {
+  const history = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const openUserMenu = Boolean(anchorEl);
 
-import SearchBar from '../search-bar/SearchBar';
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-export default function TopBar( {userObj} ) {
+  const navigateToProfile = () => {
+    history("/in/" + userObj.id);
+  };
+
+  const handleLogout = () => {
+    localStorage.setItem("user", null);
+    // setAnchorEl(null);
+    setUser(null);
+    history("/");
+  };
+
+  const askConfirmation = () => {
+    setConfirmationOpen(true);
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ bgcolor: "white", borderRadius:'20px'}} elevation={0}>
-        <Toolbar sx={{height:"90px"}}>
-          <a href='/'><SvgIcon component={LinkedHuIcon} inheritViewBox sx={{ width:"199.62px" , height:"50.64px", marginLeft:"40px",
-          marginRight: "54.38px"}} /></a>
-          <SearchBar />
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } , gap: 1}}>
-            <IconButton size="large" aria-label="mails" sx={{backgroundColor:"#F5F5F5"}}>
-              <Badge badgeContent={1} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+    <React.Fragment>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar
+          position="static"
+          sx={{ bgcolor: "white", borderRadius: "20px" }}
+          elevation={0}
+        >
+          <Toolbar sx={{ height: "90px" }}>
+            <a href="/">
+              <SvgIcon
+                component={LinkedHuIcon}
+                inheritViewBox
+                sx={{
+                  width: "199.62px",
+                  height: "50.64px",
+                  marginLeft: "40px",
+                  marginRight: "54.38px",
+                }}
+              />
+            </a>
+            <SearchBar />
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
+              <IconButton
+                size="large"
+                aria-label="mails"
+                sx={{ backgroundColor: "#F5F5F5" }}
+              >
+                <Badge badgeContent={1} color="error">
+                  <Mail />
+                </Badge>
+              </IconButton>
 
-            <IconButton size="large" aria-label="connections req" sx={{backgroundColor:"#F5F5F5"}}>
-              <Badge badgeContent={1} color="error" sx={{fontFamily:'Poppins', fontWeight:700}}>
-                <PersonOutlineIcon />
-              </Badge>
-            </IconButton>
+              <IconButton
+                size="large"
+                aria-label="connections req"
+                sx={{ backgroundColor: "#F5F5F5" }}
+              >
+                <Badge
+                  badgeContent={1}
+                  color="error"
+                  sx={{ fontFamily: "Poppins", fontWeight: 700 }}
+                >
+                  <PersonOutline />
+                </Badge>
+              </IconButton>
 
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              sx={{backgroundColor:"#F5F5F5"}}
-            >
-              <Badge badgeContent={5} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton size="large" sx={{backgroundColor:"#F5F5F5"}}>
-              <SettingsIcon />
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              onClick={() => {window.open("/in/" + userObj.id, "_blank")}}
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                sx={{ backgroundColor: "#F5F5F5" }}
+              >
+                <Badge badgeContent={5} color="error">
+                  <Notifications />
+                </Badge>
+              </IconButton>
+              <IconButton size="large" sx={{ backgroundColor: "#F5F5F5" }}>
+                <Settings />
+              </IconButton>
+
+              <Tooltip title="Account settings">
+                <IconButton
+                  onClick={handleClick}
+                  size="small"
+                  sx={{ ml: 2 }}
+                  aria-controls={openUserMenu ? "account-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openUserMenu ? "true" : undefined}
+                >
+                  <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={openUserMenu}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            mt: 1.5,
+            "& .MuiAvatar-root": {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            "&:before": {
+              content: '""',
+              display: "block",
+              position: "absolute",
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem onClick={navigateToProfile}>
+          <Avatar /> View Profile
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Edit Profile
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={askConfirmation}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
+      <ConfirmationDialog
+        onConfirm={handleLogout}
+        open={confirmationOpen}
+        setOpen={setConfirmationOpen}
+      >
+        Are you sure you want to logout?
+      </ConfirmationDialog>
+    </React.Fragment>
   );
 }
