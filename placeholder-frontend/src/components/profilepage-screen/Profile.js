@@ -6,7 +6,6 @@ import ProfileHeader from "./ProfileHeader";
 import LinearIndeterminate from "../commons/LinearIndeterminateLoading";
 
 // kept them here since we're going to need these to be dynamic pictures
-import cover from "./assets/cover.png";
 import profilePic from "./assets/1.png";
 
 import {
@@ -23,24 +22,7 @@ import {
   vectorFeed,
 } from "./assets/index";
 import "./Profile.css";
-import axios from "axios";
-import EditProfileModal from "./EditProfileModal";
-
-const baseProfileURL = "https://placeholder-backend.herokuapp.com/user/getUser"
-const getProfilePage = ( user_id, setUser ) => {
-  axios.get(baseProfileURL, {
-    params: {
-      "requested_id": user_id
-    }
-  }).then( (response) => {
-    if (response.data.code === 200) { // success
-      const user = response.data.user;
-      setUser(user);
-    } else {
-      setUser(null);
-    }
-  }).catch( (error) => console.log(error));
-};
+import ProfileInfoBar from "./ProfileInfoBar";
 
 export default function Profile() {
   const { user_id } = useParams();
@@ -48,31 +30,25 @@ export default function Profile() {
   const [sessionUser, setSessionUser] = useState(null);
   const [isOwnedProfile, setOwnedProfile] = useState(false);
 
-  const [isEdit, setIsEdit] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  const editProfile = () => {
-    setOpen(true);
-  }
+  useEffect(() => {
+    // setSessionUser(JSON.parse(localStorage.getItem("user")));
+  }, []);
 
   useEffect(() => {
-    setSessionUser(JSON.parse(localStorage.getItem("user")));
-
     getUser(user_id).then((response) => {
       setUser(response.data.user);
+      setSessionUser(JSON.parse(localStorage.getItem("user")) || null);
+      console.log(response.data.user.id);
     });
   }, [user_id]);
 
-  useEffect( () => {
-    getProfilePage(user_id, setUser);
-    setIsEdit(false);
-  },[isEdit] );
-
   useEffect(() => {
+    console.log("users", user, sessionUser);
     if (user && sessionUser) {
       setOwnedProfile(parseInt(sessionUser.id) === parseInt(user.id));
+      console.log(isOwnedProfile);
     }
-  }, [user, sessionUser]);
+  }, [user, sessionUser, isOwnedProfile]);
 
   if (!user) {
     return (
@@ -84,47 +60,16 @@ export default function Profile() {
 
   return (
     <div className="profileContainer">
-      <ProfileHeader></ProfileHeader>
-      <img src={cover} className="coverImage" alt="" />
+      <ProfileHeader
+        profileOwned={isOwnedProfile}
+        sessionUser={sessionUser}
+        user={user}
+      ></ProfileHeader>
 
-      <div className="profileDetails">
-        <div className="profileDetailLeft">
-          <div className="profileDetailRow">
-            <img src={profilePic} alt="" className="profileImage" />
-            <div>
-              <h3>
-                {user.full_name}{" "}
-                {isOwnedProfile ? <span> is my profile</span> : <></>}
-              </h3>
-              <h4>54 connections</h4>
-              <a href="https://github.com/mavibirdesmi">
-                {" "}
-                <img src={vectorGithub} className="githubImage" alt="" />{" "}
-              </a>
-              <a href="https://www.linkedin.com/in/desmin-alpaslan/">
-                {" "}
-                <img src={vectorLinkedin} className="githubImage" alt="" />{" "}
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="profileDetailRight">
-          <a>
-            {" "}
-            <img src={vectorAdd} className="more" alt="" />{" "}
-          </a>
-          <a id="modalBtn" className="modalButton"
-             onClick={editProfile}> <img src={vectorPencil} className="githubImage" alt=""/>
-          </a>
-          <a>
-            {" "}
-            <img src={vectorMore} className="more" alt="" />{" "}
-          </a>
-
-          <EditProfileModal open={open} user={user} setIsEdit={setIsEdit} onClose={() => setOpen(false)}/>
-
-        </div>
-      </div>
+      <ProfileInfoBar
+        user={user}
+        profileOwned={isOwnedProfile}
+      ></ProfileInfoBar>
 
       <div className="profileFeedContainer">
         {/* <div className="infoColumn"></div> */}
@@ -241,3 +186,37 @@ export default function Profile() {
     </div>
   );
 }
+
+// <IconButton
+//   className="moreButton"
+//   color="primary"
+//   aria-label="upload picture"
+//   component="span"
+//   onClick={handleClick}
+// >
+//   <MoreHoriz style={{ color: "#F5F5F5" }} fontSize="large" />
+// </IconButton>;
+
+// var modal = document.getElementById("simpleModal");
+// var modalBtn = document.getElementById("modalBtn");
+// var closeBtn = document.getElementsByClassName("closeBtn")[0];
+
+// modalBtn.addEventListener("click",openModal)
+
+// closeBtn.addEventListener("click",closeModal)
+
+// window.addEventListener("click",clickOutside)
+
+// function openModal(){
+//     modal.style.display = "flex";
+// }
+
+// function closeModal(){
+//     modal.style.display = "none";
+// }
+
+// function clickOutside(e){
+//     if(e.target === modal){
+//         modal.style.display = "none";
+//     }
+// }
