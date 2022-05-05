@@ -117,46 +117,6 @@ export default function Profile( {user_id} ) {
                         </div>
                     </div>
 
-                    <div className="postContainer">
-                        <div className="userProfile">
-                            <img src={vectorPostPic} alt=""/>
-                            <div>
-                                <p>{user.full_name} posted</p>
-                                <span>April 15 2022, 13:40 pm</span>
-                            </div>
-                        </div>
-                        <p className="postText"> ⠀⠀Harika, müthiş, inanılmaz!⠀
-                            <a href="#">https://zoom.us/j/612312612987123</a></p>
-                        <div className="postRow">
-                            <div className="activityIcons">
-                                <div><img src={vectorHeart}/>21</div>
-                                <div><img src={vectorComment}/>3</div>
-                                <div><img src={vectorShare}/>6</div>
-                                <button> <img src={vectorExpand}/></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="postContainer">
-                        <div className="userProfile">
-                            <img src={vectorPostPic} alt=""/>
-                            <div>
-                                <p>{user.full_name} posted</p>
-                                <span>April 15 2022, 13:40 pm</span>
-                            </div>
-                        </div>
-                        <p className="postText"> ⠀⠀Harika, müthiş, inanılmaz!⠀
-                            <a href="#">https://zoom.us/j/612312612987123</a></p>
-                        <div className="postRow">
-                            <div className="activityIcons">
-                                <div><img src={vectorHeart}/>21</div>
-                                <div><img src={vectorComment}/>3</div>
-                                <div><img src={vectorShare}/>6</div>
-                                <button> <img src={vectorExpand}/></button>
-                            </div>
-                        </div>
-                    </div>
-
                     <div className="postProfileIcon">
                         <img/> <i className="bruh"></i>
                     </div>

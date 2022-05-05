@@ -3,6 +3,7 @@ import BasicModal from '../commons/BasicModal'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup'
 import axios from "axios"
 
@@ -30,22 +31,20 @@ const EditProfileModal = ({ open, onClose, editUserInfo, user, setIsEdit }) => {
         },
     };
 
+    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
     const validationSchema = Yup.object().shape({
-        userId: Yup.string()
-            .required('User ID is required')
-            .min(6, 'User ID must be at least 6 characters'),
         email: Yup.string()
-            .required('Email is required')
             .email('Email is invalid.'),
-        phoneNumber: Yup.string()
-
+        phone: Yup.string()
+            .matches(phoneRegExp, 'Phone number is not valid'),
     });
 
     const {
         register,
         formState: { errors },
     } = useForm({
+        resolver: yupResolver(validationSchema)
     });
 
     const validate = (data) => {
