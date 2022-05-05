@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import BasicModal from "../commons/BasicModal";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Box from "@mui/material/Box";
 import * as Yup from "yup";
 import axios from "axios";
+import { TextField, Alert } from "@mui/material";
+
+import BasicModal from "../commons/BasicModal";
 
 const defaultInputValues = {
   fullName: "",
@@ -16,8 +17,9 @@ const defaultInputValues = {
   linkedinLink: "",
 };
 
-const EditProfileModal = ({ open, setOpen, user }) => {
+const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
   const [values, setValues] = useState(defaultInputValues);
+  const [error, setError] = useState("");
 
   const onClose = () => {
     setOpen(false);
@@ -61,19 +63,20 @@ const EditProfileModal = ({ open, setOpen, user }) => {
 
   const handleSubmit = () => {
     console.log(user);
+    setError("");
     if (validate(values)) {
       axios
         .patch("https://placeholder-backend.herokuapp.com/user/updateUser", {
           id: user.id,
-          full_name: values.fullName ? values.fullName : user.fullName,
+          full_name: values.fullName ? values.fullName : user.full_name,
           user_type: user.user_type,
           cs_mail: values.email ? values.email : user.cs_mail,
           phone: values.phone ? values.phone : user.phone,
           company: values.company ? values.company : user.company,
-          linkedIn_url: values.linkedIn_url
-            ? values.linkedIn_url
+          linkedIn_url: values.linkedinLink
+            ? values.linkedinLink
             : user.linkedIn_url,
-          github_url: values.githubLink ? values.githubLink : user.githubLink,
+          github_url: values.githubLink ? values.githubLink : user.github_url,
           alt_mail: user.alt_mail,
           profile_pic_path: user.profile_pic_path || "",
           cover_url: user.cover_url || "",
@@ -84,9 +87,12 @@ const EditProfileModal = ({ open, setOpen, user }) => {
             // success
             console.log("success");
             setOpen(false);
-            
-            // setIsEdit(true);
+            setEdited(true);
+            setError("");
           } else {
+            setError(
+              "Please Check Your Data [validate your cs mail to update your profile]"
+            );
           }
         })
         .catch((error) => {
@@ -105,6 +111,12 @@ const EditProfileModal = ({ open, setOpen, user }) => {
 
   const getContent = () => (
     <Box sx={modalStyles.inputFields}>
+      {error && (
+        <Alert severity="error" sx={{ mt: 2, mb: 2 }}>
+          {error}
+        </Alert>
+      )}
+
       <TextField
         placeholder="FullName"
         name="fullName"

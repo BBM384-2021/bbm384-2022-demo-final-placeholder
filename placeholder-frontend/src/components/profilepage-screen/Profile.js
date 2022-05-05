@@ -29,6 +29,8 @@ export default function Profile() {
   const [user, setUser] = useState(null);
   const [sessionUser, setSessionUser] = useState(null);
   const [isOwnedProfile, setOwnedProfile] = useState(false);
+  const [error, setError] = useState("");
+  const [isEdited, setEdited] = useState(false);
 
   useEffect(() => {
     // setSessionUser(JSON.parse(localStorage.getItem("user")));
@@ -36,11 +38,18 @@ export default function Profile() {
 
   useEffect(() => {
     getUser(user_id).then((response) => {
-      setUser(response.data.user);
-      setSessionUser(JSON.parse(localStorage.getItem("user")) || null);
-      console.log(response.data.user.id);
+      if (response.data.code === 200) {
+        // success
+        setUser(response.data.user);
+        setSessionUser(JSON.parse(localStorage.getItem("user")) || null);
+        setEdited(false);
+
+        console.log(response.data.user.id);
+      } else {
+        setUser(null);
+      }
     });
-  }, [user_id]);
+  }, [user_id, isEdited]);
 
   useEffect(() => {
     console.log("users", user, sessionUser);
@@ -69,6 +78,8 @@ export default function Profile() {
       <ProfileInfoBar
         user={user}
         profileOwned={isOwnedProfile}
+        isEdited={isEdited}
+        setEdited={setEdited}
       ></ProfileInfoBar>
 
       <div className="profileFeedContainer">
