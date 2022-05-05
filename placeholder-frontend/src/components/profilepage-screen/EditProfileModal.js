@@ -68,8 +68,8 @@ const EditProfileModal = ({ open, onClose, editUserInfo, user, setIsEdit }) => {
                     "cs_mail":values.email,
                     "phone":values.phone,
                     "company":values.company,
-                    "githubLink":values.githubLink,
-                    "linkedinLink":values.linkedinLink
+                    "github_url":values.githubLink,
+                    "linkedIn_url":values.linkedinLink
 
                 })
                 .then((response) => {
