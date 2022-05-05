@@ -31,13 +31,19 @@ const EditProfileModal = ({ open, onClose, editUserInfo, user, setIsEdit }) => {
         },
     };
 
-    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+    const phoneRegExp = /^((\+[1-9]{1,4}[ \-])|(\([0-9]{2,3}\)[ \-])|([0-9]{2,4})[ \-])?[0-9]{3,4}?[ \-][0-9]{3,4}?$/;
+
+    const regMatch = /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
 
     const validationSchema = Yup.object().shape({
         email: Yup.string()
-            .email('Email is invalid.'),
+            .email('Email is not valid.'),
         phone: Yup.string()
             .matches(phoneRegExp, 'Phone number is not valid'),
+        githubLink: Yup.string()
+            .matches(regMatch, 'Link is not valid'),
+        linkedinLink: Yup.string()
+            .matches(regMatch, 'Link is not valid'),
     });
 
     const {
@@ -47,7 +53,7 @@ const EditProfileModal = ({ open, onClose, editUserInfo, user, setIsEdit }) => {
         resolver: yupResolver(validationSchema)
     });
 
-    const validate = (data) => {
+    const validate = () => {
         return true;
     };
 
@@ -61,7 +67,10 @@ const EditProfileModal = ({ open, onClose, editUserInfo, user, setIsEdit }) => {
                     "user_type":user.user_type,
                     "cs_mail":values.email,
                     "phone":values.phone,
-                    "company":values.company
+                    "company":values.company,
+                    "githubLink":values.githubLink,
+                    "linkedinLink":values.linkedinLink
+
                 })
                 .then((response) => {
                     console.log(response)

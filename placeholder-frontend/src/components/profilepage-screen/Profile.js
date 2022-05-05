@@ -23,12 +23,37 @@ import {
   vectorFeed,
 } from "./assets/index";
 import "./Profile.css";
+import axios from "axios";
+import EditProfileModal from "./EditProfileModal";
+
+const baseProfileURL = "https://placeholder-backend.herokuapp.com/user/getUser"
+const getProfilePage = ( user_id, setUser ) => {
+  axios.get(baseProfileURL, {
+    params: {
+      "requested_id": user_id
+    }
+  }).then( (response) => {
+    if (response.data.code === 200) { // success
+      const user = response.data.user;
+      setUser(user);
+    } else {
+      setUser(null);
+    }
+  }).catch( (error) => console.log(error));
+};
 
 export default function Profile() {
   const { user_id } = useParams();
   const [user, setUser] = useState(null);
   const [sessionUser, setSessionUser] = useState(null);
   const [isOwnedProfile, setOwnedProfile] = useState(false);
+
+  const [isEdit, setIsEdit] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const editProfile = () => {
+    setOpen(true);
+  }
 
   useEffect(() => {
     setSessionUser(JSON.parse(localStorage.getItem("user")));
@@ -37,6 +62,11 @@ export default function Profile() {
       setUser(response.data.user);
     });
   }, [user_id]);
+
+  useEffect( () => {
+    getProfilePage(user_id, setUser);
+    setIsEdit(false);
+  },[isEdit] );
 
   useEffect(() => {
     if (user && sessionUser) {
@@ -83,31 +113,16 @@ export default function Profile() {
             {" "}
             <img src={vectorAdd} className="more" alt="" />{" "}
           </a>
-          <a id="modalBtn" className="modalButton">
-            {" "}
-            <img src={vectorPencil} className="githubImage" alt="" />{" "}
+          <a id="modalBtn" className="modalButton"
+             onClick={editProfile}> <img src={vectorPencil} className="githubImage" alt=""/>
           </a>
           <a>
             {" "}
             <img src={vectorMore} className="more" alt="" />{" "}
           </a>
 
-          <div id="simpleModal" className="modal">
-            <div className="modalContent">
-              <span className="closeBtn">&times;</span>
-              <h2>Edit profile</h2>
-              <form>
-                <label>Name</label>
-                <input type="text" placeholder="Name..." />
-                <label>Surname</label>
-                <input type="text" placeholder="Surname..." />
-                <label>Github</label>
-                <input type="text" placeholder="Github..." />
-                <label>Linkedin</label>
-                <input type="text" placeholder="Linkedin..." />
-              </form>
-            </div>
-          </div>
+          <EditProfileModal open={open} user={user} setIsEdit={setIsEdit} onClose={() => setOpen(false)}/>
+
         </div>
       </div>
 
@@ -226,27 +241,3 @@ export default function Profile() {
     </div>
   );
 }
-
-// var modal = document.getElementById("simpleModal");
-// var modalBtn = document.getElementById("modalBtn");
-// var closeBtn = document.getElementsByClassName("closeBtn")[0];
-
-// modalBtn.addEventListener("click",openModal)
-
-// closeBtn.addEventListener("click",closeModal)
-
-// window.addEventListener("click",clickOutside)
-
-// function openModal(){
-//     modal.style.display = "flex";
-// }
-
-// function closeModal(){
-//     modal.style.display = "none";
-// }
-
-// function clickOutside(e){
-//     if(e.target === modal){
-//         modal.style.display = "none";
-//     }
-// }
