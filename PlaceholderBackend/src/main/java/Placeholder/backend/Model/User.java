@@ -41,9 +41,12 @@ public class User {
     @Column(name="profile_pic_path")
     private String profile_pic_path;
 
+    @Column(name="cover_url")
+    private String cover_url;
+
     public User(){}
 
-    public User(int id, String full_name, String user_type, String cs_mail, String user_password, String phone, String company, String linkedIn_url, String github_url, String alt_mail, String profile_pic_path) {
+    public User(int id, String full_name, String user_type, String cs_mail, String user_password, String phone, String company, String linkedIn_url, String github_url, String alt_mail, String profile_pic_path, String cover_url) {
         this.id = id;
         this.full_name = full_name;
         this.user_type = user_type;
@@ -55,6 +58,7 @@ public class User {
         this.github_url = github_url;
         this.alt_mail = alt_mail;
         this.profile_pic_path = profile_pic_path;
+        this.cover_url = cover_url;
     }
 
     public int getId() {
@@ -145,6 +149,14 @@ public class User {
         this.profile_pic_path = profile_pic_path;
     }
 
+    public String getCover_url() {
+        return cover_url;
+    }
+
+    public void setCover_url(String cover_url) {
+        this.cover_url = cover_url;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -159,6 +171,7 @@ public class User {
                 ", github_url='" + github_url + '\'' +
                 ", alt_mail='" + alt_mail + '\'' +
                 ", profile_pic_path='" + profile_pic_path + '\'' +
+                ", cover_url='" + cover_url + '\'' +
                 '}';
     }
 }
