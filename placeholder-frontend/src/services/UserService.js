@@ -31,6 +31,8 @@ export const getUser =  (user_id) => {
     });
   };
 
+  
+
 // export const getUser = async (user_id) => {
 //   let response = await axios.get(baseProfileURL, {
 //     params: {

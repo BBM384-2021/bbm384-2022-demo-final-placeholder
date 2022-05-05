@@ -8,12 +8,19 @@ import {
   PersonRemove,
   Edit,
 } from "@mui/icons-material";
+import EditProfileModal from "./EditProfileModal";
 
-export default function ProfileInfoBar({ user, profileOwned }) {
+export default function ProfileInfoBar({
+  user,
+  profileOwned,
+  isEdited,
+  setEdited,
+}) {
   const linkedInUrl = user.linkedIn_url;
   const githubUrl = user.github_url;
   const [connections, setConnections] = useState([]);
   const [isConnected, setConnected] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     //   TODO: get connections service
@@ -30,7 +37,7 @@ export default function ProfileInfoBar({ user, profileOwned }) {
     //   !TODO
   };
   const handleEditProfile = () => {
-    //   !TODO
+    setOpen(true);
   };
 
   const openLink = (url) => {
@@ -127,6 +134,12 @@ export default function ProfileInfoBar({ user, profileOwned }) {
           </>
         )}
       </div>
+      <EditProfileModal
+        open={open}
+        setOpen={setOpen}
+        user={user}
+        setEdited={setEdited}
+      ></EditProfileModal>
     </div>
   );
 }
