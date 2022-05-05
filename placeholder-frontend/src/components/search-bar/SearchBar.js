@@ -1,4 +1,4 @@
-import { useState, onChange, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
@@ -6,8 +6,6 @@ import Box from '@mui/material/Box';
 import axios from "axios"
 
 import ProfileBanner from "../commons/ProfileBanner"
-
-import { height } from '@mui/system';
 
 const baseSearchURL = "https://placeholder-backend.herokuapp.com/user/searchUser"
 const Search = styled('div')(({ theme }) => ({
@@ -75,12 +73,6 @@ export default function SearchBar () {
         GetSimilarConnections(inputKey.target?.value, 100, setResults);
     },[inputKey])
 
-    const handleProfileBannerClick = (user) => () =>
-    {
-        const user_prof_id = user.cs_mail.split('@')[0]
-        window.open("/in/" + user.id, "_blank");
-    }
-
     return (
     <div style={{width:'400px', display:'flex', flexFlow:'column', justifyContent:'flex-start',
     marginTop:'3.5%', height:'100%'}} >
@@ -96,15 +88,14 @@ export default function SearchBar () {
             </SearchIconWrapper>
         </Search>
         {results.length > 0 &&
-            <Box sx={{width:'100%', backgroundColor:'white'}}>
+            <Box sx={{width:'100%', backgroundColor:'white', display:'flex', flexDirection:'column'}}>
                 {
                     results.map((user_elem) => {
                         return (<ProfileBanner 
                             withoutName={false}
-                            withStatus={false}
                             isChatBanner={false}
                             user={user_elem}
-                            onClick = {handleProfileBannerClick}
+                            isPostBanner={false}
                             key={user_elem.id}
                         />);
                     })

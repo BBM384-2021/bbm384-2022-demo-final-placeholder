@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link as RouterLink } from "react-router-dom";
+// import { Link as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { MailOutlined, LockOutlined } from "@mui/icons-material";
+import { MailOutlined, LockOutlined, Save } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
-  Button,
   CssBaseline,
   Card,
   Link,
@@ -15,6 +14,7 @@ import {
   Container,
   Alert,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 import IconTextField from "../commons/IconTextField";
 
@@ -49,6 +49,7 @@ const BaseLoginURL = "https://placeholder-backend.herokuapp.com/user/login";
 export default function Login({ setLogin, setUser }) {
   const [error, setError] = useState("");
   const [userData, setUserData] = useState({ cs_mail: "", user_password: "" });
+  const [isLoading, setLoading] = useState(false);
 
   const validate = (fieldValues) => {
     console.log("user_password" in fieldValues);
@@ -63,13 +64,13 @@ export default function Login({ setLogin, setUser }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event);
+    console.log("loading...", event);
+    setLoading(true);
     const data = new FormData(event.currentTarget);
     console.log({
       cs_mail: data.get("cs_mail"),
       user_password: data.get("user_password"),
     });
-    console.log(error);
     if (validate(data)) {
       console.log("login success");
 
@@ -91,7 +92,7 @@ export default function Login({ setLogin, setUser }) {
         )
         .then((response) => {
           console.log("response: ", response);
-
+          setLoading(false);
           if (response.data.code === 200) {
             // success
             const user = response.data.user;
@@ -104,6 +105,8 @@ export default function Login({ setLogin, setUser }) {
         .catch((error) => {
           console.log("error axios: ", error.response);
         });
+    } else {
+      setLoading(false);
     }
   };
 
@@ -125,7 +128,10 @@ export default function Login({ setLogin, setUser }) {
 
             <Box
               component="form"
-              onSubmit={handleSubmit}
+              onSubmit={(event) => {
+                setLoading(true);
+                handleSubmit(event);
+              }}
               noValidate
               sx={{ mt: 1 }}
             >
@@ -154,8 +160,12 @@ export default function Login({ setLogin, setUser }) {
                 iconEnd={<LockOutlined />}
               />
               <Box display="flex" justifyContent="space-between">
-                <Button
+                <LoadingButton
+                  size="small"
                   type="submit"
+                  // onClick={handleClick}
+                  // endIcon={<SendIcon />}
+                  loading={isLoading}
                   variant="contained"
                   sx={{
                     backgroundColor: Colors.hacettepe,
@@ -169,7 +179,8 @@ export default function Login({ setLogin, setUser }) {
                   }}
                 >
                   Login
-                </Button>
+                </LoadingButton>
+
                 <button
                   onClick={() => {
                     setLogin(false);

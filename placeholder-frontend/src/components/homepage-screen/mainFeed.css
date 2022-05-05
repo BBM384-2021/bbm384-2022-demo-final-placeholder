@@ -1,0 +1,20 @@
+.feedContainer {
+  flex: 6;
+  margin: 0 30px;
+  width: 75%;
+  /* background-color: white; */
+  border-radius: 20px;
+  overflow-y: scroll;
+  display: flex-row;
+  padding-inline: 10px;
+}
+/* 
+flex: '6',
+        marginLeft: '30px',
+        marginRight: '30px',
+        width: '100%',
+        backgroundColor:'white',
+        borderRadius:'20px',
+        display:'flex',
+        flexDirection : 'column',
+        paddingInline : '10px', */

@@ -1,0 +1,11 @@
+.chatSidebar {
+  flex: 3;
+  /* height: 85vh; */
+  align-items: center;
+  background-color: white;
+  border-radius: 17px;
+  /* height: calc(100vh - 50px); */
+  overflow-y: scroll;
+  position: sticky;
+  /* display: "flex"; */
+}

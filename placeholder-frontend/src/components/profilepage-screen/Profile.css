@@ -1,218 +1,272 @@
-
-.profileContainer{
-    margin-left: 30px;
-    margin-right: 30px;
+.profileContainer {
+  flex: 6;
+  margin: 0 30px;
+  overflow-y: auto;
+  display: flex-column;
 }
 
-.coverImage{
-    width: 100%;
-    height: 225px;
-    border-radius: 25px;
-    margin-bottom: 12px;
+.coverImage {
+  width: 100%;
+  height: 225px;
+  border-radius: 25px;
+  margin-bottom: 12px;
 }
 
-.profileDetails{
-    background: white;
-    padding: 15px;
-    border-radius: 25px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    box-shadow: 0 5px 10px -10px #AFAFAF;
+.profileDetails {
+  background: white;
+  padding: 15px;
+  border-radius: 25px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-shadow: 0 5px 10px -10px #afafaf;
 }
 
-.profileDetailRow{
-    display: flex;
-    align-items: flex-start;
+.profileDetailRow {
+  display: flex;
+  align-items: flex-start;
 }
 
-.profileImage{
-    position: absolute;
-    top: 220px;
-    left: 350px;
-    background: #EFEFEF;
-    border-radius: 200px;
-    width: 150px;
-    border: 15px solid #EFEFEF;
+.profileImage {
+  position: fixed;
+  top: 220px;
+  left: 350px;
+  background: #efefef;
+  border-radius: 200px;
+  width: 150px;
+  border: 15px solid #efefef;
 }
 
-.profileDetailRow div h3{
-    margin-left: 25px;
-    font-family: 'Poppins', 'SansSerif', "Verdana", sans-serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: #565656;
+.profileDetailRow div h3 {
+  margin-left: 25px;
+  font-family: "Poppins", "SansSerif", "Verdana", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #565656;
 }
 
-.profileDetailRow div h4{
-    margin-left: 25px;
-    font-family: 'Poppins', 'SansSerif', serif;font-size: 16px;
-    font-weight: 600;
-    color: #959595;
+.profileDetailRow div h4 {
+  margin-left: 25px;
+  font-family: "Poppins", "SansSerif", serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #959595;
 }
 
-.profileDetailRow a{
-    margin-bottom: 5px;
-    margin-left: 20px;
-    align-items: center;
-    box-shadow: 0 5px 15px -5px #AFAFAF;
-    background: #EFEFEF;
-    border: 0;
-    outline: 0;
-    padding: 5px 5px;
-    display: inline-flex;
-    color: #565656;
-    border-radius: 25px;
-    cursor: pointer;
+.profileDetailRow a {
+  margin-bottom: 5px;
+  margin-left: 20px;
+  align-items: center;
+  box-shadow: 0 5px 15px -5px #afafaf;
+  background: #efefef;
+  border: 0;
+  outline: 0;
+  padding: 5px 5px;
+  display: inline-flex;
+  color: #565656;
+  border-radius: 25px;
+  cursor: pointer;
 }
 
-.profileDetailRow a img{
-    height: 25px;
+.profileDetailRow a img {
+  height: 25px;
 }
 
-.profileDetailRight{
-    margin-right: 20px;
-    text-align: center;
+.profileDetailRight {
+  margin-right: 20px;
+  text-align: center;
 }
 
-.profileDetailRight a{
-    margin-left: 30px;
-    align-items: center;
-    box-shadow: 0 5px 15px -10px #565656;
-    background: #EFEFEF;
-    padding: 10px;
-    display: inline-flex;
-    border-radius: 25px;
-    cursor:pointer;
+.profileDetailRight a {
+  margin-left: 30px;
+  align-items: center;
+  box-shadow: 0 5px 15px -10px #565656;
+  background: #efefef;
+  padding: 10px;
+  display: inline-flex;
+  border-radius: 25px;
+  cursor: pointer;
 }
 
-.profileDetailRight a img{
-    width: 30px;
+.profileDetailRight a img {
+  width: 30px;
 }
 
-.profileDetailRight button:first-child{
-    margin-right: 15px;
-    align-items: center;
-    box-shadow: 0 5px 15px -10px #AFAFAF;
-    background: #EFEFEF;
-    border: 0;
-    outline: 0;
-    padding: 12px 15px;
-    display: inline-flex;
-    font-family: 'SansSerif', "Verdana", sans-serif;font-size: 12px;
-    color: #565656;
-    border-radius: 25px;
-    cursor: pointer;
+.profileDetailRight button:first-child {
+  margin-right: 15px;
+  align-items: center;
+  box-shadow: 0 5px 15px -10px #afafaf;
+  background: #efefef;
+  border: 0;
+  outline: 0;
+  padding: 12px 15px;
+  display: inline-flex;
+  font-family: "SansSerif", "Verdana", sans-serif;
+  font-size: 12px;
+  color: #565656;
+  border-radius: 25px;
+  cursor: pointer;
 }
 
-.profileDetailRight button img{
-    margin-left: 15px;
-    height: 20px;
+.profileDetailRight button img {
+  margin-left: 15px;
+  height: 20px;
 }
 
-
-
-.feedColumn{
-
-    background: #EFEFEF;
-    display: inline-list-item;
-    border-radius: 25px;
+.feedColumn {
+  background: #efefef;
+  display: inline-list-item;
+  border-radius: 25px;
 }
 
-.userProfile{
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    margin-left: 15px;
-
+.userProfile {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 15px;
 }
 
-.userProfile img{
-    width: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-    margin-bottom: -15px;
-    border: 5px solid white;
+.userProfile img {
+  width: 45px;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-bottom: -15px;
+  border: 5px solid white;
 }
 
-.userProfile p{
-    font-family: 'Poppins', "Verdana", sans-serif;
-    font-size: 15px;
-    margin-bottom: 5px;
-    font-weight: 400;
-    color: #626262;
+.userProfile p {
+  font-family: "Poppins", "Verdana", sans-serif;
+  font-size: 15px;
+  margin-bottom: 5px;
+  font-weight: 400;
+  color: #626262;
 }
 
-.userProfile span{
-    font-family: 'Poppins';
-    font-size: 14px;
-    color: #9a9a9a;
+.userProfile span {
+  font-family: "Poppins";
+  font-size: 14px;
+  color: #9a9a9a;
 }
 
-.postContainer{
-    width: 95.7%;
-    background: white;
-    box-shadow: 0 5px 15px -10px #AFAFAF;
+.postContainer {
+  background: white;
+  box-shadow: 0 5px 15px -10px #afafaf;
 
-    border-radius: 15px;
-    padding: 20px;
-    color: #626262;
-    margin: 30px 0;
+  border-radius: 15px;
+  padding: 20px;
+  color: #626262;
+  margin: 30px 0;
 }
 
-.postText{
-    color: #565656;
-    margin: 15px 0;
-    font-size: 15px;
+.postText {
+  color: #565656;
+  margin: 15px 0;
+  font-size: 15px;
 }
 
-.postText a{
-    color: blue;
-    text-decoration: none;
+.postText a {
+  color: blue;
+  text-decoration: none;
 }
 
-.activityIcons{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-left: 20px;
+.activityIcons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 20px;
 }
 
-.activityIcons div img{
-    height: 20px;
-    margin-bottom: -3px;
-    margin-right: 20px;
-    cursor: pointer;
+.activityIcons div img {
+  height: 20px;
+  margin-bottom: -3px;
+  margin-right: 20px;
+  cursor: pointer;
 }
 
-.activityIcons button{
-    margin-bottom: 5px;
-    margin-left: 20px;
-    align-items: center;
-    box-shadow: 0 5px 15px -5px #AFAFAF;
-    background: #EFEFEF;
-    border: 0;
-    outline: 0;
-    padding: 15px 15px;
-    display: inline-flex;
-    color: #565656;
-    border-radius: 25px;
-    cursor: pointer;
+.activityIcons button {
+  margin-bottom: 5px;
+  margin-left: 20px;
+  align-items: center;
+  box-shadow: 0 5px 15px -5px #afafaf;
+  background: #efefef;
+  border: 0;
+  outline: 0;
+  padding: 15px 15px;
+  display: inline-flex;
+  color: #565656;
+  border-radius: 25px;
+  cursor: pointer;
 }
 
-.activityIcons button img{
-    height: 20px;
-
+.activityIcons button img {
+  height: 20px;
 }
 
-.profileFeed{
-    margin-left: 5px;
-    font-family: 'SansSerif', "Verdana", sans-serif;font-size: 14px;
-    font-weight: 500;
-    color: #AFAFAF;
+.profileFeed {
+  margin-left: 5px;
+  font-family: "SansSerif", "Verdana", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #afafaf;
 }
 
-.profileFeed img{
-    width: 20px;
-    height: 20px;
+.profileFeed img {
+  width: 20px;
+  height: 20px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContent {
+  min-width: 30%;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 20% auto;
+  padding: 2rem;
+  width: 70%;
+  box-shadow: 0 5px 8px -5px black;
+  animation-name: modalOpen;
+  animation-duration: 0.5s;
+}
+
+.modalContent form input {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.closeBtn {
+  color: #959595;
+  float: right;
+  font-size: 30px;
+}
+
+.closeBtn:hover,
+.closeBtn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

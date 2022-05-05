@@ -181,8 +181,16 @@ public class UserDAO {
 
         try{
             session.beginTransaction();
-            session.createQuery(String.format("update User u SET u.full_name = '%s' , u.user_type = '%s' ,  u.cs_mail = '%s' , u.phone = '%s' , u.company = '%s' , u.link = '%s' , u.alt_mail = '%s' , u.profile_pic_path = '%s'  WHERE u.id = '%s' "
-                    ,user.getFull_name(),user.getUser_type(),user.getCs_mail(),user.getPhone(),user.getCompany(),user.getLink(),user.getAlt_mail(),user.getProfile_pic_path(),user.getId())).executeUpdate();
+            session.createQuery(String.format("update User u SET u.full_name = '%s' ," +
+                            " u.user_type = '%s' ," +
+                            "  u.cs_mail = '%s' ," +
+                            " u.phone = '%s' ," +
+                            " u.company = '%s' ," +
+                            " u.linkedIn_url = '%s' ," +
+                            " u.github_url = '%s' ," +
+                            " u.alt_mail = '%s' ," +
+                            " u.profile_pic_path = '%s'  WHERE u.id = '%s' "
+                    ,user.getFull_name(),user.getUser_type(),user.getCs_mail(),user.getPhone(),user.getCompany(),user.getLinkedIn_url(),user.getGithub_url(),user.getAlt_mail(),user.getProfile_pic_path(),user.getId())).executeUpdate();
             session.getTransaction().commit();
 
         }

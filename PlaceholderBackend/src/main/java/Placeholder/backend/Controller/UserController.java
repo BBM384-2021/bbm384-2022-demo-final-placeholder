@@ -20,11 +20,35 @@ public class UserController {
 
     @PostMapping("/user/createUser")
     public Object createUser(@RequestBody  HashMap<String, String> body){
-        if(!body.containsKey("user_password") || !body.containsKey("user_type") || !body.containsKey("cs_mail") || !body.containsKey("full_name") ||
-                body.get("user_password") == null || body.get("user_type") == null || body.get("cs_mail") == null || body.get("full_name") == null || !body.get("cs_mail").endsWith("@cs.hacettepe.edu.tr")){
+
+        if( !body.containsKey("cs_mail") || !body.get("cs_mail").endsWith("@cs.hacettepe.edu.tr")){
+            return DAOFunctions.getResponse(400,"error","Please use a Hacettepe CS mail.");
+        }
+        if(!body.containsKey("user_password") || !body.containsKey("user_type") || !body.containsKey("full_name") ||
+                body.get("user_password") == null || body.get("user_type") == null || body.get("cs_mail") == null || body.get("full_name") == null){
             return DAOFunctions.getResponse(400,"",null);
         }
-        User u = new User(0,body.get("full_name"),body.get("user_type"), body.get("cs_mail"), body.get("user_password"),"","","","","");
+
+        if(!body.containsKey("phone")){
+            body.put("phone","");
+        }
+        if(!body.containsKey("company")){
+            body.put("company","");
+        }
+        if(!body.containsKey("linkedIn_url")){
+            body.put("linkedIn_url","");
+        }
+        if(!body.containsKey("github_url")){
+            body.put("github_url","");
+        }
+        if(!body.containsKey("alt_mail")){
+            body.put("alt_mail","");
+        }
+        if(!body.containsKey("profile_pic_path")){
+            body.put("profile_pic_path","");
+        }
+
+        User u = new User(0,body.get("full_name"),body.get("user_type"), body.get("cs_mail"), body.get("user_password"),body.get("phone"),body.get("company"),body.get("linkedIn_url"),body.get("github_url"),body.get("alt_mail"),body.get("profile_pic_path"));
         u.setUser_password(Integer.toString(body.get("user_password").hashCode()));
         u = UserDAO.createUser(u);
 
@@ -102,9 +126,16 @@ public class UserController {
     @DeleteMapping("/user/deleteUser")
     public Object deleteUser(@RequestBody  HashMap<String, String> body){
 
-        if(!body.containsKey("user_id") || body.get("user_id").equals("")){
+        if(!body.containsKey("user_id") || body.get("user_id").equals("") ||
+            !body.containsKey("cs_mail") || body.get("cs_mail").equals("") ||
+            !body.containsKey("user_password") || body.get("user_password").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
+        User u = UserDAO.login(body.get("cs_mail"),body.get("user_password"));
+        if(u == null){
+            return DAOFunctions.getResponse(400,"",null);
+        }
+        PostDAO.deleteAllPostsOfAUser(body.get("user_id"));
         ConnectionDAO.removeAllConnections(body.get("user_id"));
         ConnectionRequestDAO.removeAllRequests(body.get("user_id"));
         return DAOFunctions.getResponse(UserDAO.deleteUser(body.get("user_id")),"",null);

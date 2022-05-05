@@ -29,8 +29,11 @@ public class User {
     @Column(name="company")
     private String company;
 
-    @Column(name="link")
-    private String link;
+    @Column(name="linkedIn_url")
+    private String linkedIn_url;
+
+    @Column(name="github_url")
+    private String github_url;
 
     @Column(name="alt_mail")
     private String alt_mail;
@@ -40,16 +43,7 @@ public class User {
 
     public User(){}
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public User(int id, String full_name, String user_type, String cs_mail, String user_password,
-                String phone, String company, String link, String alt_mail, String profile_pic_path) {
+    public User(int id, String full_name, String user_type, String cs_mail, String user_password, String phone, String company, String linkedIn_url, String github_url, String alt_mail, String profile_pic_path) {
         this.id = id;
         this.full_name = full_name;
         this.user_type = user_type;
@@ -57,9 +51,18 @@ public class User {
         this.user_password = user_password;
         this.phone = phone;
         this.company = company;
-        this.link = link;
+        this.linkedIn_url = linkedIn_url;
+        this.github_url = github_url;
         this.alt_mail = alt_mail;
         this.profile_pic_path = profile_pic_path;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFull_name() {
@@ -69,11 +72,6 @@ public class User {
     public void setFull_name(String full_name) {
         this.full_name = full_name;
     }
-
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
-    }
-
 
     public String getUser_type() {
         return user_type;
@@ -89,6 +87,14 @@ public class User {
 
     public void setCs_mail(String cs_mail) {
         this.cs_mail = cs_mail;
+    }
+
+    public String getUser_password() {
+        return user_password;
+    }
+
+    public void setUser_password(String user_password) {
+        this.user_password = user_password;
     }
 
     public String getPhone() {
@@ -107,12 +113,20 @@ public class User {
         this.company = company;
     }
 
-    public String getLink() {
-        return link;
+    public String getLinkedIn_url() {
+        return linkedIn_url;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setLinkedIn_url(String linkedIn_url) {
+        this.linkedIn_url = linkedIn_url;
+    }
+
+    public String getGithub_url() {
+        return github_url;
+    }
+
+    public void setGithub_url(String github_url) {
+        this.github_url = github_url;
     }
 
     public String getAlt_mail() {
@@ -138,10 +152,11 @@ public class User {
                 ", full_name='" + full_name + '\'' +
                 ", user_type='" + user_type + '\'' +
                 ", cs_mail='" + cs_mail + '\'' +
-                ", user_password='"+ user_password +'\''+
+                ", user_password='" + user_password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", company='" + company + '\'' +
-                ", link='" + link + '\'' +
+                ", linkedIn_url='" + linkedIn_url + '\'' +
+                ", github_url='" + github_url + '\'' +
                 ", alt_mail='" + alt_mail + '\'' +
                 ", profile_pic_path='" + profile_pic_path + '\'' +
                 '}';
