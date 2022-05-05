@@ -1,13 +1,7 @@
-/* .eventContainer{
-    flex: 3;
-    width:'25%';
-    background-color:'white';
-    border-radius:'17px';
-    display:'flex';
-} */
+
 .eventSidebar {
   background-color: white;
-  flex: 3;
+  flex: 2.5;
   /* height: calc(100vh - 50px); */
   overflow-y: scroll;
   position: sticky;
@@ -15,7 +9,7 @@
   border-radius: 20px;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 5px;
 }
 ::-webkit-scrollbar-track {
@@ -23,7 +17,7 @@
 }
 ::-webkit-scrollbar-thumb {
   background-color: rgb(179, 179, 179);
-}
+} */
 
 .eventWrapper {
   padding: 20px;

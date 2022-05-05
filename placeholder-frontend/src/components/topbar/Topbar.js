@@ -49,7 +49,6 @@ export default function TopBar({ userObj, setUser }) {
 
   const handleLogout = () => {
     localStorage.setItem("user", null);
-    // setAnchorEl(null);
     setUser(null);
     history("/");
   };

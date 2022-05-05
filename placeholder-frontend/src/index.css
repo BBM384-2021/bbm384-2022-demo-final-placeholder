@@ -11,6 +11,11 @@
 
 body,
 html {
+  font-family: "Poppins", "SansSerif", "Verdana", sans-serif;
   background-color: #efefef;
   height: 100vh;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

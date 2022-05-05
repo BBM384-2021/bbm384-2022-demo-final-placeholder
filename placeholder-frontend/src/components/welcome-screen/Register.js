@@ -79,7 +79,8 @@ export default function Register({ setLogin, setUser }) {
       full_name: data.get("full_name"),
       cs_mail: data.get("cs_mail"),
       user_password: data.get("user_password"),
-      user_type: data.get("user_type") === "student" ? 1 : 2,
+      user_type: data.get("user_type") === "student" ? 3 : 4,
+      // student: 3 , graduate: 4
     });
     console.log("current error: ", error);
     if (validate(data)) {
