@@ -60,7 +60,7 @@ export default function ProfileHeader({
       <div className="optionsContainer">
         {/* if the user is an admin or an instructor, we show the more button */}
         {/* if user is on their own profile, we only show Edit Profile option under More button */}
-        {(profileOwned || JSON.parse(sessionUser.user_type) < 2) && (
+        {!profileOwned && JSON.parse(sessionUser.user_type) < 2 && (
           <IconButton
             className="moreButton"
             color="primary"
@@ -100,28 +100,33 @@ export default function ProfileHeader({
           "aria-labelledby": "basic-button",
         }}
       >
-        {profileOwned && (
-          <MenuItem onClick={handleClose}>Edit Profile</MenuItem>
-        )}
         {/* if user is looking at their own profile, nothing shows */}
         {/* if user is admin or intructor, student admin edit appears */}
         {/* if user is admin instructor edit adds to list */}
-        {!profileOwned && JSON.parse(sessionUser.user_type) < 2 && JSON.parse(user.user_type) !== 2 && (
-          <MenuItem onClick={handleClose}>
-            Set as Student Administrative
-          </MenuItem>
-        )}
-        {!profileOwned && sessionUser.user_type < 2 && JSON.parse(user.user_type) === 2 && (
-          <MenuItem onClick={handleClose}>
-            Remove Student Administrative Role
-          </MenuItem>
-        )}
-        {!profileOwned && sessionUser.user_type < 1 && JSON.parse(user.user_type) !== 1 && (
-          <MenuItem onClick={handleClose}>Set as Instructor</MenuItem>
-        )}
-        {!profileOwned && sessionUser.user_type < 1 && JSON.parse(user.user_type) === 1 && (
-          <MenuItem onClick={handleClose}> Remove Instructor Role </MenuItem>
-        )}
+        {!profileOwned &&
+          JSON.parse(sessionUser.user_type) < 2 &&
+          JSON.parse(user.user_type) !== 2 && (
+            <MenuItem onClick={handleClose}>
+              Set as Student Administrative
+            </MenuItem>
+          )}
+        {!profileOwned &&
+          sessionUser.user_type < 2 &&
+          JSON.parse(user.user_type) === 2 && (
+            <MenuItem onClick={handleClose}>
+              Remove Student Administrative Role
+            </MenuItem>
+          )}
+        {!profileOwned &&
+          sessionUser.user_type < 1 &&
+          JSON.parse(user.user_type) !== 1 && (
+            <MenuItem onClick={handleClose}>Set as Instructor</MenuItem>
+          )}
+        {!profileOwned &&
+          sessionUser.user_type < 1 &&
+          JSON.parse(user.user_type) === 1 && (
+            <MenuItem onClick={handleClose}> Remove Instructor Role </MenuItem>
+          )}
       </Menu>
     </div>
   );

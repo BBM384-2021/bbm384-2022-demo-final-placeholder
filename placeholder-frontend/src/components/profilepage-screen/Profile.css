@@ -42,6 +42,7 @@
   height: 18vmin;
   overflow: hidden;
   border-radius: 50%;
+  margin: 5px;
 }
 .profileImage img {
   display: block;
