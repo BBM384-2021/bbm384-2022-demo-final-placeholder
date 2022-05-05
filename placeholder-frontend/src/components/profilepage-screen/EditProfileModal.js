@@ -48,10 +48,6 @@ const EditProfileModal = ({ open, onClose, editUserInfo, user, setIsEdit }) => {
     } = useForm({
     });
 
-    const editUser = (data) => {
-        editUserInfo(data);
-    };
-
     const validate = (data) => {
         return true;
     };
