@@ -5,6 +5,8 @@ import Placeholder.backend.Model.Message;
 import Placeholder.backend.Util.DAOFunctions;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 public class MessageController {
 
@@ -43,5 +45,24 @@ public class MessageController {
         else{
             return DAOFunctions.getResponse(400,"",null);
         }
+    }
+
+    @PatchMapping("/message/updateMessage")
+    public Object updateMessage(@RequestBody Message message){
+        System.out.println(message.toString());
+        if(message.getId() == 0 || message.getBody() == null || message.getBody().equals("")){
+            return DAOFunctions.getResponse(400,"error","Missing Fields");
+        }
+        int res = MessageDAO.updateMessage(message);
+
+        return DAOFunctions.getResponse(res,"",null);
+
+    }
+    @DeleteMapping("/message/deleteMessage")
+    public Object deleteEvent(@RequestBody HashMap<String, String> body){
+        if(!body.containsKey("id") || body.get("id").equals("")){
+            return DAOFunctions.getResponse(400,"",null);
+        }
+        return DAOFunctions.getResponse(MessageDAO.deleteMessage(body.get("id")),"",null);
     }
 }

@@ -139,5 +139,47 @@ public class MessageDAO {
         return result;
     }
 
+    public static int updateMessage(Message message){
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try{
+            session.beginTransaction();
+            session.createQuery(String.format("update Message m SET m.body = '%s' WHERE m.id = '%s'",message.getBody(),message.getId())).executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            factory.close();
+            System.out.println(e);
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
+
+        return 200;
+
+    }
+
+    public static int deleteMessage(String id){
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+        try{
+            session.beginTransaction();
+            session.createQuery("delete from Message m where m.id = "+id).executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
+
+        return 200;
+
+    }
+
 
 }
