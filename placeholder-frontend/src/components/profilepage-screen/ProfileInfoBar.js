@@ -8,12 +8,17 @@ import {
   PersonRemove,
   Edit,
 } from "@mui/icons-material";
+import EditProfileModal from "./EditProfileModal";
 
-export default function ProfileInfoBar({ user, profileOwned }) {
+export default function ProfileInfoBar({ user, setUser, profileOwned}) {
   const linkedInUrl = user.linkedIn_url;
   const githubUrl = user.github_url;
   const [connections, setConnections] = useState([]);
   const [isConnected, setConnected] = useState(false);
+
+  const [isEdit, setIsEdit] = useState(false);
+
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     //   TODO: get connections service
@@ -30,7 +35,7 @@ export default function ProfileInfoBar({ user, profileOwned }) {
     //   !TODO
   };
   const handleEditProfile = () => {
-    //   !TODO
+    setOpen(true);
   };
 
   const openLink = (url) => {
@@ -92,6 +97,7 @@ export default function ProfileInfoBar({ user, profileOwned }) {
 
               <Edit style={{ color: "#767676" }} fontSize="large" />
             </IconButton>
+
           </>
         ) : (
           <>
@@ -127,50 +133,9 @@ export default function ProfileInfoBar({ user, profileOwned }) {
           </>
         )}
       </div>
+      <EditProfileModal open={open} user={user} setIsEdit={setIsEdit} onClose={() => setOpen(false)}/>
     </div>
+
   );
 }
-// <div >
-//         <div className="">
-//           <div className="profileDetailRow">
-//             <div>
-//               <h3>{user.full_name}</h3>
-//               <h4>54 connections</h4>
-//               {linkedInUrl && <></>}
-//               <a href="https://github.com/mavibirdesmi">
-//                 {" "}
-//                 {/* <img src={vectorGithub} className="githubImage" alt="" />{" "} */}
-//               </a>
-//               <a href="https://www.linkedin.com/in/desmin-alpaslan/">
-//                 {" "}
-//                 {/* <img src={vectorLinkedin} className="githubImage" alt="" />{" "} */}
-//               </a>
-//             </div>
-//           </div>
-//         </div>
-//         <div className="profileDetailRight">
-//           <a> {/* <img src={vectorAdd} className="more" alt="" />{" "} */}</a>
-//           <a id="modalBtn" className="modalButton">
-//             {" "}
-//             {/* <img src={vectorPencil} className="githubImage" alt="" />{" "} */}
-//           </a>
-//           <a> {/* <img src={vectorMore} className="more" alt="" />{" "} */}</a>
 
-//           <div id="simpleModal" className="modal">
-//             <div className="modalContent">
-//               <span className="closeBtn">&times;</span>
-//               <h2>Edit profile</h2>
-//               <form>
-//                 <label>Name</label>
-//                 <input type="text" placeholder="Name..." />
-//                 <label>Surname</label>
-//                 <input type="text" placeholder="Surname..." />
-//                 <label>Github</label>
-//                 <input type="text" placeholder="Github..." />
-//                 <label>Linkedin</label>
-//                 <input type="text" placeholder="Linkedin..." />
-//               </form>
-//             </div>
-//           </div>
-//         </div>
-//       </div>

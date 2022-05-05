@@ -31,7 +31,7 @@ export default function HomePageScreen({ user, setUser }) {
 
             <Routes>
               <Route path="/" element={<MainFeed user={user} />} />
-              <Route path="/in/:user_id" element={<Profile />} />
+              <Route path="/in/:user_id" element={<Profile user = {user} setUser={setUser}/>} />
               <Route path="*" element={<ErrorPage />} />
             </Routes>
 

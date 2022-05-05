@@ -24,9 +24,8 @@ import {
 import "./Profile.css";
 import ProfileInfoBar from "./ProfileInfoBar";
 
-export default function Profile() {
+export default function Profile({user, setUser}) {
   const { user_id } = useParams();
-  const [user, setUser] = useState(null);
   const [sessionUser, setSessionUser] = useState(null);
   const [isOwnedProfile, setOwnedProfile] = useState(false);
 
@@ -68,6 +67,7 @@ export default function Profile() {
 
       <ProfileInfoBar
         user={user}
+        setUser={setUser}
         profileOwned={isOwnedProfile}
       ></ProfileInfoBar>
 

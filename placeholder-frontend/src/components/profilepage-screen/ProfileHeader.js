@@ -60,7 +60,7 @@ export default function ProfileHeader({
       <div className="optionsContainer">
         {/* if the user is an admin or an instructor, we show the more button */}
         {/* if user is on their own profile, we only show Edit Profile option under More button */}
-        {(profileOwned || JSON.parse(sessionUser.user_type) < 2) && (
+        {(profileOwned || (sessionUser.user_type) < 2) && (
           <IconButton
             className="moreButton"
             color="primary"
