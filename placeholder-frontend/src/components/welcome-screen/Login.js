@@ -93,7 +93,6 @@ export default function Login({ setLogin, setUser }) {
         .then((response) => {
           console.log("response: ", response);
           setLoading(false);
-
           if (response.data.code === 200) {
             // success
             const user = response.data.user;
@@ -106,6 +105,8 @@ export default function Login({ setLogin, setUser }) {
         .catch((error) => {
           console.log("error axios: ", error.response);
         });
+    } else {
+      setLoading(false);
     }
   };
 
