@@ -1,0 +1,68 @@
+@import "../../index.css";
+
+.post-create-container {
+    border-radius: 15px;
+    position : absolute;
+    width: 100%;
+    max-width: 45vw;
+    min-width: 20vw;
+    transform: translate(27vw, 7vh);
+    background-color: var(--white);
+}
+
+.post-create-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+
+.post-create-header-inner {
+    width: 100%;
+    margin: 0px 10px 0px 30px;
+    display: flex;
+    align-items: center;
+}
+
+.post-create-header-inner > p {
+    font-weight: 600;
+    font-size: 22px;
+    color: #767676;
+    margin-left: 40px;
+    font-family: 'Poppins';
+
+}
+
+.post-create-header-profile-pic {
+    width: 60px;
+    border-radius: 50%;
+}
+
+.post-content-input {
+    border:0;
+    outline:0;
+    width: 90%;
+    height: 280px;
+    border-radius: '25px';
+    margin-left: 30px;
+    margin-top: 10px;
+    font-size: medium;
+    font-family: 'Poppins';
+    resize: none;
+}
+
+.post-config-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 15px 10px 15px;
+}
+
+.send-post-button {
+    height:24px;
+    filter: contrast(0);
+}
+
+.send-post-button:hover {
+    filter:none;
+}

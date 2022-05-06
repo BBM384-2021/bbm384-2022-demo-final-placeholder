@@ -5,6 +5,8 @@ import CardPreview from "../commons/CardPreview";
 
 import { getMainFeed } from "../../services/PostService";
 import "./mainFeed.css";
+import ContentCreateBar from "../commons/ContentCreateBar";
+import PostCreateBox from "../posts/PostCreateBox";
 
 export default function MainFeed({ user }) {
   const [contents, setContents] = useState([]);
@@ -13,10 +15,26 @@ export default function MainFeed({ user }) {
     getMainFeed(user.id, setContents);
   }, [user.id]);
 
+  const [openCreatePost, setOpenCreatePost] = useState(false);
+  const [openCreateEvent, setOpenCreateEvent] = useState(false);
+
+  const onClickPostCreate = () => {
+    setOpenCreatePost(true);
+  }
+
+  const onClickEventCreate = () => {
+    setOpenCreateEvent(true);
+  }
+
   return (
     <div className="feedContainer">
-      <div style={{}}>
-        <h3 style={{ color: "#888888" }}>Main Feed</h3>
+      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <ContentCreateBar onClick={onClickPostCreate}>
+          Create a post...
+        </ContentCreateBar>
+        <ContentCreateBar onClick={onClickEventCreate}>
+          Create an event...
+        </ContentCreateBar>
       </div>
 
       {contents.length > 0 &&
@@ -34,6 +52,11 @@ export default function MainFeed({ user }) {
             </>
           );
         })}
+      <PostCreateBox  
+        open={openCreatePost}
+        setOpen={setOpenCreatePost}
+        user={user}
+      />
     </div>
   );
 }
