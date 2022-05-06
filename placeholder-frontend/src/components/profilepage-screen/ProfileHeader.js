@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import S3FileUpload from "react-s3";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { CameraAlt, MoreHoriz } from "@mui/icons-material";
 
-import { getS3Info } from "../../services/S3Service";
+import { updateUser } from "../../services/UserService";
+import { uploadPicture } from "../../services/S3Service";
+import FileUploader from "../commons/FileUploader";
 
 import defaultCover from "../../img/defaultProfileCover.png";
 import defaultProfilePic from "../../img/defaultProfilePic.png";
-
 import "./Profile.css";
-import FileUploader from "../commons/FileUploader";
 
-export default function ProfileHeader({ profileOwned, sessionUser, user }) {
+export default function ProfileHeader({
+  profileOwned,
+  sessionUser,
+  user,
+  setEdited,
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [profilePic, setProfilePic] = useState(
     user.profile_pic_path ? user.profile_pic_path : defaultProfilePic
@@ -35,29 +39,10 @@ export default function ProfileHeader({ profileOwned, sessionUser, user }) {
   };
 
   const handleChangePP = (selectedFile) => {
-    setProfilePic(selectedFile);
-    // TODO updateUser();
+    console.log("profile file: ", selectedFile);
+    uploadPicture(selectedFile, "profile-pics", setEdited);
   };
 
-  // const handleChangePP = (file) => {
-  //   // Bucket Details: S3
-  //   const config = {
-  //     bucketName: getS3Info.S3_BUCKET,
-  //     dirName: getS3Info.folder_name, //it’s optional
-  //     region: getS3Info.S3_REGION,
-  //     accessKeyId: getS3Info.S3_KEY_ID,
-  //     secretAccessKey: getS3Info.S3_SECRET_KEY,
-  //   };
-
-  //   // then upload the file
-  //   S3FileUpload.uploadFile(file, config)
-  //     .then((data) => {
-  //       console.log(data.location); // it return the file url
-  //     })
-  //     .catch((err) => {
-  //       alert(err);
-  //     });
-  // };
   const handleChangeCover = () => {
     // TODO
   };
@@ -73,7 +58,7 @@ export default function ProfileHeader({ profileOwned, sessionUser, user }) {
         <div className="profileImage">
           <img src={profilePic} alt="Profile of User" />
           {profileOwned && (
-            <FileUploader setUploadedFile={setProfilePic}></FileUploader>
+            <FileUploader setUploadedFile={handleChangePP}></FileUploader>
           )}
         </div>
       </div>

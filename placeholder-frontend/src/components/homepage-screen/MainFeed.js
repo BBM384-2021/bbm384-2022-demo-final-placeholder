@@ -21,17 +21,17 @@ export default function MainFeed({ user }) {
 
       {contents.length > 0 &&
         contents.map((content) => {
-          console.log(content.post.id);
+          // console.log(content.post.id);
           return (
-            <>
+            <div key={content.post.id}>
               <CardPreview
                 className="cardContainer"
                 content={content}
                 contentType={"post"}
-                key={content.post.id}
+                id={content.post.id}
                 user={user}
               />
-            </>
+            </div>
           );
         })}
     </div>

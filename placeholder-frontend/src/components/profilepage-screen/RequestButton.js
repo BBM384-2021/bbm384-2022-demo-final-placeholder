@@ -1,3 +1,4 @@
+// TODO: This component will be used later if we manage to implement connection requests and notifications
 // import React, { useState, useEffect } from "react";
 // import {
 //   acceptFriendRequest,
