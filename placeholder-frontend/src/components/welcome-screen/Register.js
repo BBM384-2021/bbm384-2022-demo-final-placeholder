@@ -56,7 +56,7 @@ export default function Register({ setLogin, setUser }) {
   const [userData, setUserData] = useState({ cs_mail: "", user_password: "" });
 
   const validate = (fieldValues) => {
-    console.log("user_password" in fieldValues);
+    // console.log("user_password" in fieldValues);
     if (fieldValues.get("user_password")?.length < 6) {
       setError("Minimum 6 characters required.");
       return false;

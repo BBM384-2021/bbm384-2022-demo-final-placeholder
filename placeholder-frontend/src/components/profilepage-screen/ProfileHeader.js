@@ -1,24 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { CameraAlt, MoreHoriz } from "@mui/icons-material";
 
+import { updateUser } from "../../services/UserService";
+import { uploadPicture } from "../../services/S3Service";
+import FileUploader from "../commons/FileUploader";
+
 import defaultCover from "../../img/defaultProfileCover.png";
 import defaultProfilePic from "../../img/defaultProfilePic.png";
-
 import "./Profile.css";
 
 export default function ProfileHeader({
-  cover,
-  profilePic,
   profileOwned,
   sessionUser,
   user,
+  setEdited,
 }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [profilePic, setProfilePic] = useState(
+    user.profile_pic_path ? user.profile_pic_path : defaultProfilePic
+  );
+  const [coverPic, setCoverPic] = useState(
+    user.cover_url ? user.cover_url : defaultCover
+  );
+  // const [state, setState] = useState({
+  //   mainState: "initial", //initial, uploaded
+  //   selectedFile: null,
+  //   imageUploaded: 0,
+  // });
+
   const open = Boolean(anchorEl);
-  const profilePicPath = user.profile_pic_path
-    ? user.profile_pic_path
-    : defaultProfilePic;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,40 +38,34 @@ export default function ProfileHeader({
     setAnchorEl(null);
   };
 
-  const handleChangePP = () => {
-    console.log(JSON.parse(sessionUser.user_type) < 2);
+  const handleChangePP = (selectedFile) => {
+    console.log("profile file: ", selectedFile);
+    uploadPicture(selectedFile, "profile-pics", setEdited);
   };
+
   const handleChangeCover = () => {
-    console.log("change cover pp");
+    // TODO
   };
 
   return (
     <div
       className="headerContainer"
       style={{
-        backgroundImage: `url(${cover ? cover : defaultCover})`,
+        backgroundImage: `url(${coverPic})`,
       }}
     >
       <div className="ppContainer">
         <div className="profileImage">
-          <img src={profilePicPath} alt="Profile of User" />
+          <img src={profilePic} alt="Profile of User" />
           {profileOwned && (
-            <IconButton
-              className="editPPButton"
-              color="primary"
-              aria-label="upload picture"
-              component="span"
-              onClick={handleChangePP}
-            >
-              <CameraAlt style={{ color: "#A5A5A5" }} />
-            </IconButton>
+            <FileUploader setUploadedFile={handleChangePP}></FileUploader>
           )}
         </div>
       </div>
       <div className="optionsContainer">
         {/* if the user is an admin or an instructor, we show the more button */}
         {/* if user is on their own profile, we only show Edit Profile option under More button */}
-        {(profileOwned || JSON.parse(sessionUser.user_type) < 2) && (
+        {!profileOwned && JSON.parse(sessionUser.user_type) < 2 && (
           <IconButton
             className="moreButton"
             color="primary"
@@ -100,28 +105,33 @@ export default function ProfileHeader({
           "aria-labelledby": "basic-button",
         }}
       >
-        {profileOwned && (
-          <MenuItem onClick={handleClose}>Edit Profile</MenuItem>
-        )}
         {/* if user is looking at their own profile, nothing shows */}
         {/* if user is admin or intructor, student admin edit appears */}
         {/* if user is admin instructor edit adds to list */}
-        {!profileOwned && JSON.parse(sessionUser.user_type) < 2 && JSON.parse(user.user_type) !== 2 && (
-          <MenuItem onClick={handleClose}>
-            Set as Student Administrative
-          </MenuItem>
-        )}
-        {!profileOwned && sessionUser.user_type < 2 && JSON.parse(user.user_type) === 2 && (
-          <MenuItem onClick={handleClose}>
-            Remove Student Administrative Role
-          </MenuItem>
-        )}
-        {!profileOwned && sessionUser.user_type < 1 && JSON.parse(user.user_type) !== 1 && (
-          <MenuItem onClick={handleClose}>Set as Instructor</MenuItem>
-        )}
-        {!profileOwned && sessionUser.user_type < 1 && JSON.parse(user.user_type) === 1 && (
-          <MenuItem onClick={handleClose}> Remove Instructor Role </MenuItem>
-        )}
+        {!profileOwned &&
+          JSON.parse(sessionUser.user_type) < 2 &&
+          JSON.parse(user.user_type) !== 2 && (
+            <MenuItem onClick={handleClose}>
+              Set as Student Administrative
+            </MenuItem>
+          )}
+        {!profileOwned &&
+          sessionUser.user_type < 2 &&
+          JSON.parse(user.user_type) === 2 && (
+            <MenuItem onClick={handleClose}>
+              Remove Student Administrative Role
+            </MenuItem>
+          )}
+        {!profileOwned &&
+          sessionUser.user_type < 1 &&
+          JSON.parse(user.user_type) !== 1 && (
+            <MenuItem onClick={handleClose}>Set as Instructor</MenuItem>
+          )}
+        {!profileOwned &&
+          sessionUser.user_type < 1 &&
+          JSON.parse(user.user_type) === 1 && (
+            <MenuItem onClick={handleClose}> Remove Instructor Role </MenuItem>
+          )}
       </Menu>
     </div>
   );

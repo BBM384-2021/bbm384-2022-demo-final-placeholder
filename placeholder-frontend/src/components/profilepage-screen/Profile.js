@@ -52,10 +52,10 @@ export default function Profile() {
   }, [user_id, isEdited]);
 
   useEffect(() => {
-    console.log("users", user, sessionUser);
+    // console.log("users", user, sessionUser);
     if (user && sessionUser) {
       setOwnedProfile(parseInt(sessionUser.id) === parseInt(user.id));
-      console.log(isOwnedProfile);
+      // console.log(isOwnedProfile);
     }
   }, [user, sessionUser, isOwnedProfile]);
 
@@ -73,10 +73,12 @@ export default function Profile() {
         profileOwned={isOwnedProfile}
         sessionUser={sessionUser}
         user={user}
+        setEdited={setEdited}
       ></ProfileHeader>
 
       <ProfileInfoBar
         user={user}
+        sessionUser={sessionUser}
         profileOwned={isOwnedProfile}
         isEdited={isEdited}
         setEdited={setEdited}

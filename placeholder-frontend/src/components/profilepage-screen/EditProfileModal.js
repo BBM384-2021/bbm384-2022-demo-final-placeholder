@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { TextField, Alert, Box, IconButton, Typography } from "@mui/material";
+import { Clear } from "@mui/icons-material";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Box from "@mui/material/Box";
 import * as Yup from "yup";
-import axios from "axios";
-import { TextField, Alert } from "@mui/material";
 
+import { updateUser } from "../../services/UserService";
 import BasicModal from "../commons/BasicModal";
 
 const defaultInputValues = {
@@ -19,11 +19,26 @@ const defaultInputValues = {
 
 const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
   const [values, setValues] = useState(defaultInputValues);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(``);
 
   const onClose = () => {
     setOpen(false);
   };
+
+  // const removeLink = (link) => {
+  //   switch (link) {
+  //     case "github":
+  //       values.githubLink = "";
+  //       setEdited(true);
+  //       break;
+  //     case "linkedin":
+  //       values.linkedinLink = "";
+  //       setEdited(true);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
   const modalStyles = {
     inputFields: {
@@ -62,36 +77,19 @@ const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
   };
 
   const handleSubmit = () => {
-    console.log(user);
-    setError("");
+    setError(``);
     if (validate(values)) {
-      axios
-        .patch("https://placeholder-backend.herokuapp.com/user/updateUser", {
-          id: user.id,
-          full_name: values.fullName ? values.fullName : user.full_name,
-          user_type: user.user_type,
-          cs_mail: values.email ? values.email : user.cs_mail,
-          phone: values.phone ? values.phone : user.phone,
-          company: values.company ? values.company : user.company,
-          linkedIn_url: values.linkedinLink
-            ? values.linkedinLink
-            : user.linkedIn_url,
-          github_url: values.githubLink ? values.githubLink : user.github_url,
-          alt_mail: user.alt_mail,
-          profile_pic_path: user.profile_pic_path || "",
-          cover_url: user.cover_url || "",
-        })
+      updateUser({ user: user, values: values })
         .then((response) => {
           console.log(response);
           if (response.data.code === 200) {
             // success
-            console.log("success");
             setOpen(false);
             setEdited(true);
-            setError("");
+            setError(``);
           } else {
             setError(
-              "Please Check Your Data [validate your cs mail to update your profile]"
+              `Please Check Your Data \n [Only use your CS Mail in your profile]`
             );
           }
         })
@@ -182,6 +180,22 @@ const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
           handleChange({ ...values, githubLink: event.target.value })
         }
       />
+      {/* TODO LATER: remove the link like below, also style dis */}
+      {/* {user.github_url && (
+        <div className="">
+          <Typography>Current GitHub Link: {user.github_url}</Typography>
+          <IconButton
+            color="primary"
+            aria-label="remove link"
+            component="span"
+            onClick={() => {
+              removeLink("github");
+            }}
+          >
+            <Clear style={{ color: "#FF1F2D" }} fontSize="medium" />
+          </IconButton>
+        </div>
+      )} */}
       <TextField
         placeholder="Linkedin link"
         name="linkedinLink"
