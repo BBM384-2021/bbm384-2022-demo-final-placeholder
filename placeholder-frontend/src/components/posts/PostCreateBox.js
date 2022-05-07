@@ -16,18 +16,20 @@ export default function PostCreateBox ( {user, open, setOpen} ) {
 
     useEffect(()=>{
         if (open) {
-            const interpretResult = (result) => {
-                let allTags = {};
-                for (let i = 0; i < result.length; i++)
-                {
-                    allTags[result[i].id] = {
-                        isSelected: false,
-                        tagName: result[i].tag_name
-                    };
+            getAllTags().then((response) => {
+                if (response.data.code === 200) {
+                    const result = response.data.allTags;
+                    let allTags = {};
+                    for (let i = 0; i < result.length; i++)
+                    {
+                        allTags[result[i].id] = {
+                            isSelected: false,
+                            tagName: result[i].tag_name
+                        };
+                    }
+                    setTags(allTags);
                 }
-                setTags(allTags);
-            };
-            getAllTags(interpretResult);
+            });
         }
     }, [open])
 
