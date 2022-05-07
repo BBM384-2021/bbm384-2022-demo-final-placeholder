@@ -7,7 +7,6 @@ import ProfileHeader from "./ProfileHeader";
 import ProfileInfoBar from "./ProfileInfoBar";
 import ProfileFeed from "./ProfileFeed";
 
-
 import "./Profile.css";
 
 export default function Profile({ sessionUser, setSessionUser }) {
@@ -19,9 +18,16 @@ export default function Profile({ sessionUser, setSessionUser }) {
   const [isEdited, setEdited] = useState(false);
 
   useEffect(() => {
+    console.log("isEdited change", user);
+    setSessionUser(JSON.parse(localStorage.getItem("user")) || sessionUser);
+    setEdited(false);
+  }, [user, isEdited, isOwnedProfile]);
+
+  useEffect(() => {
     getUser(user_id).then((response) => {
       if (response.data.code === 200) {
         // success
+        console.log("getUser");
         setUser(response.data.user);
         setSessionUser(JSON.parse(localStorage.getItem("user")) || null);
         setEdited(false);
@@ -29,7 +35,7 @@ export default function Profile({ sessionUser, setSessionUser }) {
         setUser(null);
       }
     });
-  }, [user_id, isEdited]);
+  }, [user_id]);
 
   useEffect(() => {
     if (user && sessionUser) {
@@ -62,7 +68,6 @@ export default function Profile({ sessionUser, setSessionUser }) {
         setEdited={setEdited}
       ></ProfileInfoBar>
       <ProfileFeed user={user}></ProfileFeed>
-      
     </div>
   );
 }

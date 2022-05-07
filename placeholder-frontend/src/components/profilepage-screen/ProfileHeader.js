@@ -38,7 +38,14 @@ export default function ProfileHeader({
 
   useEffect(() => {
     if (!state.isLoading) setEdited(true);
-  }, [state.isLoading, setEdited]);
+    setState({
+      ...state,
+      profilePic: user.profile_pic_path
+        ? user.profile_pic_path
+        : defaultProfilePic,
+      coverPic: user.cover_url ? user.cover_url : defaultCover,
+    });
+  }, [state.isLoading, setEdited, user]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

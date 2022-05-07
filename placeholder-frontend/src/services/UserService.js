@@ -59,3 +59,7 @@ export function getUsersConnected(user_id) {
     params: { current_user_id: user_id },
   });
 }
+
+export function updateLocalUser(user){
+  //TODO
+}

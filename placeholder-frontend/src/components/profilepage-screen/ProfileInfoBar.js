@@ -38,7 +38,15 @@ export default function ProfileInfoBar({
   const [connectionsOpen, setConnectionsOpen] = useState(false);
 
   useEffect(() => {
-    setEdited(true);
+    getUsersConnected(user.id)
+      .then((response) => {
+        if (response.data.code === 200) {
+          setConnections(response.data.connectedUsers);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, [isConnected]);
 
   useEffect(() => {
