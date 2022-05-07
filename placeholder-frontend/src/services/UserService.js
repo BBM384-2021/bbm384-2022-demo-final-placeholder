@@ -4,6 +4,8 @@ const client = axios.create({
   baseURL: "https://placeholder-backend.herokuapp.com/user",
 });
 
+//  TODO: Do we even have a use case for this? 
+// if not, DELETE DIS
 export async function getAllUsers() {
   try {
     client.get("/getAllUsers").then((res) => {
@@ -34,11 +36,9 @@ export const getUser = (user_id) => {
 };
 
 export const updateUser = ({ user, values, profilePic, coverUrl }) => {
-  console.log(values);
   const { fullName, email, phone, company, linkedinLink, githubLink } = values
     ? values
     : {};
-  console.log("profile pic: ", profilePic);
   return client.patch("/updateUser", {
     id: user.id,
     full_name: fullName ? fullName : user.full_name,
@@ -60,13 +60,6 @@ export function getUsersConnected(user_id) {
   });
 }
 
-// export const getUser = async (user_id) => {
-//   let response = await axios.get(baseProfileURL, {
-//     params: {
-//       requested_id: user_id,
-//     },
-//   });
-//   console.log("returned user is ", response.data.user);
-//   const user = response.data.user;
-//   return user;
-// };
+export function updateLocalUser(user){
+  //TODO
+}

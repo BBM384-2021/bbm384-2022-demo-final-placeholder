@@ -30,9 +30,7 @@ export default function InteractionBar({
       alert(
         "Please Wait While We Save Your Like!\n Spamming buttons might result with data losses"
       );
-    //   console.log(
-    //     "Waiting for server response before sending another like post"
-    //   );
+    
       return;
     }
     setLikeLock(true);
@@ -45,10 +43,8 @@ export default function InteractionBar({
         : content.likeCount - 1,
     });
     if (!content.isLiked) {
-    //   console.log("like is sended to the backend!");
       postLike(curr_user_id, post_id, setLikeLock);
     } else {
-    //   console.log("like is taken from the backend");
       deleteLike(curr_user_id, post_id, setLikeLock);
     }
   };

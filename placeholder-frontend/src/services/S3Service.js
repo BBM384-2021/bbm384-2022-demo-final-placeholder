@@ -41,16 +41,12 @@ export const uploadPicture = (file, type, user, setState, state) => {
     .putObject(params)
     // register callbacks on request to retrieve response data
     .on("success", function (response) {
-      console.log({
-        ...user,
-        profile_pic_path: "customUrl",
-      });
       const customUrl = ROOT_S3_URL + params.Key;
       switch (type) {
         case "profilePic":
           updateUser({ user: user, profilePic: customUrl }).then((response) => {
             if (response.data.code === 200) {
-              console.log("File uploaded to server!");
+              console.log("Profile Picture uploaded to server!");
               setState({ ...state, profilePic: customUrl });
 
               localStorage.setItem(
@@ -68,7 +64,7 @@ export const uploadPicture = (file, type, user, setState, state) => {
         case "coverUrl":
           updateUser({ user: user, coverUrl: customUrl }).then((response) => {
             if (response.data.code === 200) {
-              console.log("File uploaded to server!");
+              console.log("Cover Photo uploaded to server!");
               setState({ ...state, coverPic: customUrl });
               localStorage.setItem(
                 "user",
@@ -103,5 +99,5 @@ export const uploadPicture = (file, type, user, setState, state) => {
       }
     });
   setState({ ...state, isLoading: false, value: 0 });
-//   setEdited(true);
+  //   setEdited(true);
 };
