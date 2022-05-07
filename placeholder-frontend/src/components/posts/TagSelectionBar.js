@@ -2,15 +2,17 @@ import React from "react";
 import TagBox from "./TagBox";
 import "./tagSelectionBar.css"
 
-export default function TagSelectionBar ( {tags, setTags} ) {
+export default function TagSelectionBar ( {tags, setTags, setNoTagError} ) {
 
     const onTagClick = (id) => {
         return (select) => {
-            tags[id] = {
+            setNoTagError(false);
+            let updated_tags = {...tags};
+            updated_tags[id] = {
                 isSelected:select,
-                tagName:tags[id].tagName
+                tagName:tags[id].tagName 
             }
-            setTags(tags);
+            setTags(updated_tags);
         }
     };
 

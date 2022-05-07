@@ -7,7 +7,7 @@ export default function TagBox ({children, onClick}) {
     const [isSelected, setIsSelected] = useState(false);
 
     const onTagClick = () => {
-        onClick(isSelected)
+        onClick(!isSelected)
         setIsSelected(!isSelected)
     }
 
