@@ -33,7 +33,9 @@ export const getUser = (user_id) => {
 
 export const updateUser = ({ user, values, profilePic, coverUrl }) => {
   console.log(values);
-  const { fullName, email, phone, company, linkedinLink, githubLink } = values;
+  const { fullName, email, phone, company, linkedinLink, githubLink } = values
+    ? values
+    : {};
   console.log("profile pic: ", profilePic);
   return axios.patch(
     "https://placeholder-backend.herokuapp.com/user/updateUser",

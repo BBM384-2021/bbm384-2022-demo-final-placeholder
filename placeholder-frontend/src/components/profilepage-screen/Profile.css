@@ -28,7 +28,7 @@
 }
 .editPPButton {
   position: absolute !important;
-  background: #fff no-repeat 100% 100% !important;
+  background: rgba(0, 0, 0, 0.5) no-repeat 100% 100% !important;
   width: 30px;
   height: 30px;
   bottom: 25px;
@@ -60,7 +60,7 @@
   flex-direction: column;
 }
 .editCoverButton {
-  background-color: rgb(239, 239, 239, 0.3) !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 .profileDetails {
