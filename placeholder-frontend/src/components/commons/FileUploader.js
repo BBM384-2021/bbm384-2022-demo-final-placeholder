@@ -20,13 +20,13 @@ const FileUploader = (props) => {
   return (
     <>
       <IconButton
-        className="editPPButton"
+        className={props.class}
         color="primary"
         aria-label="upload picture"
         component="span"
         onClick={handleClick}
       >
-        <CameraAlt style={{ color: "#A5A5A5" }} />
+        <CameraAlt className="altIcon" style={{ color: "#F5F5F5" }} />
       </IconButton>
       <input
         type="file"

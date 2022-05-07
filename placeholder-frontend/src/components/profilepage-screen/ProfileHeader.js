@@ -1,5 +1,13 @@
-import React, { useState } from "react";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  IconButton,
+  Menu,
+  MenuItem,
+  Box,
+  CircularProgress,
+  Typography,
+  Backdrop,
+} from "@mui/material";
 import { CameraAlt, MoreHoriz } from "@mui/icons-material";
 
 import { updateUser } from "../../services/UserService";
@@ -17,19 +25,21 @@ export default function ProfileHeader({
   setEdited,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [profilePic, setProfilePic] = useState(
-    user.profile_pic_path ? user.profile_pic_path : defaultProfilePic
-  );
-  const [coverPic, setCoverPic] = useState(
-    user.cover_url ? user.cover_url : defaultCover
-  );
-  // const [state, setState] = useState({
-  //   mainState: "initial", //initial, uploaded
-  //   selectedFile: null,
-  //   imageUploaded: 0,
-  // });
-
   const open = Boolean(anchorEl);
+
+  const [state, setState] = useState({
+    isLoading: false,
+    value: 0,
+    profilePic: user.profile_pic_path
+      ? user.profile_pic_path
+      : defaultProfilePic,
+    coverPic: user.cover_url ? user.cover_url : defaultCover,
+  });
+
+  useEffect(() => {
+    console.log(state.isLoading);
+    console.log(state.value);
+  }, [state]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -40,25 +50,28 @@ export default function ProfileHeader({
 
   const handleChangePP = (selectedFile) => {
     console.log("profile file: ", selectedFile);
-    uploadPicture(selectedFile, "profile-pics", setEdited);
+    uploadPicture(selectedFile, "profilePic", user, setState, state, setEdited);
   };
 
-  const handleChangeCover = () => {
-    // TODO
+  const handleChangeCover = (selectedFile) => {
+    uploadPicture(selectedFile, "coverUrl", user, setState, state, setEdited);
   };
 
   return (
     <div
       className="headerContainer"
       style={{
-        backgroundImage: `url(${coverPic})`,
+        backgroundImage: `url(${state.coverPic})`,
       }}
     >
       <div className="ppContainer">
         <div className="profileImage">
-          <img src={profilePic} alt="Profile of User" />
+          <img src={state.profilePic} alt="Profile of User" />
           {profileOwned && (
-            <FileUploader setUploadedFile={handleChangePP}></FileUploader>
+            <FileUploader
+              class="editPPButton"
+              setUploadedFile={handleChangePP}
+            ></FileUploader>
           )}
         </div>
       </div>
@@ -77,15 +90,19 @@ export default function ProfileHeader({
           </IconButton>
         )}
         {profileOwned && (
-          <IconButton
-            className="editCoverButton"
-            color="primary"
-            aria-label="upload picture"
-            component="span"
-            onClick={handleChangeCover}
-          >
-            <CameraAlt style={{ color: "#F5F5F5" }} fontSize="large" />
-          </IconButton>
+          <FileUploader
+            class="editCoverButton"
+            setUploadedFile={handleChangeCover}
+          ></FileUploader>
+          // <IconButton
+          //   className="editCoverButton"
+          //   color="primary"
+          //   aria-label="upload picture"
+          //   component="span"
+          //   onClick={handleChangeCover}
+          // >
+          //   <CameraAlt style={{ color: "#F5F5F5" }} fontSize="large" />
+          // </IconButton>
         )}
       </div>
       <Menu
@@ -133,6 +150,37 @@ export default function ProfileHeader({
             <MenuItem onClick={handleClose}> Remove Instructor Role </MenuItem>
           )}
       </Menu>
+
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={state.isLoading}
+        onClick={handleClose}
+      >
+        <Box sx={{ position: "relative", display: "inline-flex" }}>
+          <CircularProgress
+            color="inherit"
+            thickness={4}
+            variant="determinate"
+            value={state.value}
+          />
+          <Box
+            sx={{
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+              position: "absolute",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="caption" component="div" color="text.primary">
+              {`${Math.round(state.value)}%`}
+            </Typography>
+          </Box>
+        </Box>
+      </Backdrop>
     </div>
   );
 }
