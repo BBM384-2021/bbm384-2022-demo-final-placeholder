@@ -16,6 +16,8 @@ import {
 } from "../../services/ConnectionService";
 
 import EditProfileModal from "./EditProfileModal";
+import { getUsersConnected } from "../../services/UserService";
+import ConnectionsModal from "./ConnectionsModal";
 
 export default function ProfileInfoBar({
   user,
@@ -27,8 +29,25 @@ export default function ProfileInfoBar({
   const linkedInUrl = user.linkedIn_url;
   const githubUrl = user.github_url;
   const [connections, setConnections] = useState([]);
+
   const [isConnected, setConnected] = useState(false);
+  //open modal for profile edit:
   const [open, setOpen] = useState(false);
+
+  //open modal for connections screen:
+  const [connectionsOpen, setConnectionsOpen] = useState(false);
+
+  useEffect(() => {
+    getUsersConnected(user.id)
+      .then((response) => {
+        if (response.data.code === 200) {
+          setConnections(response.data.connectedUsers);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [isConnected]);
 
   useEffect(() => {
     //   TODO: get connections service
@@ -46,16 +65,23 @@ export default function ProfileInfoBar({
           console.alert(e);
         });
     }
-    
-  }, [user]);
+    getUsersConnected(user.id)
+      .then((response) => {
+        if (response.data.code === 200) {
+          setConnections(response.data.connectedUsers);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [user, profileOwned, sessionUser.id]);
 
   const showConnectionsScreen = () => {
-    //   !TODO
+    setConnectionsOpen(true);
   };
   const handleAddConnection = () => {
     createConnection(user.id, sessionUser.id)
       .then((response) => {
-        console.log(response);
         if (response.data.code === 200) {
           setConnected(true);
         } else {
@@ -69,7 +95,6 @@ export default function ProfileInfoBar({
   const handleRemoveConnection = () => {
     removeConnection(user.id, sessionUser.id)
       .then((response) => {
-        console.log(response);
         if (response.data.code === 200) {
           setConnected(false);
         } else {
@@ -77,7 +102,7 @@ export default function ProfileInfoBar({
         }
       })
       .catch((e) => {
-        console.log("remove error", e);
+        console.log("Handle Remove Connection:", e);
       });
   };
   const handleEditProfile = () => {
@@ -178,12 +203,22 @@ export default function ProfileInfoBar({
           </>
         )}
       </div>
-      <EditProfileModal
-        open={open}
-        setOpen={setOpen}
-        user={user}
-        setEdited={setEdited}
-      ></EditProfileModal>
+      {open && (
+        <EditProfileModal
+          open={open}
+          setOpen={setOpen}
+          user={user}
+          setEdited={setEdited}
+        ></EditProfileModal>
+      )}
+      {connectionsOpen && (
+        <ConnectionsModal
+          open={connectionsOpen}
+          setOpen={setConnectionsOpen}
+          connections={connections}
+          userName={user.full_name}
+        ></ConnectionsModal>
+      )}
     </div>
   );
 }

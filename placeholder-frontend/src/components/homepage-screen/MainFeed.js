@@ -39,7 +39,6 @@ export default function MainFeed({ user }) {
 
       {contents.length > 0 &&
         contents.map((content) => {
-          // console.log(content.post.id);
           return (
             <div key={content.post.id}>
               <CardPreview

@@ -1,4 +1,3 @@
-import axios from "axios";
 import AWS from "aws-sdk";
 
 import { updateUser } from "./UserService";
@@ -31,7 +30,7 @@ const s3Bucket = new AWS.S3({
   signatureVersion: "v4",
 });
 
-export const uploadPicture = (file, type, user, setState, state, setEdited) => {
+export const uploadPicture = (file, type, user, setState, state) => {
   const params = {
     ACL: "public-read",
     Key: user.id + type,
@@ -42,16 +41,12 @@ export const uploadPicture = (file, type, user, setState, state, setEdited) => {
     .putObject(params)
     // register callbacks on request to retrieve response data
     .on("success", function (response) {
-      console.log({
-        ...user,
-        profile_pic_path: "customUrl",
-      });
       const customUrl = ROOT_S3_URL + params.Key;
       switch (type) {
         case "profilePic":
           updateUser({ user: user, profilePic: customUrl }).then((response) => {
             if (response.data.code === 200) {
-              console.log("File uploaded to server!");
+              console.log("Profile Picture uploaded to server!");
               setState({ ...state, profilePic: customUrl });
 
               localStorage.setItem(
@@ -69,7 +64,7 @@ export const uploadPicture = (file, type, user, setState, state, setEdited) => {
         case "coverUrl":
           updateUser({ user: user, coverUrl: customUrl }).then((response) => {
             if (response.data.code === 200) {
-              console.log("File uploaded to server!");
+              console.log("Cover Photo uploaded to server!");
               setState({ ...state, coverPic: customUrl });
               localStorage.setItem(
                 "user",
@@ -96,9 +91,6 @@ export const uploadPicture = (file, type, user, setState, state, setEdited) => {
         isLoading: true,
         value: Math.round((evt.loaded / evt.total) * 100),
       });
-      //   setState({
-      //     progress: Math.round((evt.loaded / evt.total) * 100),
-      //   });
     })
     .send((err) => {
       if (err) {
@@ -107,25 +99,5 @@ export const uploadPicture = (file, type, user, setState, state, setEdited) => {
       }
     });
   setState({ ...state, isLoading: false, value: 0 });
-  setEdited(true);
+  //   setEdited(true);
 };
-
-// export function uploadPicture(file, type, setEdited) {
-//   console.log("uploaded file: ", file);
-//   S3FileUpload.uploadFile(file, { ...config, dirName: "/profile-pics" })
-//     .then((data) => {
-//       //TODO: change proflePic to type and see if it works
-//       console.log("s3 data:", data.location);
-//   updateUser({ profilePic: data.location }).then((response) => {
-//     if (response.data.code === 200) {
-//       console.log("File uploaded to server!");
-//       setEdited(true);
-//     } else {
-//       alert("We had a problem uploading your file");
-//     }
-//   });
-//     })
-//     .catch((error) => {
-//       alert("S3 Had an Error: ", error);
-//     });
-// }
