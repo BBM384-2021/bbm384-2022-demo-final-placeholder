@@ -5,15 +5,7 @@ import { getUser } from "../../services/UserService";
 import ProfileHeader from "./ProfileHeader";
 import LinearIndeterminate from "../commons/LinearIndeterminateLoading";
 
-// kept them here since we're going to need these to be dynamic pictures
-import profilePic from "./assets/1.png";
-
 import {
-  vectorPencil,
-  vectorGithub,
-  vectorLinkedin,
-  vectorMore,
-  vectorAdd,
   vectorHeart,
   vectorComment,
   vectorShare,
@@ -24,17 +16,13 @@ import {
 import "./Profile.css";
 import ProfileInfoBar from "./ProfileInfoBar";
 
-export default function Profile() {
+export default function Profile({ sessionUser, setSessionUser }) {
   const { user_id } = useParams();
   const [user, setUser] = useState(null);
-  const [sessionUser, setSessionUser] = useState(null);
+  // const [sessionUser, setSessionUser] = useState(null);
   const [isOwnedProfile, setOwnedProfile] = useState(false);
   const [error, setError] = useState("");
   const [isEdited, setEdited] = useState(false);
-
-  useEffect(() => {
-    // setSessionUser(JSON.parse(localStorage.getItem("user")));
-  }, []);
 
   useEffect(() => {
     getUser(user_id).then((response) => {
@@ -43,8 +31,7 @@ export default function Profile() {
         setUser(response.data.user);
         setSessionUser(JSON.parse(localStorage.getItem("user")) || null);
         setEdited(false);
-
-        console.log(response.data.user.id);
+        console.log("user refresh on setEdited: ", response.data.user);
       } else {
         setUser(null);
       }

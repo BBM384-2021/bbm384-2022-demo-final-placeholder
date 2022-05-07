@@ -136,6 +136,13 @@
   margin: 0 20px;
   transition: all 0.5s ease 0s !important;
 }
+
+.profileBanner-connection {
+  margin: 15px 0;
+  border-radius: 20px;
+}
+
+/* OUROBOROS WAS HERE */
 /* .hoverButton:hover span:after {
   content: "Add Connection";
   width: fit-content;

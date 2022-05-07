@@ -38,8 +38,8 @@ export default function ProfileHeader({
 
   useEffect(() => {
     console.log(state.isLoading);
-    console.log(state.value);
-  }, [state]);
+    if (!state.isLoading) setEdited(true);
+  }, [state.isLoading, setEdited]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,11 +50,11 @@ export default function ProfileHeader({
 
   const handleChangePP = (selectedFile) => {
     console.log("profile file: ", selectedFile);
-    uploadPicture(selectedFile, "profilePic", user, setState, state, setEdited);
+    uploadPicture(selectedFile, "profilePic", user, setState, state);
   };
 
   const handleChangeCover = (selectedFile) => {
-    uploadPicture(selectedFile, "coverUrl", user, setState, state, setEdited);
+    uploadPicture(selectedFile, "coverUrl", user, setState, state);
   };
 
   return (
