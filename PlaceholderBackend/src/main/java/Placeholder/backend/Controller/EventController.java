@@ -46,7 +46,9 @@ public class EventController {
 
         if(event.getEvent_body() == null || event.getEvent_body().equals("")
             || event.getEvent_location() == null || event.getEvent_location().equals("")
-            || event.getUser_id() == 0 || event.getEvent_share_date() == null || event.getEvent_share_date().equals("")){
+            || event.getUser_id() == 0 || event.getEvent_share_date() == null || event.getEvent_share_date().equals("")
+            || event.getStart_date() == null || event.getStart_date().equals("")
+            || event.getEnd_date() == null || event.getEnd_date().equals("")){
 
             return DAOFunctions.getResponse(400,"error","Missing Fields");
 
@@ -64,7 +66,9 @@ public class EventController {
     @PatchMapping("/event/updateEvent")
     public Object updateEvent(@RequestBody Event event){
         if(event.getEvent_body() == null || event.getEvent_body().equals("") || event.getId() == 0 ||
-            event.getEvent_location() == null ||event.getEvent_location().equals("")){
+            event.getEvent_location() == null ||event.getEvent_location().equals("")
+                || event.getStart_date() == null || event.getStart_date().equals("")
+                || event.getEnd_date() == null || event.getEnd_date().equals("")){
             return DAOFunctions.getResponse(400,"error","Missing Fields");
         }
         return DAOFunctions.getResponse(EventDAO.updateEvent(event),"",null);

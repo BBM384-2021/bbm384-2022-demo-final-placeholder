@@ -174,7 +174,7 @@ public class EventDAO {
 
         try{
             session.beginTransaction();
-            session.createQuery(String.format("update Event e SET e.event_body = '%s' , e.event_visual_data_path = '%s', e.event_location = '%s' WHERE e.id = '%s'",event.getEvent_body(),event.getEvent_visual_data_path(),event.getEvent_location(),event.getId())).executeUpdate();
+            session.createQuery(String.format("update Event e SET e.event_body = '%s' , e.event_visual_data_path = '%s', e.event_location = '%s', e.start_date = '%s', e.end_date = '%s' WHERE e.id = '%s'",event.getEvent_body(),event.getEvent_visual_data_path(),event.getEvent_location(),event.getStart_date(),event.getEnd_date(),event.getId())).executeUpdate();
             session.getTransaction().commit();
         }
         catch (Exception e){
