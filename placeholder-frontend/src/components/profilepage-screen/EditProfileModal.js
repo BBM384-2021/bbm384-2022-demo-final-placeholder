@@ -81,7 +81,6 @@ const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
     if (validate(values)) {
       updateUser({ user: user, values: values })
         .then((response) => {
-          console.log(response);
           if (response.data.code === 200) {
             // success
             setOpen(false);
@@ -94,7 +93,7 @@ const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
           }
         })
         .catch((error) => {
-          console.log(error.response.request);
+          console.log(error.message);
         });
     }
   };

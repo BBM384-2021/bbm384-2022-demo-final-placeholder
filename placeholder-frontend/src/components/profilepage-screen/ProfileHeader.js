@@ -37,7 +37,6 @@ export default function ProfileHeader({
   });
 
   useEffect(() => {
-    console.log(state.isLoading);
     if (!state.isLoading) setEdited(true);
   }, [state.isLoading, setEdited]);
 
@@ -49,7 +48,6 @@ export default function ProfileHeader({
   };
 
   const handleChangePP = (selectedFile) => {
-    console.log("profile file: ", selectedFile);
     uploadPicture(selectedFile, "profilePic", user, setState, state);
   };
 

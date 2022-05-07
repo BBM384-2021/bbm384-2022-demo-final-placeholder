@@ -2,19 +2,13 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { getUser } from "../../services/UserService";
-import ProfileHeader from "./ProfileHeader";
 import LinearIndeterminate from "../commons/LinearIndeterminateLoading";
-
-import {
-  vectorHeart,
-  vectorComment,
-  vectorShare,
-  vectorExpand,
-  vectorPostPic, // we will delete these obv
-  vectorFeed,
-} from "./assets/index";
-import "./Profile.css";
+import ProfileHeader from "./ProfileHeader";
 import ProfileInfoBar from "./ProfileInfoBar";
+import ProfileFeed from "./ProfileFeed";
+
+
+import "./Profile.css";
 
 export default function Profile({ sessionUser, setSessionUser }) {
   const { user_id } = useParams();
@@ -31,7 +25,6 @@ export default function Profile({ sessionUser, setSessionUser }) {
         setUser(response.data.user);
         setSessionUser(JSON.parse(localStorage.getItem("user")) || null);
         setEdited(false);
-        console.log("user refresh on setEdited: ", response.data.user);
       } else {
         setUser(null);
       }
@@ -39,10 +32,8 @@ export default function Profile({ sessionUser, setSessionUser }) {
   }, [user_id, isEdited]);
 
   useEffect(() => {
-    // console.log("users", user, sessionUser);
     if (user && sessionUser) {
       setOwnedProfile(parseInt(sessionUser.id) === parseInt(user.id));
-      // console.log(isOwnedProfile);
     }
   }, [user, sessionUser, isOwnedProfile]);
 
@@ -70,119 +61,8 @@ export default function Profile({ sessionUser, setSessionUser }) {
         isEdited={isEdited}
         setEdited={setEdited}
       ></ProfileInfoBar>
-
-      <div className="profileFeedContainer">
-        {/* <div className="infoColumn"></div> */}
-
-        <div className="feedColumn">
-          <div className="postContainer">
-            <a className="profileFeed">
-              <img src={vectorFeed} />
-              ⠀Profile Feed
-            </a>
-            <div className="userProfile">
-              <img src={vectorPostPic} alt="" />
-              <div>
-                <p>{user.full_name} posted</p>
-                <span>April 15 2022, 13:40 pm</span>
-              </div>
-            </div>
-            <p className="postText">
-              {" "}
-              ⠀⠀Ders deneme bir iki üç!⠀
-              <a href="#">https://zoom.us/j/612312612987123</a>
-            </p>
-            <div className="postRow">
-              <div className="activityIcons">
-                <div>
-                  <img src={vectorHeart} />
-                  21
-                </div>
-                <div>
-                  <img src={vectorComment} />3
-                </div>
-                <div>
-                  <img src={vectorShare} />6
-                </div>
-                <button>
-                  {" "}
-                  <img src={vectorExpand} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="postContainer">
-            <div className="userProfile">
-              <img src={vectorPostPic} alt="" />
-              <div>
-                <p>{user.full_name} posted</p>
-                <span>April 15 2022, 13:40 pm</span>
-              </div>
-            </div>
-            <p className="postText">
-              {""}
-              Harika, müthiş, inanılmaz!⠀
-              <a href="#">https://zoom.us/j/612312612987123</a>
-            </p>
-            <div className="postRow">
-              <div className="activityIcons">
-                <div>
-                  <img src={vectorHeart} />
-                  21
-                </div>
-                <div>
-                  <img src={vectorComment} />3
-                </div>
-                <div>
-                  <img src={vectorShare} />6
-                </div>
-                <button>
-                  {" "}
-                  <img src={vectorExpand} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="postContainer">
-            <div className="userProfile">
-              <img src={vectorPostPic} alt="" />
-              <div>
-                <p>{user.full_name} posted</p>
-                <span>April 15 2022, 13:40 pm</span>
-              </div>
-            </div>
-            <p className="postText">
-              {" "}
-              ⠀⠀Harika, müthiş, inanılmaz!⠀
-              <a href="#">https://zoom.us/j/612312612987123</a>
-            </p>
-            <div className="postRow">
-              <div className="activityIcons">
-                <div>
-                  <img src={vectorHeart} />
-                  21
-                </div>
-                <div>
-                  <img src={vectorComment} />3
-                </div>
-                <div>
-                  <img src={vectorShare} />6
-                </div>
-                <button>
-                  {" "}
-                  <img src={vectorExpand} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="postProfileIcon">
-            <img /> <i className="bruh"></i>
-          </div>
-        </div>
-      </div>
+      <ProfileFeed user={user}></ProfileFeed>
+      
     </div>
   );
 }

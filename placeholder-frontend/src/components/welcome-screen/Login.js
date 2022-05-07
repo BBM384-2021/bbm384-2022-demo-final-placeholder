@@ -52,7 +52,6 @@ export default function Login({ setLogin, setUser }) {
   const [isLoading, setLoading] = useState(false);
 
   const validate = (fieldValues) => {
-    console.log("user_password" in fieldValues);
     if (fieldValues.get("user_password")?.length < 6) {
       setError("Check your password!");
       return false;
@@ -64,16 +63,10 @@ export default function Login({ setLogin, setUser }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("loading...", event);
     setLoading(true);
     const data = new FormData(event.currentTarget);
-    console.log({
-      cs_mail: data.get("cs_mail"),
-      user_password: data.get("user_password"),
-    });
-    if (validate(data)) {
-      console.log("login success");
 
+    if (validate(data)) {
       axios
         .get(
           BaseLoginURL,
@@ -91,19 +84,17 @@ export default function Login({ setLogin, setUser }) {
           }
         )
         .then((response) => {
-          console.log("response: ", response);
           setLoading(false);
           if (response.data.code === 200) {
             // success
             const user = response.data.user;
-            console.log(user);
             setUser(user);
           } else {
             setError("Wrong E-mail or Password!");
           }
         })
         .catch((error) => {
-          console.log("error axios: ", error.response);
+          console.log("Login Error: ", error.response);
         });
     } else {
       setLoading(false);

@@ -61,7 +61,6 @@ export default function ProfileInfoBar({
       .then((response) => {
         if (response.data.code === 200) {
           setConnections(response.data.connectedUsers);
-          console.log(response.data);
         }
       })
       .catch((e) => {
@@ -75,7 +74,6 @@ export default function ProfileInfoBar({
   const handleAddConnection = () => {
     createConnection(user.id, sessionUser.id)
       .then((response) => {
-        console.log(response);
         if (response.data.code === 200) {
           setConnected(true);
         } else {
@@ -89,7 +87,6 @@ export default function ProfileInfoBar({
   const handleRemoveConnection = () => {
     removeConnection(user.id, sessionUser.id)
       .then((response) => {
-        console.log(response);
         if (response.data.code === 200) {
           setConnected(false);
         } else {
@@ -97,7 +94,7 @@ export default function ProfileInfoBar({
         }
       })
       .catch((e) => {
-        console.log("remove error", e);
+        console.log("Handle Remove Connection:", e);
       });
   };
   const handleEditProfile = () => {

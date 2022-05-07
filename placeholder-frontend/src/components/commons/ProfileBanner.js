@@ -20,7 +20,7 @@ export default function ProfileBanner({
 }) {
   const styleClassName = "profileBanner-" + contentType;
   const withStatus = status === undefined ? false : true;
-  let contentEnum = -1;
+  let contentEnum = 0;
   switch (contentType) {
     case "post":
       contentEnum = 0;
@@ -36,7 +36,9 @@ export default function ProfileBanner({
       break;
 
     default:
-      return <div>There was a problem</div>;
+      //search bar banners
+      contentEnum = 4;
+      break;
   
   }
   return (
