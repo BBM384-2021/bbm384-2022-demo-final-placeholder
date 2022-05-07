@@ -18,7 +18,6 @@ export default function Profile({ sessionUser, setSessionUser }) {
   const [isEdited, setEdited] = useState(false);
 
   useEffect(() => {
-    console.log("isEdited change", user);
     setSessionUser(JSON.parse(localStorage.getItem("user")) || sessionUser);
     setEdited(false);
   }, [user, isEdited, isOwnedProfile]);

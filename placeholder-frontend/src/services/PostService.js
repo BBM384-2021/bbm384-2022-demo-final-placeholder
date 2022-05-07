@@ -80,7 +80,7 @@ export function getPost(post_id, setState, finishFunction) {
 }
 
 export function getAllPostsOfUser(user_id) {
-  return axios.get(baseURL + "/getPost", {
+  return axios.get(baseURL + "/getAllPostsOfAUser", {
     params: {
       user_id: user_id,
     },
