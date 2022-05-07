@@ -16,58 +16,67 @@ function isUserLikedPost(likeArray, userID) {
   return false;
 }
 
-export default function InteractionBar ( {content, setContent, post_id, curr_user_id, setOpen} )
-{    
-    const [likeLock, setLikeLock] = useState(false);
+export default function InteractionBar({
+  content,
+  setContent,
+  post_id,
+  curr_user_id,
+  setOpen,
+}) {
+  const [likeLock, setLikeLock] = useState(false);
 
-    const onLikeClick = () => {
-        if (likeLock) {
-            console.log("Waiting for server response before sending another like post");
-            return;
-        }
-        setLikeLock(true);
+  const onLikeClick = () => {
+    if (likeLock) {
+      alert(
+        "Please Wait While We Save Your Like!\n Spamming buttons might result with data losses"
+      );
+    //   console.log(
+    //     "Waiting for server response before sending another like post"
+    //   );
+      return;
+    }
+    setLikeLock(true);
 
-        setContent({
-            ...content,
-            "isLiked" : !content.isLiked,
-            "likeCount" : !content.isLiked ? content.likeCount + 1 : content.likeCount - 1
-        });
-        if (!content.isLiked) {
-            console.log("like is sended to the backend!");
-            postLike(curr_user_id, post_id, setLikeLock);
-        } else {
-            console.log("like is taken from the backend");
-            deleteLike(curr_user_id, post_id, setLikeLock);
-        }
-        
-    };
+    setContent({
+      ...content,
+      isLiked: !content.isLiked,
+      likeCount: !content.isLiked
+        ? content.likeCount + 1
+        : content.likeCount - 1,
+    });
+    if (!content.isLiked) {
+    //   console.log("like is sended to the backend!");
+      postLike(curr_user_id, post_id, setLikeLock);
+    } else {
+    //   console.log("like is taken from the backend");
+      deleteLike(curr_user_id, post_id, setLikeLock);
+    }
+  };
 
-    return (
-        <div className="interaction-bar-row" style={{display: 'flex', flexDirection: 'row', marginLeft:'30px',
-        fontFamily: 'Poppins'}}>
-            <div>
-                <IconButton
-                    onClick={onLikeClick}
-                    variant="contained">
-                    {content.isLiked && 
-                        <FavoriteIcon htmlColor="red"/>
-                    }
-                    {!content.isLiked &&
-                        <FavoriteBorderIcon />
-                    }
-                </IconButton>
-                {content.likeCount}
-            </div>
+  return (
+    <div
+      className="interaction-bar-row"
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        marginLeft: "30px",
+        fontFamily: "Poppins",
+      }}
+    >
+      <div>
+        <IconButton onClick={onLikeClick} variant="contained">
+          {content.isLiked && <FavoriteIcon htmlColor="red" />}
+          {!content.isLiked && <FavoriteBorderIcon />}
+        </IconButton>
+        {content.likeCount}
+      </div>
 
-            <div>
-                <IconButton
-                    disabled={setOpen===undefined}
-                    onClick={setOpen}>
-                    <ModeCommentIcon />
-                </IconButton>
-                {content.commentCount}
-            </div>
-
-        </div>
-    );
+      <div>
+        <IconButton disabled={setOpen === undefined} onClick={setOpen}>
+          <ModeCommentIcon />
+        </IconButton>
+        {content.commentCount}
+      </div>
+    </div>
+  );
 }

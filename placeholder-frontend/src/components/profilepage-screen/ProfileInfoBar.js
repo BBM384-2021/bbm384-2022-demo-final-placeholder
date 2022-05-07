@@ -8,10 +8,18 @@ import {
   PersonRemove,
   Edit,
 } from "@mui/icons-material";
+
+import {
+  checkConnection,
+  createConnection,
+  removeConnection,
+} from "../../services/ConnectionService";
+
 import EditProfileModal from "./EditProfileModal";
 
 export default function ProfileInfoBar({
   user,
+  sessionUser,
   profileOwned,
   isEdited,
   setEdited,
@@ -25,16 +33,52 @@ export default function ProfileInfoBar({
   useEffect(() => {
     //   TODO: get connections service
     // if our session user is in the list, we set the isConnected to true
+    if (!profileOwned) {
+      checkConnection(user.id, sessionUser.id)
+        .then((response) => {
+          if (response.data.code === 200) {
+            setConnected(response.data.connected);
+          } else {
+            alert("Something Went Wrong! Please Try Again.");
+          }
+        })
+        .catch((e) => {
+          console.alert(e);
+        });
+    }
+    
   }, [user]);
 
   const showConnectionsScreen = () => {
     //   !TODO
   };
   const handleAddConnection = () => {
-    //   !TODO
+    createConnection(user.id, sessionUser.id)
+      .then((response) => {
+        console.log(response);
+        if (response.data.code === 200) {
+          setConnected(true);
+        } else {
+          alert("Something Went Wrong! Please Try Again.");
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
   const handleRemoveConnection = () => {
-    //   !TODO
+    removeConnection(user.id, sessionUser.id)
+      .then((response) => {
+        console.log(response);
+        if (response.data.code === 200) {
+          setConnected(false);
+        } else {
+          alert("Something Went Wrong! Please Try Again.");
+        }
+      })
+      .catch((e) => {
+        console.log("remove error", e);
+      });
   };
   const handleEditProfile = () => {
     setOpen(true);
@@ -143,47 +187,3 @@ export default function ProfileInfoBar({
     </div>
   );
 }
-// <div >
-//         <div className="">
-//           <div className="profileDetailRow">
-//             <div>
-//               <h3>{user.full_name}</h3>
-//               <h4>54 connections</h4>
-//               {linkedInUrl && <></>}
-//               <a href="https://github.com/mavibirdesmi">
-//                 {" "}
-//                 {/* <img src={vectorGithub} className="githubImage" alt="" />{" "} */}
-//               </a>
-//               <a href="https://www.linkedin.com/in/desmin-alpaslan/">
-//                 {" "}
-//                 {/* <img src={vectorLinkedin} className="githubImage" alt="" />{" "} */}
-//               </a>
-//             </div>
-//           </div>
-//         </div>
-//         <div className="profileDetailRight">
-//           <a> {/* <img src={vectorAdd} className="more" alt="" />{" "} */}</a>
-//           <a id="modalBtn" className="modalButton">
-//             {" "}
-//             {/* <img src={vectorPencil} className="githubImage" alt="" />{" "} */}
-//           </a>
-//           <a> {/* <img src={vectorMore} className="more" alt="" />{" "} */}</a>
-
-//           <div id="simpleModal" className="modal">
-//             <div className="modalContent">
-//               <span className="closeBtn">&times;</span>
-//               <h2>Edit profile</h2>
-//               <form>
-//                 <label>Name</label>
-//                 <input type="text" placeholder="Name..." />
-//                 <label>Surname</label>
-//                 <input type="text" placeholder="Surname..." />
-//                 <label>Github</label>
-//                 <input type="text" placeholder="Github..." />
-//                 <label>Linkedin</label>
-//                 <input type="text" placeholder="Linkedin..." />
-//               </form>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
