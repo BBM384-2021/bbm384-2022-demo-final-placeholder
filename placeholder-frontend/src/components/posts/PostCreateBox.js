@@ -78,7 +78,6 @@ export default function PostCreateBox({ user, open, setOpen }) {
   useEffect(() => {
     // create the preview
     let objectUrl;
-    console.log("visualData: ", state.postVisualData);
     if (state.postVisualData) {
       objectUrl = URL.createObjectURL(state.postVisualData);
       setPreview(objectUrl);

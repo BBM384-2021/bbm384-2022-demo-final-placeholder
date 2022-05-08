@@ -40,7 +40,6 @@ export const uploadPicture = (file, type, user, setState, state) => {
         ? "" + state.postKey
         : "generated" + Math.floor(Math.random() * 100)
       : user.id + type;
-  console.log("type: ", typeof urlKey);
   const params = {
     ACL: "public-read",
     Key: urlKey,
@@ -56,7 +55,7 @@ export const uploadPicture = (file, type, user, setState, state) => {
         case "profilePic":
           updateUser({ user: user, profilePic: customUrl }).then((response) => {
             if (response.data.code === 200) {
-              console.log("Profile Picture uploaded to server!");
+              console.log("Profile Picture uploaded to server!", customUrl);
               setState({ ...state, profilePic: customUrl });
 
               localStorage.setItem(
@@ -76,7 +75,7 @@ export const uploadPicture = (file, type, user, setState, state) => {
         case "coverUrl":
           updateUser({ user: user, coverUrl: customUrl }).then((response) => {
             if (response.data.code === 200) {
-              console.log("Cover Photo uploaded to server!");
+              console.log("Cover Photo uploaded to server!", customUrl);
               setState({ ...state, coverPic: customUrl });
               localStorage.setItem(
                 "user",

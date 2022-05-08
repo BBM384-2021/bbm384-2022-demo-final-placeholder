@@ -11,13 +11,13 @@ export default function CardContent({
   const refText = createRef();
   const [showMore, setShowMore] = useState(false);
 
-  useState(() => {
-    console.log(
-      content.post.post_visual_data_path
-        ? content.post.post_visual_data_path
-        : content.post
-    );
-  }, [content]);
+  // useState(() => {
+  //   console.log(
+  //     content.post.post_visual_data_path
+  //       ? content.post.post_visual_data_path
+  //       : content.post
+  //   );
+  // }, [content]);
 
   useLayoutEffect(() => {
     if (refText.current.clientHeight < refText.current.scrollHeight) {
