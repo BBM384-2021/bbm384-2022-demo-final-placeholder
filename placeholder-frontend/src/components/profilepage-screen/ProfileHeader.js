@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  IconButton,
-  Menu,
-  MenuItem,
-  Box,
-  CircularProgress,
-  Typography,
-  Backdrop,
-} from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import { CameraAlt, MoreHoriz } from "@mui/icons-material";
 
-import { updateUser } from "../../services/UserService";
 import { uploadPicture } from "../../services/S3Service";
 import FileUploader from "../commons/FileUploader";
 
@@ -76,7 +67,10 @@ export default function ProfileHeader({
             <FileUploader
               class="editPPButton"
               setUploadedFile={handleChangePP}
-            ></FileUploader>
+              state={state}
+            >
+              <CameraAlt className="altIcon" style={{ color: "#F5F5F5" }} />
+            </FileUploader>
           )}
         </div>
       </div>
@@ -98,7 +92,10 @@ export default function ProfileHeader({
           <FileUploader
             class="editCoverButton"
             setUploadedFile={handleChangeCover}
-          ></FileUploader>
+            state={state}
+          >
+            <CameraAlt className="altIcon" style={{ color: "#F5F5F5" }} />
+          </FileUploader>
           // <IconButton
           //   className="editCoverButton"
           //   color="primary"
@@ -155,37 +152,6 @@ export default function ProfileHeader({
             <MenuItem onClick={handleClose}> Remove Instructor Role </MenuItem>
           )}
       </Menu>
-
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={state.isLoading}
-        onClick={handleClose}
-      >
-        <Box sx={{ position: "relative", display: "inline-flex" }}>
-          <CircularProgress
-            color="inherit"
-            thickness={4}
-            variant="determinate"
-            value={state.value}
-          />
-          <Box
-            sx={{
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-              position: "absolute",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Typography variant="caption" component="div" color="text.primary">
-              {`${Math.round(state.value)}%`}
-            </Typography>
-          </Box>
-        </Box>
-      </Backdrop>
     </div>
   );
 }

@@ -43,7 +43,7 @@ export default function CardPreview({ content, contentType, user, key }) {
     <Card
       id={key}
       sx={{
-        height: "420px",
+        // maxHeight: "420px",
         margin: "10px",
         borderRadius: "10px",
         backgroundColor: Colors.whiteShaded,

@@ -68,14 +68,29 @@ export function getPost(post_id, setState, finishFunction) {
       params: {
         post_id: post_id,
       },
-    })
-    .then((response) => {
-      console.log(response);
-      if (response.data.code === 200) {
-        setState(response.data.post);
-      } else {
-      }
-      finishFunction();
+    }).then((response) => {
+        if (response.data.code === 200) {
+          setState(response.data.post);
+        } else {
+        
+        }
+        finishFunction();
+    });
+}
+  
+export function addPost ( user_id, post_body, attachment, tags ) {
+    let visual_path_url = attachment;
+    if (visual_path_url !== null) {
+        // DO S3 related stuff
+    }
+    return axios.post(baseURL + "/addPost", {
+        "post" : {
+            "user_id" : user_id,
+            "post_body" : post_body,
+            "post_share_date" : new Date().toISOString(),
+            "post_visual_data_path" : visual_path_url
+        },
+        "tags" : tags
     });
 }
 

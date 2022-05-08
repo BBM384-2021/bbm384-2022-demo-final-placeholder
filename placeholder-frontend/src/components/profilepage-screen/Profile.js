@@ -26,7 +26,6 @@ export default function Profile({ sessionUser, setSessionUser }) {
     getUser(user_id).then((response) => {
       if (response.data.code === 200) {
         // success
-        console.log("getUser");
         setUser(response.data.user);
         setSessionUser(JSON.parse(localStorage.getItem("user")) || null);
         setEdited(false);

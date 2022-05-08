@@ -13,7 +13,6 @@ export default function ProfileFeed({ user }) {
     getAllPostsOfUser(user.id)
       .then((response) => {
         if (response.data.code === 200) {
-          console.log("post data:", response.data);
           setUserPosts(response.data.allPosts);
         }
       })

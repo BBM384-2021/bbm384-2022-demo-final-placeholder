@@ -1,0 +1,30 @@
+@import "../../index.css";
+
+.tag-box {
+    padding: 0px 10px 0px 10px;
+    margin: 0px 5px 0px 5px;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+}
+
+.tag-box:hover {
+    cursor: pointer;
+}
+
+.selected {
+    background-color: rgb(49, 197, 49);
+}
+
+.selected:hover {
+    background-color: rgb(42, 155, 42);
+}
+
+.nselected {
+    background-color: var(--whiteShadow);
+}
+
+.nselected:hover {
+    background-color: var(--pasiveChat);
+}
