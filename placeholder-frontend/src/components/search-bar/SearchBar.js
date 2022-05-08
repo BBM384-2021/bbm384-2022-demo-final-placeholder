@@ -66,7 +66,7 @@ const GetSimilarConnections = (input, user_id, setResults) => {
         setResults([]);
       }
     })
-    .catch((error) => console.log("getSimilarConnections: ", error));
+    .catch((error) => console.log(error));
 };
 
 export default function SearchBar() {

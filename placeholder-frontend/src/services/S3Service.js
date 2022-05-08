@@ -13,7 +13,7 @@ const config = {
   //   signatureVersion: "v4",
 };
 
-const ROOT_S3_URL =
+export const ROOT_S3_URL =
   "https://placeholder-file-bucket.s3.eu-central-1.amazonaws.com/";
 
 AWS.config.update({
@@ -31,9 +31,18 @@ const s3Bucket = new AWS.S3({
 });
 
 export const uploadPicture = (file, type, user, setState, state) => {
+  // for postVisualData:
+  //  if it's a first upload we assign a random id to the picture,
+  //  if that's an update we use postID
+  const urlKey =
+    type === "postVisualData"
+      ? state.postKey
+        ? "" + state.postKey
+        : "generated" + Math.floor(Math.random() * 100)
+      : user.id + type;
   const params = {
     ACL: "public-read",
-    Key: user.id + type,
+    Key: urlKey,
     ContentType: file.type,
     Body: file,
   };
@@ -46,7 +55,7 @@ export const uploadPicture = (file, type, user, setState, state) => {
         case "profilePic":
           updateUser({ user: user, profilePic: customUrl }).then((response) => {
             if (response.data.code === 200) {
-              console.log("Profile Picture uploaded to server!");
+              console.log("Profile Picture uploaded to server!", customUrl);
               setState({ ...state, profilePic: customUrl });
 
               localStorage.setItem(
@@ -60,11 +69,13 @@ export const uploadPicture = (file, type, user, setState, state) => {
               alert("We had a problem uploading your file");
             }
           });
+          setState({ ...state, isLoading: false, value: 0 });
+
           break;
         case "coverUrl":
           updateUser({ user: user, coverUrl: customUrl }).then((response) => {
             if (response.data.code === 200) {
-              console.log("Cover Photo uploaded to server!");
+              console.log("Cover Photo uploaded to server!", customUrl);
               setState({ ...state, coverPic: customUrl });
               localStorage.setItem(
                 "user",
@@ -77,6 +88,26 @@ export const uploadPicture = (file, type, user, setState, state) => {
               alert("We had a problem uploading your file");
             }
           });
+          break;
+        case "postVisualData":
+          console.log("postVisualData Uploaded to S3: ", customUrl);
+
+          setState({ ...state, postVisualData: undefined });
+          // updateUser({ user: user, coverUrl: customUrl }).then((response) => {
+          //   if (response.data.code === 200) {
+          //     console.log("Cover Photo uploaded to server!");
+          //     setState({ ...state, coverPic: customUrl });
+          //     localStorage.setItem(
+          //       "user",
+          //       JSON.stringify({
+          //         ...user,
+          //         cover_url: customUrl,
+          //       })
+          //     );
+          //   } else {
+          //     alert("We had a problem uploading your file");
+          //   }
+          // });
           break;
 
         default:
