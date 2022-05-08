@@ -7,20 +7,22 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function TagManagementBox ( {open, setOpen} ) {
     const [tags, setTags] = useState([]);
-    const [isRefresh, setIsRefresh] = useState(false);
+    const [isRefresh, setIsRefresh] = useState(true);
     useEffect(
         () => {
-            getAllTags().then(
-            (response) => {
-                if (response.data.code === 200) {
-                    // request succesful
-                    setTags(response.data.allTags)
-                } else {
-                    console.log(response);
-                }
-                setIsRefresh(false);
+            if (isRefresh) {
+                getAllTags().then(
+                    (response) => {
+                        if (response.data.code === 200) {
+                            // request succesful
+                            setTags(response.data.allTags)
+                        } else {
+                            console.log(response);
+                        }
+                        setIsRefresh(false);
+                    }
+                ).catch( (error) => console.log(error) )
             }
-        ).catch( (error) => console.log(error) )
     }, [isRefresh])
     return (
     <Modal
@@ -35,6 +37,9 @@ export default function TagManagementBox ( {open, setOpen} ) {
                     <CloseIcon />
                 </IconButton>
             </div>
+            <div className="tag-new-button">
+                Add New Tag
+            </div>
             
             <div className="tag-management-table">
                 <div className="tag-table-headers">
@@ -44,7 +49,11 @@ export default function TagManagementBox ( {open, setOpen} ) {
                 </div>
                 <hr/>
                 {tags.length > 0 &&
-                    tags.map((tag_i) => <TagEntry tag={tag_i}/>)
+                    tags.map((tag_i) => <TagEntry
+                                            tag={tag_i}
+                                            key={"tagManag" + tag_i.id}
+                                            setIsRefresh={setIsRefresh}
+                                            />)
                 }
             </div>
         </div>
