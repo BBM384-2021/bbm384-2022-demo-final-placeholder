@@ -21,3 +21,9 @@ export function deleteTag ( tag_id ) {
         }
     })
 }
+
+export function createTag ( tag_name ) {
+    return axios.post(baseURL + "/createTag", {
+        "tag_name" : tag_name
+    });
+}
