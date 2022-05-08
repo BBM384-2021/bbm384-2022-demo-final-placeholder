@@ -4,6 +4,7 @@ import "./tagManagementBox.css"
 import { getAllTags } from "../../services/TagService";
 import TagEntry from "./TagEntry";
 import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function TagManagementBox ( {open, setOpen} ) {
     const [tags, setTags] = useState([]);
@@ -37,9 +38,10 @@ export default function TagManagementBox ( {open, setOpen} ) {
                     <CloseIcon />
                 </IconButton>
             </div>
-            <div className="tag-new-button">
-                Add New Tag
-            </div>
+            <button className="tag-new-button">
+                <p>Add New Tag</p>
+                <AddIcon sx={{marginLeft:'5px'}}/>
+            </button>
             
             <div className="tag-management-table">
                 <div className="tag-table-headers">
