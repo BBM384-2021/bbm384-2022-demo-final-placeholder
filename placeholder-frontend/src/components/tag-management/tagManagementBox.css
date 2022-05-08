@@ -36,7 +36,7 @@
 
 .tag-new-button {
     border-radius: 10px;
-    background-color: rgb(56, 195, 56);
+    background-color: rgb(195, 130, 56);
     width: fit-content;
     padding: 0px 10px 0px 10px;
     margin-left: 20px;
@@ -47,5 +47,13 @@
 }
 
 .tag-new-button:hover {
+    background-color: rgb(157, 105, 46);
+}
+
+.active {
+    background-color: rgb(56, 195, 56);
+}
+
+.active:hover {
     background-color: rgb(56, 172, 56);
 }

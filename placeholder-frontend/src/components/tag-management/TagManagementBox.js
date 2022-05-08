@@ -5,10 +5,15 @@ import { getAllTags } from "../../services/TagService";
 import TagEntry from "./TagEntry";
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
+import DoneIcon from '@mui/icons-material/Done';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Collapse } from "@mui/material";
 
 export default function TagManagementBox ( {open, setOpen} ) {
     const [tags, setTags] = useState([]);
     const [isRefresh, setIsRefresh] = useState(true);
+    const [isAddNew, setIsAddNew] = useState(false);
+
     useEffect(
         () => {
             if (isRefresh) {
@@ -38,11 +43,30 @@ export default function TagManagementBox ( {open, setOpen} ) {
                     <CloseIcon />
                 </IconButton>
             </div>
-            <button className="tag-new-button">
-                <p>Add New Tag</p>
-                <AddIcon sx={{marginLeft:'5px'}}/>
-            </button>
-            
+            <div style={{display:'flex', alignItems:'center'}}>
+                <button 
+                    className={"tag-new-button" + (isAddNew ? " active" : "")}
+                    onClick={()=>setIsAddNew(!isAddNew)}
+                >
+                    <p>Add New Tag</p>
+                    {isAddNew ?
+                        <DoneIcon sx={{marginLeft:'5px'}}/>
+                        :
+                        <AddIcon sx={{marginLeft:'5px'}}/>
+                    }
+                    
+                </button>
+                <Collapse in={isAddNew} orientation={'horizontal'} 
+                sx={{ maxHeight:'40px'}}>
+                    <div style={{display:'flex', alignItems:'center'}}>
+                        <input style={{height:'80%', borderRadius:'5px', borderStyle:'solid',
+                        marginLeft:'10px', fontSize:'23px', width:'200px', fontWeight:'300'}}></input>
+                        <IconButton onClick={()=>{setIsAddNew(false)}}>
+                            <CancelIcon htmlColor="red"/>
+                        </IconButton>
+                    </div>
+                </Collapse>
+            </div>
             <div className="tag-management-table">
                 <div className="tag-table-headers">
                     <h3>Tag ID</h3>
