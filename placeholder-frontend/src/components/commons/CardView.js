@@ -6,13 +6,12 @@ import InteractionBar from "./InteractionBar";
 import CommentSection from "./CommentSection";
 import { Colors } from "../../Colors";
 
-export default function CardView( {content, setContent,
-    contentType, user, interactionContent, setInteractionContent, setIsRefresh} ) {
+const CardView = React.forwardRef( ({content, setContent,
+    contentType, user, interactionContent, setInteractionContent, setIsRefresh}, ref ) => {
     return (
-        
         <Card sx={{
             maxWidth : '65vw',
-            position : 'absolue',
+            position : 'absolute',
             transform : 'translate(15vw, 7vh)',
             backgroundColor: Colors.whiteShaded,
             borderRadius:'10px',
@@ -36,4 +35,6 @@ export default function CardView( {content, setContent,
                 />
         </Card>
     );
-}
+});
+
+export default CardView;

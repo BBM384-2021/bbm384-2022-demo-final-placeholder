@@ -49,7 +49,6 @@ export default function TopBar({ userObj, setUser }) {
 
   const handleLogout = () => {
     localStorage.setItem("user", null);
-    // setAnchorEl(null);
     setUser(null);
     history("/");
   };
@@ -82,31 +81,22 @@ export default function TopBar({ userObj, setUser }) {
             <SearchBar />
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
-              <IconButton
-                size="large"
-                aria-label="mails"
-                sx={{ backgroundColor: "#F5F5F5" }}
-              >
-                <Badge badgeContent={1} color="error">
-                  <Mail />
-                </Badge>
-              </IconButton>
-
-              <IconButton
-                size="large"
-                aria-label="connections req"
-                sx={{ backgroundColor: "#F5F5F5" }}
-              >
-                <Badge
-                  badgeContent={1}
-                  color="error"
-                  sx={{ fontFamily: "Poppins", fontWeight: 700 }}
+              <Tooltip title="Connection Requests">
+                <IconButton
+                  aria-label="connections req"
+                  sx={{ backgroundColor: "#F5F5F5" }}
                 >
-                  <PersonOutline />
-                </Badge>
-              </IconButton>
+                  <Badge
+                    badgeContent={1}
+                    color="error"
+                    sx={{ fontFamily: "Poppins", fontWeight: 700 }}
+                  >
+                    <PersonOutline />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
 
-              <IconButton
+              {/* <IconButton
                 size="large"
                 aria-label="show 17 new notifications"
                 sx={{ backgroundColor: "#F5F5F5" }}
@@ -114,21 +104,26 @@ export default function TopBar({ userObj, setUser }) {
                 <Badge badgeContent={5} color="error">
                   <Notifications />
                 </Badge>
-              </IconButton>
-              <IconButton size="large" sx={{ backgroundColor: "#F5F5F5" }}>
+              </IconButton> */}
+              {/* <IconButton size="large" sx={{ backgroundColor: "#F5F5F5" }}>
                 <Settings />
-              </IconButton>
+              </IconButton> */}
 
               <Tooltip title="Account settings">
                 <IconButton
                   onClick={handleClick}
-                  size="small"
-                  sx={{ ml: 2 }}
+                  sx={{ mr: 2 }}
                   aria-controls={openUserMenu ? "account-menu" : undefined}
                   aria-haspopup="true"
                   aria-expanded={openUserMenu ? "true" : undefined}
                 >
-                  <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                  <Avatar
+                    size="large"
+                    src={userObj.profile_pic_path}
+                    // sx={{ width: 32, height: 32 }}
+                  >
+                    {userObj.full_name.charAt(0)}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
             </Box>

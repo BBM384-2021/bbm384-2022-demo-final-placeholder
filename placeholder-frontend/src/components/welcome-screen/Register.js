@@ -56,7 +56,6 @@ export default function Register({ setLogin, setUser }) {
   const [userData, setUserData] = useState({ cs_mail: "", user_password: "" });
 
   const validate = (fieldValues) => {
-    console.log("user_password" in fieldValues);
     if (fieldValues.get("user_password")?.length < 6) {
       setError("Minimum 6 characters required.");
       return false;
@@ -79,26 +78,11 @@ export default function Register({ setLogin, setUser }) {
       full_name: data.get("full_name"),
       cs_mail: data.get("cs_mail"),
       user_password: data.get("user_password"),
-      user_type: data.get("user_type") === "student" ? 1 : 2,
+      user_type: data.get("user_type") === "student" ? 3 : 4,
+      // student: 3 , graduate: 4
     });
-    console.log("current error: ", error);
     if (validate(data)) {
-      console.log(userData);
-      // axios
-      //   .post(BaseLoginURL)
-      //   .then((response) => {
-      //     if (response.data.code === 200) {
-      //       // success
-      //       const user = response.data.user;
-      //       console.log(user);
-      //       setUser(user);
-      //     } else {
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     console.log(error.response.request);
-      //     setError("Check Your Info!");
-      //   });
+      console.log("Register Validation TODO: ", userData);
     }
   };
 

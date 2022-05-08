@@ -11,7 +11,7 @@ export const modalStyles = {
         p: 4,
         borderRadius : 5,
 
-},
+    },
     inputFields: {
         fontFamily: 'Poppins',
         display: 'flex',

@@ -34,7 +34,7 @@ export default function ConfirmationDialog({
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={onConfirm} autoFocus>
-          Do It!
+          Yes
         </Button>
       </DialogActions>
     </Dialog>

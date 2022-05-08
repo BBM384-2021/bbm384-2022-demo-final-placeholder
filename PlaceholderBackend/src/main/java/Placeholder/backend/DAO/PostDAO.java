@@ -185,6 +185,39 @@ public class PostDAO {
         return result;
     }
 
+    public static Object getPost(String postId){
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        List<Object> result = new ArrayList<>();
+        List<Object> queryResult;
+        try{
+            session.beginTransaction();
+            queryResult = session.createQuery(String.format("from Tag t " +
+                    "INNER JOIN PostTag pt ON t.id = pt.tag_id " +
+                    "INNER JOIN Post p ON p.id = pt.post_id " +
+                    "INNER JOIN User u ON u.id = p.user_id " +
+                    "LEFT JOIN Like l ON l.post_id = p.id " +
+                    "LEFT JOIN User lu ON l.user_id = lu.id " +
+                    "LEFT JOIN Comment c ON c.post_id = p.id " +
+                    "LEFT JOIN User cu ON c.user_id = cu.id WHERE p.id = '%s'",postId)).getResultList();
+            extractPostList(result, queryResult,false,null);
+            session.getTransaction().commit();
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+        finally {
+            factory.close();
+        }
+        if(result.size()==0){
+            return null;
+        }
+        return result.get(0);
+    }
+
     public static List<Object> getAllPosts(){
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();

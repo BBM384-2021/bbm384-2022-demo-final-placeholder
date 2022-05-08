@@ -47,8 +47,11 @@ public class UserController {
         if(!body.containsKey("profile_pic_path")){
             body.put("profile_pic_path","");
         }
+        if(!body.containsKey("cover_url")){
+            body.put("cover_url","");
+        }
 
-        User u = new User(0,body.get("full_name"),body.get("user_type"), body.get("cs_mail"), body.get("user_password"),body.get("phone"),body.get("company"),body.get("linkedIn_url"),body.get("github_url"),body.get("alt_mail"),body.get("profile_pic_path"));
+        User u = new User(0,body.get("full_name"),body.get("user_type"), body.get("cs_mail"), body.get("user_password"),body.get("phone"),body.get("company"),body.get("linkedIn_url"),body.get("github_url"),body.get("alt_mail"),body.get("profile_pic_path"),body.get("cover_url"));
         u.setUser_password(Integer.toString(body.get("user_password").hashCode()));
         u = UserDAO.createUser(u);
 

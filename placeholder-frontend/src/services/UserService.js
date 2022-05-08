@@ -1,8 +1,14 @@
 const axios = require("axios");
 
+const client = axios.create({
+  baseURL: "https://placeholder-backend.herokuapp.com/user",
+});
+
+//  TODO: Do we even have a use case for this? 
+// if not, DELETE DIS
 export async function getAllUsers() {
   try {
-    axios.get("/user/getAllUsers").then((res) => {
+    client.get("/getAllUsers").then((res) => {
       console.log(res);
     });
     const response = await fetch("/api/users");
@@ -21,23 +27,39 @@ export async function createUser(data) {
   return await response.json();
 }
 
-//TODO: arrange user service to make better api calls :d
-const baseProfileURL = "https://placeholder-backend.herokuapp.com/user/getUser";
-export const getUser =  (user_id) => {
-    return axios.get(baseProfileURL, {
-      params: {
-        requested_id: user_id,
-      },
-    });
-  };
+export const getUser = (user_id) => {
+  return client.get("/getUser", {
+    params: {
+      requested_id: user_id,
+    },
+  });
+};
 
-// export const getUser = async (user_id) => {
-//   let response = await axios.get(baseProfileURL, {
-//     params: {
-//       requested_id: user_id,
-//     },
-//   });
-//   console.log("returned user is ", response.data.user);
-//   const user = response.data.user;
-//   return user;
-// };
+export const updateUser = ({ user, values, profilePic, coverUrl }) => {
+  const { fullName, email, phone, company, linkedinLink, githubLink } = values
+    ? values
+    : {};
+  return client.patch("/updateUser", {
+    id: user.id,
+    full_name: fullName ? fullName : user.full_name,
+    user_type: user.user_type,
+    cs_mail: email ? email : user.cs_mail,
+    phone: phone ? phone : user.phone,
+    company: company ? company : user.company,
+    linkedIn_url: linkedinLink ? linkedinLink : user.linkedIn_url,
+    github_url: githubLink ? githubLink : user.github_url,
+    alt_mail: user.alt_mail,
+    profile_pic_path: profilePic ? profilePic : user.profile_pic_path,
+    cover_url: coverUrl ? coverUrl : user.cover_url,
+  });
+};
+
+export function getUsersConnected(user_id) {
+  return client.get("/getUsersConnected", {
+    params: { current_user_id: user_id },
+  });
+}
+
+export function updateLocalUser(user){
+  //TODO
+}
