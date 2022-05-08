@@ -1,67 +1,80 @@
 @import "../../index.css";
 
 .post-create-container {
-    border-radius: 15px;
-    position : absolute;
-    width: 100%;
-    max-width: 45vw;
-    min-width: 20vw;
-    transform: translate(27vw, 7vh);
-    background-color: var(--white);
+  border-radius: 15px;
+  position: absolute;
+  width: 100%;
+  max-width: 45vw;
+  min-width: 20vw;
+  max-height: 90vh;
+  overflow: scroll;
+  transform: translate(27vw, 4vh);
+  background-color: var(--white);
 }
 
 .post-create-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 20px;
 }
 
 .post-create-header-inner {
-    width: 100%;
-    margin: 0px 10px 0px 30px;
-    display: flex;
-    align-items: center;
+  width: 100%;
+  margin: 0px 10px 0px 30px;
+  display: flex;
+  align-items: center;
 }
 
 .post-create-header-inner > p {
-    font-weight: 600;
-    font-size: 22px;
-    color: #767676;
-    margin-left: 40px;
-    font-family: 'Poppins';
-
+  font-weight: 600;
+  font-size: 22px;
+  color: #767676;
+  margin-left: 40px;
+  font-family: "Poppins";
 }
 
 .post-create-header-profile-pic {
-    width: 60px;
-    border-radius: 50%;
+  width: 60px;
+  border-radius: 50%;
 }
 
 .post-content-input {
-    border:0;
-    outline:0;
-    width: 90%;
-    height: 280px;
-    border-radius: '25px';
-    margin-left: 30px;
-    margin-top: 10px;
-    font-size: medium;
-    font-family: 'Poppins';
-    resize: none;
+  border: 0;
+  outline: 0;
+  width: 90%;
+  /* min-height: 20px; */
+  height: fit-content;
+  /* max-height: 280px; */
+  border-radius: "25px";
+  margin-left: 30px;
+  margin-top: 10px;
+  font-size: medium;
+  font-family: "Poppins";
+  /* overflow: scroll; */
+  /* resize: none; */
 }
 
 .post-config-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0px 15px 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px 15px 10px 15px;
 }
 
 .send-post-button {
-    filter: contrast(0);
+  filter: contrast(0);
 }
 
 .send-post-button:hover {
-    filter:none;
+  filter: none;
+}
+
+.postVisualDataPreview {
+  display: block;
+  max-width: 60%;
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
