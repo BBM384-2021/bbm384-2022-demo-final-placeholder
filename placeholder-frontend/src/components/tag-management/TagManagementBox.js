@@ -42,6 +42,7 @@ export default function TagManagementBox ( {open, setOpen} ) {
                 (response) => {
                     if (response.data.code === 200) {
                         setIsRefresh(true);
+                        setNewTagName("");
                     } else {
                         console.log(response);
                     }
@@ -113,13 +114,16 @@ export default function TagManagementBox ( {open, setOpen} ) {
                     <h3>Tag Options</h3>
                 </div>
                 <hr/>
-                {tags.length > 0 &&
-                    tags.map((tag_i) => <TagEntry
-                                            tag={tag_i}
-                                            key={"tagManag" + tag_i.id}
-                                            setIsRefresh={setIsRefresh}
-                                            />)
-                }
+                <div style={{height: '50vh', overflow: 'scroll'}}>
+                    {tags.length > 0 &&
+                        tags.map((tag_i) => <TagEntry
+                                                tag={tag_i}
+                                                key={"tagManag" + tag_i.id}
+                                                setIsRefresh={setIsRefresh}
+                                                />)
+                    }
+                </div>
+
             </div>
         </div>
     </Modal>
