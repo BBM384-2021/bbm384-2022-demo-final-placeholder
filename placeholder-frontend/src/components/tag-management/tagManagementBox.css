@@ -1,0 +1,35 @@
+@import "../../index.css";
+
+.tag-management-container {
+    width : 65vw;
+    position : absolute;
+    transform : translate(17vw, 10vh);
+    background-color: var(--whiteShaded);
+    border-radius:10px;
+    padding-bottom: 20px;
+}
+
+.tag-management-header > h1 {
+    font-size: x-large;
+}
+
+.tag-management-header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 20px 0px 20px;
+    align-items: center;
+}
+.tag-management-table {
+    text-align: center;
+}
+
+.tag-table-headers {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.tag-management-table > hr {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}

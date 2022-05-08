@@ -24,8 +24,10 @@ import {
   PersonAdd,
   Logout,
 } from "@mui/icons-material";
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 import SearchBar from "../search-bar/SearchBar";
+import TagManagementBox from "../tag-management/TagManagementBox";
 import { ReactComponent as LinkedHuIcon } from "../../linhu_logo.svg";
 import ConfirmationDialog from "../commons/ConfirmationDialog";
 import { render } from "@testing-library/react";
@@ -33,6 +35,7 @@ import { render } from "@testing-library/react";
 export default function TopBar({ userObj, setUser }) {
   const history = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [tagManOpen, setTagManOpen] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const openUserMenu = Boolean(anchorEl);
 
@@ -175,6 +178,15 @@ export default function TopBar({ userObj, setUser }) {
           Edit Profile
         </MenuItem>
         <Divider />
+        {userObj.user_type == 0 && // if admin is using the system
+        <>
+          <MenuItem onClick={()=>setTagManOpen(true)}>
+            <LocalOfferIcon sx={{marginRight:'10px'}}/>
+            Manage Tags
+          </MenuItem>
+          <Divider />
+        </>
+        }
         <MenuItem onClick={askConfirmation}>
           <ListItemIcon>
             <Logout fontSize="small" />
@@ -189,6 +201,13 @@ export default function TopBar({ userObj, setUser }) {
       >
         Are you sure you want to logout?
       </ConfirmationDialog>
+
+      {userObj.user_type == 0 &&
+        <TagManagementBox 
+          open={tagManOpen}
+          setOpen={setTagManOpen}
+        />
+      }
     </React.Fragment>
   );
 }

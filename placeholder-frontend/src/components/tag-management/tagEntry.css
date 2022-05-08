@@ -1,0 +1,10 @@
+.tag-entry {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;   
+}
+
+.entry-line {
+    background-color: gray;
+    border: none;
+    height: 1px;
+}
