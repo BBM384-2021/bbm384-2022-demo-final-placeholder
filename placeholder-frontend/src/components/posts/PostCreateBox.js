@@ -14,17 +14,18 @@ import TagSelectionBar from "./TagSelectionBar";
 import FileUploader from "../commons/FileUploader";
 // Services
 import { getAllTags } from "../../services/TagService";
-import { addPost } from "../../services/PostService";
+import { addPost, updatePost } from "../../services/PostService";
 import { uploadPicture, ROOT_S3_URL } from "../../services/S3Service";
 // Style and Images
 import sendIcon from "../../img/paper-plane.png";
 import "./postCreateBox.css";
 
-export default function PostCreateBox({ user, open, setOpen }) {
-  const [postContent, setPostContent] = useState("");
+export default function PostCreateBox({ children, user, open, setOpen, isEdit, content, setIsRefresh }) {
+  
+  const [postContent, setPostContent] = useState(isEdit ? content.post.post_body : "");
   const [tags, setTags] = useState({});
 
-  const [preview, setPreview] = useState();
+  const [preview, setPreview] = useState(isEdit ? content.post.post_visual_data_path : undefined);
 
   const [waitResponse, setWaitResponse] = useState(false);
   const [noTagError, setNoTagError] = useState(false);
@@ -36,7 +37,10 @@ export default function PostCreateBox({ user, open, setOpen }) {
     value: 0,
     postKey: -1,
     postVisualData: undefined,
+    isEdit : isEdit
   });
+
+  const pvdp = content.post.post_visual_data_path;
 
   const handlePostChange = (event) => {
     setPostContent(event.target.value);
@@ -63,9 +67,10 @@ export default function PostCreateBox({ user, open, setOpen }) {
         if (response.data.code === 200) {
           const result = response.data.allTags;
           let allTags = {};
+          const currentlySelectedTags = isEdit ? new Set(content.tags.map((entry) => entry.id)) : null;
           for (let i = 0; i < result.length; i++) {
             allTags[result[i].id] = {
-              isSelected: false,
+              isSelected: isEdit ? currentlySelectedTags.has(result[i].id) : false,
               tagName: result[i].tag_name,
             };
           }
@@ -78,15 +83,26 @@ export default function PostCreateBox({ user, open, setOpen }) {
   useEffect(() => {
     // create the preview
     let objectUrl;
-    if (state.postVisualData) {
+    if (state.isEdit && (pvdp !== "null" && pvdp !== null)) {
+      setPreview(content.post.post_visual_data_path);
+    } else if (state.postVisualData) {
       objectUrl = URL.createObjectURL(state.postVisualData);
       setPreview(objectUrl);
     } else {
       setPreview(undefined);
     }
+    setState({ ...state, isEdit: false});
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [state.postVisualData]);
+
+  useEffect(() => {
+    if (isEdit) {
+      if ((pvdp !== "null" && pvdp !== null)) {
+        setState({ ...state, postVisualData: content.post.post_visual_data_path});
+      }
+    }
+  }, [])
 
   const handleClose = () => {
     setPostContent("");
@@ -106,12 +122,20 @@ export default function PostCreateBox({ user, open, setOpen }) {
     setWaitResponse(true);
     // since we don't know the post id yet, we generate a custom url for initial post image
     // (normally we use id to store in S3 in order to get objects easily)
-    const customUrl = "newPost" + Math.floor(Math.random() * 100);
+    let customUrl = "newPost" + Math.floor(Math.random() * 100);
     // S3 service is  using that key to generate the below URL
     // we need to redefine the URL to save it on our database :D
-    setState({ ...state, postKey: customUrl });
+    if (isEdit) {
+      // if there already exists a photo URL then set it
+      customUrl = (pvdp !== "null" && pvdp !== null)
+                          ?
+                          content.post.post_visual_data_path.slice(62) : customUrl;
+      console.log(content.post.post_visual_data_path, customUrl)
+      setState({ ...state, postKey: customUrl });               
+    } else {
+      setState({ ...state, postKey: customUrl });
+    }
     const attachmentLink = preview ? ROOT_S3_URL + customUrl : undefined;
-    console.log(attachmentLink);
     let selectedTags = [];
     for (const [id, values] of Object.entries(tags)) {
       if (values.isSelected) {
@@ -125,6 +149,21 @@ export default function PostCreateBox({ user, open, setOpen }) {
     if (selectedTags.length === 0) {
       setNoTagError(true);
       setWaitResponse(false);
+    } else if (isEdit) {
+      updatePost(content.post.id, postContent, attachmentLink)
+        .then((response) => {
+          if (response.data.code === 200) {
+            // success
+            if (preview) {
+              handlePostVisualData(state.postVisualData, {
+                ...state,
+                postKey: customUrl,
+              })
+            }
+          }
+          setWaitResponse(false);
+          handleClose();
+        }).catch( (error) => error )
     } else {
       addPost(user.id, postContent, attachmentLink, selectedTags)
         .then((response) => {
@@ -155,7 +194,7 @@ export default function PostCreateBox({ user, open, setOpen }) {
               src={user.profile_pic_path}
               alt="user-profile"
             />
-            <p>Create a post</p>
+            <p>{children}</p>
           </div>
           <IconButton onClick={() => setOpen(false)}>
             <CloseIcon />

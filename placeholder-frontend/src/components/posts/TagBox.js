@@ -3,8 +3,8 @@ import "./tagBox.css";
 import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
 
-export default function TagBox ({children, onClick}) {
-    const [isSelected, setIsSelected] = useState(false);
+export default function TagBox ({children, tag, onClick}) {
+    const [isSelected, setIsSelected] = useState(tag.isSelected);
 
     const onTagClick = () => {
         onClick(!isSelected)

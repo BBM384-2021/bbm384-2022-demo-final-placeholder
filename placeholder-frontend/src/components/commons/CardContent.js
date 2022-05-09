@@ -11,6 +11,8 @@ export default function CardContent({
   const refText = createRef();
   const [showMore, setShowMore] = useState(false);
 
+  const pvdp = content.post.post_visual_data_path;
+
   // useState(() => {
   //   console.log(
   //     content.post.post_visual_data_path
@@ -64,7 +66,7 @@ export default function CardContent({
           </div>
         )}
       </div>
-      {content.post.post_visual_data_path && (
+      {(pvdp !== "null" && pvdp !== null) && (
         <img
           className="postVisualDataPreview"
           alt="Post Attachment"

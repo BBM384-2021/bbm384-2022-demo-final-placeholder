@@ -52,7 +52,12 @@ export default function CardPreview({ content, contentType, user, key }) {
         flexDirection: "column",
       }}
     >
-      <CardTitle content={stateContent} contentType={contentType} />
+      <CardTitle 
+        content={stateContent}
+        contentType={contentType}
+        enablePostOptions={content.user.id === user.id || user.user_type == 0}
+        setIsRefresh={setIsRefresh}
+        />
       <CardContent
         content={stateContent}
         enableShortView={true}

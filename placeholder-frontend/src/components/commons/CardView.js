@@ -17,7 +17,7 @@ const CardView = React.forwardRef( ({content, setContent,
             borderRadius:'10px',
             paddingBottom: '20px'
         }}>
-            <CardTitle content={content} contentType={contentType} />
+            <CardTitle content={content} contentType={contentType}/>
             <CardContent content={content} enableShortView={false}/>
             <InteractionBar 
                 content={interactionContent}

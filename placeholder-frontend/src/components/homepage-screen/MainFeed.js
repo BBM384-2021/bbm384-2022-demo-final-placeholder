@@ -55,7 +55,12 @@ export default function MainFeed({ user }) {
         open={openCreatePost}
         setOpen={setOpenCreatePost}
         user={user}
-      />
+        isEdit={false}
+        content={null}
+        setIsRefresh={undefined}
+      >
+        Create a post
+      </PostCreateBox>
     </div>
   );
 }
