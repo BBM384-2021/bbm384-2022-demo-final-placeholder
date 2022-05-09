@@ -18,13 +18,13 @@ export async function getAllUsers() {
   }
 }
 
-export function createUser(data, onSuccess, onFail) {
+export function createUser(data) {
   // const response = await fetch(`/api/user`, {
   //   method: "POST",
   //   headers: { "Content-Type": "application/json" },
   //   body: JSON.stringify({ user: data }),
   // });
-  return client.post()
+  return client.post('/createUser', data )
 }
 
 export const getUser = (user_id) => {

@@ -26,6 +26,7 @@ import IconTextField from "../commons/IconTextField";
 
 import { Colors } from "../../Colors";
 import "./Welcome.css";
+import { createUser } from "../../services/UserService";
 
 function Copyright(props) {
   return (
@@ -57,7 +58,11 @@ export default function Register({ setLogin, setUser }) {
 
   useEffect(() => {
     console.log(userData);
-    
+    createUser(userData).then((response) => {
+      if (response.data.code === 200) {
+        setUser(response.data.user);
+      }
+    });
   }, [userData]);
 
   const validate = (fieldValues) => {
