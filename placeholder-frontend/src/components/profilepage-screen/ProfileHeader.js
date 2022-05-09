@@ -131,14 +131,14 @@ export default function ProfileHeader({
           JSON.parse(sessionUser.user_type) < 2 &&
           JSON.parse(user.user_type) !== 2 && (
             <MenuItem onClick={handleClose}>
-              Set as Student Administrative
+              Set as Student Representative
             </MenuItem>
           )}
         {!profileOwned &&
           sessionUser.user_type < 2 &&
           JSON.parse(user.user_type) === 2 && (
             <MenuItem onClick={handleClose}>
-              Remove Student Administrative Role
+              Remove Student Representative Role
             </MenuItem>
           )}
         {!profileOwned &&
