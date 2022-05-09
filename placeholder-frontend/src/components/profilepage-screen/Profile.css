@@ -38,11 +38,11 @@
 .profileImage {
   position: relative;
   display: inline-block;
-  width: 18vmin;
-  height: 18vmin;
+  width: 90%;
+  height: 90%;
   overflow: hidden;
   border-radius: 50%;
-  margin: 5px;
+  margin: 5%;
 }
 .profileImage img {
   display: block;

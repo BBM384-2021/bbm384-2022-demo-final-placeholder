@@ -48,7 +48,6 @@ const BaseLoginURL = "https://placeholder-backend.herokuapp.com/user/login";
 
 export default function Login({ setLogin, setUser }) {
   const [error, setError] = useState("");
-  const [userData, setUserData] = useState({ cs_mail: "", user_password: "" });
   const [isLoading, setLoading] = useState(false);
 
   const validate = (fieldValues) => {

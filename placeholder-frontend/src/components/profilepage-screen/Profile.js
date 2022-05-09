@@ -55,11 +55,13 @@ export default function Profile({ sessionUser, setSessionUser }) {
         profileOwned={isOwnedProfile}
         sessionUser={sessionUser}
         user={user}
+        setUser={setUser}
         setEdited={setEdited}
       ></ProfileHeader>
 
       <ProfileInfoBar
         user={user}
+        setUser={setUser}
         sessionUser={sessionUser}
         profileOwned={isOwnedProfile}
         isEdited={isEdited}

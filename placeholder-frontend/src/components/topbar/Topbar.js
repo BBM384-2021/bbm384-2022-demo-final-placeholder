@@ -15,24 +15,18 @@ import {
   ListItemIcon,
 } from "@mui/material";
 
-import {
-  AccountCircle,
-  Mail,
-  Notifications,
-  Settings,
-  PersonOutline,
-  PersonAdd,
-  Logout,
-} from "@mui/icons-material";
+import { Settings, PersonOutline, Logout } from "@mui/icons-material";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 import SearchBar from "../search-bar/SearchBar";
+import TagManagementBox from "../tag-management/TagManagementBox";
 import { ReactComponent as LinkedHuIcon } from "../../linhu_logo.svg";
 import ConfirmationDialog from "../commons/ConfirmationDialog";
-import { render } from "@testing-library/react";
 
 export default function TopBar({ userObj, setUser }) {
   const history = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [tagManOpen, setTagManOpen] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const openUserMenu = Boolean(anchorEl);
 
@@ -81,7 +75,7 @@ export default function TopBar({ userObj, setUser }) {
             <SearchBar />
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
-              <Tooltip title="Connection Requests">
+              {/* <Tooltip title="Connection Requests">
                 <IconButton
                   aria-label="connections req"
                   sx={{ backgroundColor: "#F5F5F5" }}
@@ -94,7 +88,7 @@ export default function TopBar({ userObj, setUser }) {
                     <PersonOutline />
                   </Badge>
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
 
               {/* <IconButton
                 size="large"
@@ -166,7 +160,7 @@ export default function TopBar({ userObj, setUser }) {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem onClick={navigateToProfile}>
-          <Avatar /> View Profile
+          <Avatar src={userObj.profile_pic_path} /> View Profile
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
@@ -175,6 +169,13 @@ export default function TopBar({ userObj, setUser }) {
           Edit Profile
         </MenuItem>
         <Divider />
+        {parseInt(userObj.user_type) === 0 && ( // if admin is using the system
+          <MenuItem onClick={() => setTagManOpen(true)}>
+            <LocalOfferIcon sx={{ marginRight: "10px" }} />
+            Manage Tags
+          </MenuItem>
+        )}
+        {parseInt(userObj.user_type) === 0 && <Divider />}
         <MenuItem onClick={askConfirmation}>
           <ListItemIcon>
             <Logout fontSize="small" />
@@ -189,6 +190,10 @@ export default function TopBar({ userObj, setUser }) {
       >
         Are you sure you want to logout?
       </ConfirmationDialog>
+
+      {userObj.user_type == 0 && (
+        <TagManagementBox open={tagManOpen} setOpen={setTagManOpen} />
+      )}
     </React.Fragment>
   );
 }

@@ -1,14 +1,16 @@
-import { Box } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router";
+import { Box } from "@mui/material";
 import profilePic from "../profilepage-screen/assets/1post.png";
 import calenderPic from "../../img/calendar.png";
 import { Colors } from "../../Colors";
 import "./ProfileBanner.css";
 
-function handleProfileBannerClick(user) {
+function handleProfileBannerClick(user, history) {
   return () => {
     // const user_prof_id = user.cs_mail.split('@')[0]
-    window.open("/in/" + user.id, "_blank");
+    // window.open("/in/" + user.id, "_blank");
+    history(`/in/${user.id}`);
   };
 }
 
@@ -18,6 +20,7 @@ export default function ProfileBanner({
   user,
   status,
 }) {
+  const history = useNavigate();
   const styleClassName = "profileBanner-" + contentType;
   const withStatus = status === undefined ? false : true;
   let contentEnum = 0;
@@ -39,18 +42,21 @@ export default function ProfileBanner({
       //search bar banners
       contentEnum = 4;
       break;
-  
   }
+
+  const profilePicPath = user.profile_pic_path
+    ? user.profile_pic_path
+    : profilePic;
   return (
     <Box
       className={"profileBanner " + styleClassName}
       component={"button"}
-      onClick={handleProfileBannerClick(user)}
+      onClick={handleProfileBannerClick(user, history)}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
         <img
           className="profileBanner---profilePic"
-          src={profilePic}
+          src={profilePicPath}
           alt=""
           style={{ margin: "0px 10px 0px 5px" }}
         />

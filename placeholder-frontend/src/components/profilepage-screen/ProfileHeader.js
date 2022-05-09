@@ -3,6 +3,7 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import { CameraAlt, MoreHoriz } from "@mui/icons-material";
 
 import { uploadPicture } from "../../services/S3Service";
+import { getUser, updateUser } from "../../services/UserService";
 import FileUploader from "../commons/FileUploader";
 
 import defaultCover from "../../img/defaultProfileCover.png";
@@ -13,10 +14,12 @@ export default function ProfileHeader({
   profileOwned,
   sessionUser,
   user,
+  setUser,
   setEdited,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [isRoleChange, setRoleChange] = useState(false);
 
   const [state, setState] = useState({
     isLoading: false,
@@ -26,6 +29,17 @@ export default function ProfileHeader({
       : defaultProfilePic,
     coverPic: user.cover_url ? user.cover_url : defaultCover,
   });
+
+  useEffect(() => {
+    getUser(user.id).then((response) => {
+      if (response.data.code === 200) {
+        setUser(response.data.user);
+      } else {
+        setUser(null);
+      }
+    });
+    setRoleChange(false);
+  }, [isRoleChange]);
 
   useEffect(() => {
     if (!state.isLoading) setEdited(true);
@@ -53,6 +67,35 @@ export default function ProfileHeader({
     uploadPicture(selectedFile, "coverUrl", user, setState, state);
   };
 
+  const setStudentRep = () => {
+    updateUser({ user: user, values: { userType: 2 } }).then((response) => {
+      if (response.data.code === 200) {
+        setRoleChange(true);
+      }
+    });
+  };
+  const removeStudentRep = () => {
+    updateUser({ user: user, values: { userType: 3 } }).then((response) => {
+      if (response.data.code === 200) {
+        setRoleChange(true);
+      }
+    });
+  };
+  const setInstructor = () => {
+    updateUser({ user: user, values: { userType: 1 } }).then((response) => {
+      if (response.data.code === 200) {
+        setRoleChange(true);
+      }
+    });
+  };
+  const removeInstructor = () => {
+    updateUser({ user: user, values: { userType: 3 } }).then((response) => {
+      if (response.data.code === 200) {
+        setRoleChange(true);
+      }
+    });
+  };
+
   return (
     <div
       className="headerContainer"
@@ -77,7 +120,7 @@ export default function ProfileHeader({
       <div className="optionsContainer">
         {/* if the user is an admin or an instructor, we show the more button */}
         {/* if user is on their own profile, we only show Edit Profile option under More button */}
-        {!profileOwned && JSON.parse(sessionUser.user_type) < 2 && (
+        {!profileOwned && parseInt(sessionUser.user_type) < 2 && (
           <IconButton
             className="moreButton"
             color="primary"
@@ -96,15 +139,6 @@ export default function ProfileHeader({
           >
             <CameraAlt className="altIcon" style={{ color: "#F5F5F5" }} />
           </FileUploader>
-          // <IconButton
-          //   className="editCoverButton"
-          //   color="primary"
-          //   aria-label="upload picture"
-          //   component="span"
-          //   onClick={handleChangeCover}
-          // >
-          //   <CameraAlt style={{ color: "#F5F5F5" }} fontSize="large" />
-          // </IconButton>
         )}
       </div>
       <Menu
@@ -128,28 +162,30 @@ export default function ProfileHeader({
         {/* if user is admin or intructor, student admin edit appears */}
         {/* if user is admin instructor edit adds to list */}
         {!profileOwned &&
-          JSON.parse(sessionUser.user_type) < 2 &&
-          JSON.parse(user.user_type) !== 2 && (
-            <MenuItem onClick={handleClose}>
-              Set as Student Administrative
+          parseInt(sessionUser.user_type) < 2 &&
+          parseInt(user.user_type) !== 2 && (
+            <MenuItem onClick={setStudentRep}>
+              Set as Student Representative
             </MenuItem>
           )}
         {!profileOwned &&
           sessionUser.user_type < 2 &&
-          JSON.parse(user.user_type) === 2 && (
-            <MenuItem onClick={handleClose}>
-              Remove Student Administrative Role
+          parseInt(user.user_type) === 2 && (
+            <MenuItem onClick={removeStudentRep}>
+              Remove Student Representative Role
             </MenuItem>
           )}
         {!profileOwned &&
           sessionUser.user_type < 1 &&
-          JSON.parse(user.user_type) !== 1 && (
-            <MenuItem onClick={handleClose}>Set as Instructor</MenuItem>
+          parseInt(user.user_type) !== 1 && (
+            <MenuItem onClick={setInstructor}>Set as Instructor</MenuItem>
           )}
         {!profileOwned &&
           sessionUser.user_type < 1 &&
-          JSON.parse(user.user_type) === 1 && (
-            <MenuItem onClick={handleClose}> Remove Instructor Role </MenuItem>
+          parseInt(user.user_type) === 1 && (
+            <MenuItem onClick={removeInstructor}>
+              Remove Instructor Role
+            </MenuItem>
           )}
       </Menu>
     </div>

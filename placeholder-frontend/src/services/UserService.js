@@ -4,7 +4,7 @@ const client = axios.create({
   baseURL: "https://placeholder-backend.herokuapp.com/user",
 });
 
-//  TODO: Do we even have a use case for this? 
+//  TODO: Do we even have a use case for this?
 // if not, DELETE DIS
 export async function getAllUsers() {
   try {
@@ -18,13 +18,13 @@ export async function getAllUsers() {
   }
 }
 
-export async function createUser(data) {
-  const response = await fetch(`/api/user`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user: data }),
-  });
-  return await response.json();
+export function createUser(data) {
+  // const response = await fetch(`/api/user`, {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({ user: data }),
+  // });
+  return client.post("/createUser", data);
 }
 
 export const getUser = (user_id) => {
@@ -36,13 +36,19 @@ export const getUser = (user_id) => {
 };
 
 export const updateUser = ({ user, values, profilePic, coverUrl }) => {
-  const { fullName, email, phone, company, linkedinLink, githubLink } = values
-    ? values
-    : {};
+  const {
+    fullName,
+    userType,
+    email,
+    phone,
+    company,
+    linkedinLink,
+    githubLink,
+  } = values ? values : {};
   return client.patch("/updateUser", {
     id: user.id,
     full_name: fullName ? fullName : user.full_name,
-    user_type: user.user_type,
+    user_type: userType ? userType : user.user_type,
     cs_mail: email ? email : user.cs_mail,
     phone: phone ? phone : user.phone,
     company: company ? company : user.company,
@@ -60,6 +66,6 @@ export function getUsersConnected(user_id) {
   });
 }
 
-export function updateLocalUser(user){
+export function updateLocalUser(user) {
   //TODO
 }

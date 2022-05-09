@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IconButton, Button } from "@mui/material";
+import { IconButton, Button, Chip } from "@mui/material";
 import {
   GitHub,
   LinkedIn,
@@ -21,6 +21,7 @@ import ConnectionsModal from "./ConnectionsModal";
 
 export default function ProfileInfoBar({
   user,
+  setUser,
   sessionUser,
   profileOwned,
   isEdited,
@@ -42,6 +43,7 @@ export default function ProfileInfoBar({
       .then((response) => {
         if (response.data.code === 200) {
           setConnections(response.data.connectedUsers);
+          setUser(user);
         }
       })
       .catch((e) => {
@@ -118,6 +120,25 @@ export default function ProfileInfoBar({
     <div className="profileDetails">
       <div className="profileDetailLeft">
         <h3>{user.full_name}</h3>
+        {parseInt(user.user_type) === 0 && (
+          <Chip sx={{ ml: 1 }} variant="outlined" color="info" label="Admin" />
+        )}
+        {parseInt(user.user_type) === 1 && (
+          <Chip
+            sx={{ ml: 1 }}
+            variant="outlined"
+            color="info"
+            label="Instructor"
+          />
+        )}
+        {parseInt(user.user_type) === 2 && (
+          <Chip
+            sx={{ ml: 1 }}
+            variant="outlined"
+            color="info"
+            label="Student Rep."
+          />
+        )}
         <div className="profileInfoContainer">
           {linkedInUrl && (
             <IconButton
