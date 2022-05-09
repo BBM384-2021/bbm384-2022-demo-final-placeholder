@@ -21,6 +21,7 @@ import ConnectionsModal from "./ConnectionsModal";
 
 export default function ProfileInfoBar({
   user,
+  setUser,
   sessionUser,
   profileOwned,
   isEdited,
@@ -42,6 +43,7 @@ export default function ProfileInfoBar({
       .then((response) => {
         if (response.data.code === 200) {
           setConnections(response.data.connectedUsers);
+          setUser(user);
         }
       })
       .catch((e) => {

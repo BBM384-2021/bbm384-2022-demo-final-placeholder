@@ -24,7 +24,7 @@ export function createUser(data) {
   //   headers: { "Content-Type": "application/json" },
   //   body: JSON.stringify({ user: data }),
   // });
-  return client.post('/createUser', data )
+  return client.post("/createUser", data);
 }
 
 export const getUser = (user_id) => {
@@ -36,13 +36,19 @@ export const getUser = (user_id) => {
 };
 
 export const updateUser = ({ user, values, profilePic, coverUrl }) => {
-  const { fullName, email, phone, company, linkedinLink, githubLink } = values
-    ? values
-    : {};
+  const {
+    fullName,
+    userType,
+    email,
+    phone,
+    company,
+    linkedinLink,
+    githubLink,
+  } = values ? values : {};
   return client.patch("/updateUser", {
     id: user.id,
     full_name: fullName ? fullName : user.full_name,
-    user_type: user.user_type,
+    user_type: userType ? userType : user.user_type,
     cs_mail: email ? email : user.cs_mail,
     phone: phone ? phone : user.phone,
     company: company ? company : user.company,
