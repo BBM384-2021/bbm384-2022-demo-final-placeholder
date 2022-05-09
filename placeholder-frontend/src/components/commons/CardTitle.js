@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import { Box, IconButton, Menu, MenuItem } from "@mui/material"
+import { deletePost } from "../../services/PostService";
 import ProfileBanner from "./ProfileBanner";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import PostCreateBox from "../posts/PostCreateBox";
@@ -15,6 +16,15 @@ export default function CardTitle( {content, contentType, enablePostOptions, set
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+    const handleRemoveClick = () => {
+        deletePost(content.post.id)
+            .then((response) => {
+                if (response.data.code === 200) {
+                    // request succesfull
+                }
+            }).catch( (error) => console.log(error))
+    }
 
     const [openEditPost, setOpenEditPost] = useState(false);
 
@@ -38,7 +48,7 @@ export default function CardTitle( {content, contentType, enablePostOptions, set
                     onClose={handleClose}
                 >
                     <MenuItem onClick={()=>{setOpenEditPost(true); handleClose()}}>Edit</MenuItem>
-                    <MenuItem onClick={()=>null}>Remove</MenuItem>
+                    <MenuItem onClick={()=>{handleRemoveClick(); handleClose()}}>Remove</MenuItem>
             </Menu>
             {openEditPost &&
                 <PostCreateBox  

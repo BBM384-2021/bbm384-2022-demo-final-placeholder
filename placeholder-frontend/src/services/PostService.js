@@ -109,3 +109,11 @@ export function updatePost( post_id, post_body, post_visual_data_path ) {
     "post_visual_data_path" : post_visual_data_path
   });
 }
+
+export function deletePost ( post_id ) {
+  return axios.delete(baseURL + "/deletePost", {
+    data : {
+      "id" : post_id
+    }
+  })
+}

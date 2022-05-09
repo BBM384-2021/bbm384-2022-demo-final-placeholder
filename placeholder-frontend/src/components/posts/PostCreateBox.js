@@ -40,7 +40,7 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
     isEdit : isEdit
   });
 
-  const pvdp = content.post.post_visual_data_path;
+  const pvdp = content?.post.post_visual_data_path;
 
   const handlePostChange = (event) => {
     setPostContent(event.target.value);
