@@ -6,21 +6,14 @@ import calenderPic from "../../img/calendar.png";
 import { Colors } from "../../Colors";
 import "./ProfileBanner.css";
 
-function handleProfileBannerClick(user, history) {
-  return () => {
-    // const user_prof_id = user.cs_mail.split('@')[0]
-    // window.open("/in/" + user.id, "_blank");
-    history(`/in/${user.id}`);
-  };
-}
-
 export default function ProfileBanner({
   withoutName = false,
   contentType,
   user,
   status,
+  handleChatOpen,
 }) {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const styleClassName = "profileBanner-" + contentType;
   const withStatus = status === undefined ? false : true;
   let contentEnum = 0;
@@ -37,21 +30,33 @@ export default function ProfileBanner({
     case "connection":
       contentEnum = 3;
       break;
+    case "chat":
+      contentEnum = 4;
+      break;
 
     default:
       //search bar banners
-      contentEnum = 4;
+      contentEnum = 5;
       break;
   }
 
   const profilePicPath = user.profile_pic_path
     ? user.profile_pic_path
     : profilePic;
+
+  function handleProfileBannerClick(user) {
+    if (contentEnum === 4) {
+      return handleChatOpen(user);
+    }
+    console.log("Navigation");
+    return navigate(`/in/${user.id}`);
+  }
+
   return (
     <Box
       className={"profileBanner " + styleClassName}
       component={"button"}
-      onClick={handleProfileBannerClick(user, history)}
+      onClick={() => handleProfileBannerClick(user)}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
         <img
@@ -60,7 +65,7 @@ export default function ProfileBanner({
           alt=""
           style={{ margin: "0px 10px 0px 5px" }}
         />
-        <div>
+        <div className="bannerInfoContainer">
           {!withoutName && (
             <p style={{ margin: "0px", wordWrap: "normal" }}>
               <strong> {user.full_name} </strong>

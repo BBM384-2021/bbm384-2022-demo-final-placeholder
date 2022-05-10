@@ -40,7 +40,7 @@ export default function HomePageScreen({ user, setUser }) {
               <Route path="*" element={<ErrorPage />} />
             </Routes>
 
-            <ChatSideBar />
+            <ChatSideBar user={user} />
           </>
         )}
         {!flexDisplay && (
