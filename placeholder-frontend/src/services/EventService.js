@@ -11,30 +11,15 @@ export function getMainEventFeed(user_id, setEvents) {
         })
         .then((response) => {
             if (response.data.code === 200) {
-                // success
-                // console.log(response);
-                const events = response.data.allEvents;
-                setEvents(events);
+
+                console.log(response);
+                //const events = response.data;
+                //setEvents(events);
             } else {
                 setEvents([]);
             }
         })
         .catch((error) => console.log(error));
-}
-
-export function getEvent(post_id, setState, finishFunction) {
-    axios
-        .get(baseURL + "/getEvent", {
-            params: {
-                post_id: post_id,
-            },
-        }).then((response) => {
-        if (response.data.code === 200) {
-            setState(response.data.event);
-        } else {
-        }
-        finishFunction();
-    });
 }
 
 export function addEvent (user_id, event_body, event_share_date, event_location, start_date, end_date){

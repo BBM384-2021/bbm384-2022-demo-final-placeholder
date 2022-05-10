@@ -1,28 +1,14 @@
+import * as React from 'react';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Box from "@mui/material/Box";
-import React, { useEffect, useState } from "react";
+
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import { getEvent } from "../../services/EventService";
-
 import "./eventCard.css";
-import {getPost} from "../../services/PostService";
 
-export default function EventCard() {
-
-    const [stateContent, setStateContent] = useState(content);
-    const [isRefresh, setIsRefresh] = useState(false);
-
-    useEffect(() => {
-        const finishRefreshContent = () => {
-            setIsRefresh(false);
-        };
-        if (isRefresh) {
-            getEvent(stateContent.post.id, setStateContent, finishRefreshContent);
-        }
-    }, [isRefresh]);
+export default function EventCard({ content, contentType, user, key }) {
 
     return (
         <Box className="card">

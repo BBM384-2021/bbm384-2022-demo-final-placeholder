@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-
-import CardPreview from "../commons/CardPreview";
 
 import { getMainFeed } from "../../services/PostService";
 import "./mainFeed.css";
 import ContentCreateBar from "../commons/ContentCreateBar";
 import PostCreateBox from "../posts/PostCreateBox";
 import EventCreateBox from "../events/EventCreateBox";
+import EventCard from "../commons/EventCard";
+import CardPreview from "../commons/CardPreview";
 
 
 export default function MainFeed({ user }) {
