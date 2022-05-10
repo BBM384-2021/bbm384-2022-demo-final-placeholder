@@ -3,6 +3,19 @@ import { Box, Typography } from "@mui/material";
 import { Colors } from "../../Colors";
 import "./cardPreview.css";
 
+function convertMs2TimeString(time_obj) {
+  const time = (new Date()) - time_obj;
+  if (time / 1000 < 60) { // if less than a minute
+      return Math.floor(time / 1000) + " seconds ago";
+  } else if (time / (1000 * 60) < 60) { // if less than a hour
+      return Math.floor(time / (1000 * 60)) + " minutes ago";
+  } else if (time / (1000 * 60 * 60) < 24) { // if less than a day
+      return Math.floor(time / (1000 * 60 * 60)) + " hours ago";
+  } else {
+      return Math.floor(time / (1000 * 60 * 60 * 24)) + " days ago";
+  }
+};
+
 export default function CardContent({
   content,
   enableShortView,
@@ -82,7 +95,7 @@ export default function CardContent({
       >
         {/* <strong>Files Attached (1)</strong> */}
         <span style={{ fontWeight: "100" }}>
-          {content.post.post_share_date}
+          {convertMs2TimeString(new Date(content.post.post_share_date))}
         </span>
       </div>
     </Box>
