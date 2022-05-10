@@ -57,7 +57,6 @@ export default function Profile({ sessionUser, setSessionUser }) {
         user={user}
         setEdited={setEdited}
       ></ProfileHeader>
-
       <ProfileInfoBar
         user={user}
         sessionUser={sessionUser}
@@ -65,6 +64,7 @@ export default function Profile({ sessionUser, setSessionUser }) {
         isEdited={isEdited}
         setEdited={setEdited}
       ></ProfileInfoBar>
+
       <ProfileFeed user={user}></ProfileFeed>
     </div>
   );
