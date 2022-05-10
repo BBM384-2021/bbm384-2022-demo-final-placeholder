@@ -1,22 +1,28 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import profilePic from '../profilepage-screen/assets/1.png'
-import "./eventCard.css";
 import Box from "@mui/material/Box";
+import React, { useEffect, useState } from "react";
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
+import { getEvent } from "../../services/EventService";
+
+import "./eventCard.css";
+import {getPost} from "../../services/PostService";
 
 export default function EventCard() {
+
+    const [stateContent, setStateContent] = useState(content);
+    const [isRefresh, setIsRefresh] = useState(false);
+
+    useEffect(() => {
+        const finishRefreshContent = () => {
+            setIsRefresh(false);
+        };
+        if (isRefresh) {
+            getEvent(stateContent.post.id, setStateContent, finishRefreshContent);
+        }
+    }, [isRefresh]);
 
     return (
         <Box className="card">
@@ -26,21 +32,37 @@ export default function EventCard() {
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title="Desmin Alpaslan posted" //body
+                titleTypographyProps={{variant:'span'}}
+                title="BBM3131 Discussion" //body
             />
             <CardContent className="cardContent">
                 <div className="cardContentContainer">
-                    <Typography variant="body2" fontFamily="Poppins" fontSize="15px" color="text.secondary">
-                        meeting this afternoon, zoom link
-                    </Typography>
+                    <div className="cardPosterInfo">
+                        <span>Selman Kahya posted</span>
+                    </div>
                     <div className="cardContentButton">
-                        <box className="attend-button">
-                            <span>ATTEND</span>
-                        </box>
-                        <span>23 attending</span>
+                        <button className="attend-button">
+                            ATTEND
+                        </button>
+                        <button className="going-button">
+                            GOING
+                        </button>
+                        <button className="going-button">
+                            GOING
+                        </button>
+                        <span> 23 attending</span>
                     </div>
                 </div>
             </CardContent>
+            <div className="cardBottomContent">
+                <span>
+                    Starting in 18 hours
+                </span>
+
+                <span>
+                    Today
+                </span>
+            </div>
 
 
         </Box>

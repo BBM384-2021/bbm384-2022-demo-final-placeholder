@@ -1,5 +1,4 @@
 import React from "react";
-import Box from "@mui/material/Box";
 import "./eventSideBar.css";
 import EventCard from "../commons/EventCard";
 
@@ -9,32 +8,14 @@ export default function EventSideBar() {
     <div className="eventSidebar">
       <div className="eventWrapper">
         <ul className="eventList">
-
           <li className="eventListItem">
             <div className="eventIcon" />
             <span className="eventListItemText">Event Feed</span>
           </li>
         </ul>
-
         <EventCard>
-
-        </EventCard>
-        <EventCard>
-
-        </EventCard>
-        <EventCard>
-
-        </EventCard>
-        <EventCard>
-
         </EventCard>
         <button className="eventButton">
-
-
-
-
-
-
           Show More</button>
       </div>
     </div>

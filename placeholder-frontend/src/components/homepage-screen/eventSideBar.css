@@ -9,6 +9,13 @@
   border-radius: 20px;
 }
 
+.eventListItemText{
+  margin-left: -10px;
+  font-family: "Poppins";
+  color: #767676;
+  font-weight: 550;
+}
+
 /* ::-webkit-scrollbar {
   width: 5px;
 }
@@ -41,7 +48,11 @@
 
 .eventButton {
   width: 150px;
+  cursor: pointer;
   border: none;
+  font-family: "Poppins";
+  color: #626262;
+  margin-top: 30px;
   padding: 10px;
   border-radius: 5px;
   font-weight: 500;
