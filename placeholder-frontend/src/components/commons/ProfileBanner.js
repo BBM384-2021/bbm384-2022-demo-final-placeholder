@@ -36,6 +36,7 @@ export default function ProfileBanner({
 
     default:
       //search bar banners
+      // chat banner
       contentEnum = 5;
       break;
   }
@@ -46,7 +47,7 @@ export default function ProfileBanner({
 
   function handleProfileBannerClick(user) {
     if (contentEnum === 4) {
-      return handleChatOpen(user);
+      return handleChatOpen(user.id);
     }
     console.log("Navigation");
     return navigate(`/in/${user.id}`);

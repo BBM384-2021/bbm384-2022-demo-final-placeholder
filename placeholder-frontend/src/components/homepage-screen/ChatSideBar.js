@@ -1,14 +1,27 @@
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
+import {
+  Box,
+  Drawer,
+  IconButton,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  Container,
+} from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 import { getUsersConnected } from "../../services/UserService";
+import ProfileBanner from "../commons/ProfileBanner";
+import ChatView from "../chat/ChatView";
 
 import "./chatSidebar.css";
-import ProfileBanner from "../commons/ProfileBanner";
+import { useNavigate } from "react-router";
 
 export default function ChatSideBar({ user }) {
   const [connectedUsers, setConnectedUsers] = useState({});
-  const [chatOpen, setChatOpen] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUsersConnected(user.id)
@@ -24,12 +37,17 @@ export default function ChatSideBar({ user }) {
       });
   }, [user]);
 
-  function openChatModal(user) {
+  function openChatModal(userId) {
     console.log("Chat is open");
+    return navigate(`/chat/${userId}`);
+
     //TODO: Modal ekle chatView koy icine
     //! diger islemleri etkilemeden modal acik kalabilir mi ona bak
   }
 
+  // const handleDrawerClose = () => {
+  //   setChatOpen(false);
+  // };
   return (
     <div className="chatSidebar">
       <div style={{ marginLeft: "31px" }}>
@@ -42,11 +60,55 @@ export default function ChatSideBar({ user }) {
                 contentType="chat"
                 user={connection}
                 status="Tap to chat"
-                handleChatOpen={openChatModal}
+                handleChatOpen={() => openChatModal(connection.id)}
               />
             </div>
           );
         })}
+        {/* <ChatPortal>
+          <Drawer
+            className=".MuiDrawer-paperAnchorDockedBottom"
+            sx={{
+              width: drawerWidth,
+              flexShrink: 0,
+              "& .MuiDrawer-paper": {
+                width: drawerWidth,
+                boxSizing: "border-box",
+              },
+            }}
+            anchor="bottom"
+            variant="persistent"
+            open={chatOpen}
+            ModalProps={{
+              keepMounted: true,
+              sx: {
+                height: "50%",
+                position: "relative",
+                paddingRight: "300px",
+              },
+              position: { X: 330, Y: 50 },
+            }}
+            PaperProps={
+              {
+                sx: {
+                  height: "50%",
+                  position: "absolute",
+                  right: 20,
+                  bottom: 0,
+                },
+                // position: { X: 330, Y: 50 },
+              }
+            }
+          >
+            <div>
+              <IconButton onClick={handleDrawerClose}>
+                <Close />
+              </IconButton>
+            </div>
+            <Divider />
+           <ChatView></ChatView> 
+          </Drawer>
+        </ChatPortal> */}
       </div>
     </div>
   );

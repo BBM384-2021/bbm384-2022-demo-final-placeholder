@@ -16,7 +16,7 @@ import ConfirmationDialog from "../commons/ConfirmationDialog";
 
 import "./comment.css";
 
-function convertMs2TimeString(time) {
+export function convertMs2TimeString(time) {
   if (time / 1000 < 60) {
     // if less than a minute
     return Math.floor(time / 1000) + " seconds ago";

@@ -1,16 +1,16 @@
 .homeContainer {
   font-family: Poppins;
+  flex-grow: 5;
   display: flex;
-  flex: auto;
   flex-direction: row;
   justify-content: space-between;
-  height: calc(100vh - 150px);
-  bottom:10px;
+  height: calc(100vh - 140px);
+  padding-bottom: 20px;
   /* margin-left: 50px; */
   /* margin-right: 50px; */
   padding-top: 2%;
   width: calc(100vw - 40px);
   overflow-y: visible;
-  position: relative; 
+  position: relative;
   /* background-color: blueviolet; */
 }

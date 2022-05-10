@@ -7,15 +7,25 @@
   border-radius: 17px;
   /* height: calc(100vh - 50px); */
   overflow-y: scroll;
-  position: sticky;
-  display: flex-start;
+  overflow-x: visible;
+  /* position: relative; */
+  display: flex;
 }
 
 .bannerContainer{
-  /* position: relative; */
   width: auto;
   margin-top: 15px;
   margin-right: 20px;
   border-radius: 17px;
+
+}
+.MuiDrawer-paperAnchorDockedBottom{
+  width: 350px !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  background-color: burlywood !important;
+  right:0 !important;
+  /* z-index: 9999 !important; */
+
 
 }
