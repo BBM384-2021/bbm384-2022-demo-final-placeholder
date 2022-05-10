@@ -7,6 +7,8 @@ import { getMainFeed } from "../../services/PostService";
 import "./mainFeed.css";
 import ContentCreateBar from "../commons/ContentCreateBar";
 import PostCreateBox from "../posts/PostCreateBox";
+import EventCreateBox from "../events/EventCreateBox";
+
 
 export default function MainFeed({ user }) {
   const [contents, setContents] = useState([]);
@@ -28,7 +30,7 @@ export default function MainFeed({ user }) {
 
   return (
     <div className="feedContainer">
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+      <div style={{display: 'flex', justifyContent: 'space-between', cursor: "pointer"}}>
         <ContentCreateBar onClick={onClickPostCreate}>
           Create a post...
         </ContentCreateBar>
@@ -51,11 +53,20 @@ export default function MainFeed({ user }) {
             </div>
           );
         })}
-      <PostCreateBox  
+
+
+      <PostCreateBox
         open={openCreatePost}
         setOpen={setOpenCreatePost}
         user={user}
       />
+
+      <EventCreateBox
+          open={openCreateEvent}
+          setOpen={setOpenCreateEvent}
+          user={user}
+      />
+
     </div>
   );
 }
