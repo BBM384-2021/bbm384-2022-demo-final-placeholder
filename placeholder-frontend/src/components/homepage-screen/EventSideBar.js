@@ -5,11 +5,13 @@ import {getMainEventFeed } from "../../services/EventService";
 
 export default function EventSideBar({user}) {
 
-  const [contents, setContents] = useState([]);
+  const [participatingEvents, setParticipatingEvents] = useState([]);
+  const [nonParticipatingEvents, setNonParticipatingEvents] = useState([]);
 
-  console.log(user);
+
+
   useEffect(() => {
-    getMainEventFeed(user.id, setContents);
+    getMainEventFeed(user.id, setParticipatingEvents,setNonParticipatingEvents);
   }, [user.id]);
 
 
@@ -23,20 +25,35 @@ export default function EventSideBar({user}) {
             <span className="eventListItemText">Event Feed</span>
           </li>
         </ul>
-        {contents.length > 0 &&
-            contents.map((content) => {
+        {participatingEvents.length > 0 &&
+            participatingEvents.map((content) => {
               return (
                   <div key={content.event.id}>
                     <EventCard
                         className="cardContainer"
                         content={content}
-                        contentType={"event"}
+                        contentType={"going"}
                         id={content.event.id}
                         user={user}
                     />
                   </div>
               );
             })}
+        {nonParticipatingEvents.length > 0 &&
+            nonParticipatingEvents.map((content) => {
+              return (
+                  <div key={content.event.id}>
+                    <EventCard
+                        className="cardContainer"
+                        content={content}
+                        contentType={"attend"}
+                        id={content.event.id}
+                        user={user}
+                    />
+                  </div>
+              );
+            })}
+
         <button className="eventButton">
           Show More</button>
       </div>

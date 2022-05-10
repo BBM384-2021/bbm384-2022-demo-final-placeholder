@@ -7,15 +7,19 @@ import DoneIcon from '@mui/icons-material/Done';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { updateComment, deleteComment } from "../../services/CommentService";
 
-function convertMs2TimeString(time) {
+export function convertMs2TimeString(time) {
     if (time / 1000 < 60) { // if less than a minute
         return Math.floor(time / 1000) + " seconds ago";
     } else if (time / (1000 * 60) < 60) { // if less than a hour
         return Math.floor(time / (1000 * 60)) + " minutes ago";
     } else if (time / (1000 * 60 * 60) < 24) { // if less than a day
         return Math.floor(time / (1000 * 60 * 60)) + " hours ago";
-    } else {
+    } else if (time / (1000 * 60 * 60 *24) < 7){
         return Math.floor(time / (1000 * 60 * 60 * 24)) + " days ago";
+    } else if (time / (1000 * 60 * 60 *24 * 7) < 4){
+        return Math.floor(time / (1000 * 60 * 60 * 24 * 7)) + " weeks ago";
+    } else{
+        return Math.floor(time / (1000 * 60 * 60 * 24 * 7 * 4)) + " months ago";
     }
 };
 

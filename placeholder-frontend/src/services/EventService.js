@@ -2,24 +2,29 @@ import axios from "axios";
 
 const baseURL = "https://placeholder-backend.herokuapp.com/event";
 
-export function getMainEventFeed(user_id, setEvents) {
+export function getMainEventFeed(user_id, setParticipatingEvents,setNonParticipatingEvents) {
     axios
         .get(baseURL + "/getMainFeed", {
             params: {
-                user_id: user_id,
+                current_user_id: user_id,
             },
         })
         .then((response) => {
+            console.log(response);
             if (response.data.code === 200) {
 
-                console.log(response);
-                //const events = response.data;
-                //setEvents(events);
-            } else {
-                setEvents([]);
+                setNonParticipatingEvents(response.data.nonParticipatingEvents);
+                setParticipatingEvents(response.data.participatingEvents)
             }
         })
         .catch((error) => console.log(error));
+}
+
+export function participateEvent (user_id, event_id){
+    return axios.post (baseURL + "/participateEvent", {
+        "user_id" : user_id,
+        "event_id" : event_id,
+    });
 }
 
 export function addEvent (user_id, event_body, event_share_date, event_location, start_date, end_date){
