@@ -86,7 +86,7 @@ export default function SearchBar() {
   }, [])
 
   const handleClickOutside = (event) => {
-    if (searchBarRef && !searchBarRef.current.contains(event.target)) {
+    if (searchBarRef && !searchBarRef?.current.contains(event.target)) {
       setResults([]);
     }
   }
