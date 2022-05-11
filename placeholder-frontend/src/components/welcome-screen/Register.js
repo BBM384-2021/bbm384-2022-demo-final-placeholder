@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -26,6 +26,7 @@ import IconTextField from "../commons/IconTextField";
 
 import { Colors } from "../../Colors";
 import "./Welcome.css";
+import { createUser } from "../../services/UserService";
 
 function Copyright(props) {
   return (
@@ -52,51 +53,61 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Register({ setLogin, setUser }) {
-  const [error, setError] = useState("");
-  const [userData, setUserData] = useState({ cs_mail: "", user_password: "" });
+  const [errors, setErrors] = useState({});
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    console.log(userData);
+    createUser(userData).then((response) => {
+      if (response.data.code === 200) {
+        setUser(response.data.user);
+      }
+    });
+  }, [userData]);
 
   const validate = (fieldValues) => {
-    if (fieldValues.get("user_password")?.length < 6) {
-      setError("Minimum 6 characters required.");
-      return false;
-    } else if (
-      fieldValues.get("user_password") !== fieldValues.get("confirm_password")
-    ) {
-      setError("Please Confirm Password!");
-      return false;
+    let temp = {};
+    if (!fieldValues.get("user_type")) {
+      console.log("user_type");
+      temp["userType"] = "Select a User Type to Register";
+    } else {
+      delete temp["userType"];
     }
-    return true;
+
+    if (fieldValues.get("password")?.length < 6) {
+      temp["password"] = "Minimum 6 Characters Required in Passwords.";
+    } else if (
+      fieldValues.get("password") !== fieldValues.get("confirm_password")
+    ) {
+      delete temp["password"];
+      temp["confirm_password"] = "Passwords Do NOT Match!";
+    } else {
+      delete temp["confirm_password"];
+    }
+    setErrors({ ...temp });
+    // will return true if temp is empty else validation fails
+    return Object.keys(temp).length === 0;
   };
-  // const { values, setValues, errors, setErrors, handleInputChange, resetForm } =
-  //   useForm(initialFValues, true, validate);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    setUserData({
-      full_name: data.get("full_name"),
-      cs_mail: data.get("cs_mail"),
-      user_password: data.get("user_password"),
-      user_type: data.get("user_type") === "student" ? 3 : 4,
-      // student: 3 , graduate: 4
-    });
     if (validate(data)) {
-      console.log("Register Validation TODO: ", userData);
+      console.log("Register Validated");
+      setUserData({
+        full_name: data.get("full_name"),
+        // student: 3 , graduate: 4
+        user_type: data.get("user_type")
+          ? data.get("user_type") === "student"
+            ? 3
+            : 4
+          : undefined,
+        cs_mail: data.get("cs_mail"),
+        user_password: data.get("password"),
+        confirm_password: data.get("confirm_password"),
+      });
     }
   };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log(event.currentTarget);
-  //   console.log({
-  //     email: data.get("email"),
-  //     type: data.get("user-type"),
-  //     password: data.get("password"),
-  //     confpassword: data.get("confirm-password"),
-  //   });
-  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -111,17 +122,16 @@ export default function Register({ setLogin, setUser }) {
             }}
           >
             <h3 className="welcome">Join Us!</h3>
-            {error && <Alert severity="error">{error}</Alert>}
-            <Box
-              component="form"
-              noValidate
-              handleSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
+            {Object.values(errors).map((error, index) => (
+              <Alert key={index} severity="error">
+                {error}
+              </Alert>
+            ))}
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <RadioGroup
                 row
-                aria-labelledby="user-type"
-                name="user-type"
+                aria-labelledby="user_type"
+                name="user_type"
                 className="radio-container"
               >
                 <FormControlLabel
@@ -163,8 +173,7 @@ export default function Register({ setLogin, setUser }) {
                 id="full_name"
                 label="Name Surname"
                 name="full_name"
-                autoComplete="name"
-                autoFocus
+                // autoFocus
                 iconEnd={<PersonOutlined />}
               />
               <IconTextField
@@ -172,10 +181,9 @@ export default function Register({ setLogin, setUser }) {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
+                id="cs_mail"
                 label="Email Address"
-                name="email"
-                autoComplete="email"
+                name="cs_mail"
                 autoFocus
                 iconEnd={<MailOutlined />}
               />
@@ -188,7 +196,6 @@ export default function Register({ setLogin, setUser }) {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
                 iconEnd={<LockOutlined />}
               />
               <IconTextField
@@ -196,11 +203,10 @@ export default function Register({ setLogin, setUser }) {
                 margin="normal"
                 required
                 fullWidth
-                name="confirm-password"
+                name="confirm_password"
                 label="Confirm Password"
                 type="password"
-                id="confirm-password"
-                autoComplete="current-password"
+                id="confirm_password"
                 iconEnd={<LockOutlined />}
               />
               <Box display="flex" justifyContent="space-between">

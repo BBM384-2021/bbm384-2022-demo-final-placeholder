@@ -1,0 +1,59 @@
+@import "../../index.css";
+
+.tag-management-container {
+    width : 65vw;
+    position : absolute;
+    transform : translate(17vw, 10vh);
+    background-color: var(--whiteShaded);
+    border-radius:10px;
+    padding-bottom: 20px;
+}
+
+.tag-management-header > h1 {
+    font-size: x-large;
+}
+
+.tag-management-header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 20px 0px 20px;
+    align-items: center;
+}
+.tag-management-table {
+    text-align: center;
+}
+
+.tag-table-headers {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.tag-management-table > hr {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.tag-new-button {
+    border-radius: 10px;
+    background-color: rgb(195, 130, 56);
+    padding: 0px 10px 0px 10px;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    min-height: 40px;
+}
+
+.tag-new-button:hover {
+    background-color: rgb(157, 105, 46);
+}
+
+.active {
+    background-color: rgb(56, 195, 56);
+}
+
+.active:hover {
+    background-color: rgb(56, 172, 56);
+}
