@@ -8,6 +8,7 @@ import "./mainFeed.css";
 import ContentCreateBar from "../commons/ContentCreateBar";
 import PostCreateBox from "../posts/PostCreateBox";
 import TagFilter from "../commons/TagFilter";
+import EventCreateBox from "../events/EventCreateBox";
 
 export default function MainFeed({ user }) {
   const [contents, setContents] = useState([]);
@@ -57,7 +58,7 @@ export default function MainFeed({ user }) {
             </div>
           );
         })}
-      <PostCreateBox  
+      <PostCreateBox
         open={openCreatePost}
         setOpen={setOpenCreatePost}
         user={user}
@@ -67,6 +68,14 @@ export default function MainFeed({ user }) {
       >
         Create a post
       </PostCreateBox>
+        <EventCreateBox
+            open={openCreateEvent}
+            setOpen={setOpenCreateEvent}
+            user={user}
+            isEdit={false}
+            content={null}
+            setIsRefresh={undefined}
+        />
     </div>
   );
 }
