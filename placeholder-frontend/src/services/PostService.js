@@ -102,11 +102,14 @@ export function getAllPostsOfUser(user_id) {
   });
 }
 
-export function updatePost( post_id, post_body, post_visual_data_path ) {
+export function updatePost( post_id, post_body, post_visual_data_path, tags ) {
   return axios.patch(baseURL + "/updatePost", {
-    "id" : post_id,
-    "post_body" : post_body,
-    "post_visual_data_path" : post_visual_data_path
+    "post": {
+      "id" : post_id,
+      "post_body" : post_body,
+      "post_visual_data_path" : post_visual_data_path
+    },
+    "tags" : tags
   });
 }
 

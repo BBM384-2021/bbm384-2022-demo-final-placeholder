@@ -158,7 +158,7 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
       setWaitResponse(false);
     } else if (isEdit) {
       const isPhotoEdit = (state.postVisualData instanceof File);
-      updatePost(content.post.id, postContent, attachmentLink)
+      updatePost(content.post.id, postContent, attachmentLink, selectedTags)
         .then((response) => {
           if (response.data.code === 200) {
             // success
