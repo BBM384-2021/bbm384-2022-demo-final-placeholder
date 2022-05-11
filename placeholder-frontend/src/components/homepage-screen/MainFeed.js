@@ -7,6 +7,7 @@ import { getMainFeed } from "../../services/PostService";
 import "./mainFeed.css";
 import ContentCreateBar from "../commons/ContentCreateBar";
 import PostCreateBox from "../posts/PostCreateBox";
+import TagFilter from "../commons/TagFilter";
 
 export default function MainFeed({ user }) {
   const [contents, setContents] = useState([]);
@@ -26,6 +27,8 @@ export default function MainFeed({ user }) {
     setOpenCreateEvent(true);
   }
 
+  const [selectedTags, setSelectedTags] = useState([]);
+
   return (
     <div className="feedContainer">
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -36,7 +39,7 @@ export default function MainFeed({ user }) {
           Create an event...
         </ContentCreateBar>
       </div>
-
+      <TagFilter setSelectedTags={setSelectedTags}/>
       {contents.length > 0 &&
         contents.map((content) => {
           return (
