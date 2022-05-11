@@ -1,0 +1,15 @@
+.tag-view-box {
+    background-color: rgb(227, 87, 87);
+    border-radius: 10px;
+    width: fit-content;
+    padding: 3px 10px 3px 10px;
+    margin: 2px 5px 2px 5px;
+    color: aliceblue;
+    font-weight: 600;
+}
+
+.tag-view-container {
+    margin: 5px 30px 5px 30px;
+    display: flex;
+    flex-wrap: wrap;
+}

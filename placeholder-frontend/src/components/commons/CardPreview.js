@@ -6,6 +6,7 @@ import "./cardPreview.css";
 import CardView from "./CardView";
 import CardTitle from "./CardTitle";
 import CardContent from "./CardContent";
+import CardTagBar from "./CardTagBar";
 import { getPost } from "../../services/PostService";
 
 function isUserLikedPost(likeArray, userID) {
@@ -58,6 +59,7 @@ export default function CardPreview({ content, contentType, user, key }) {
         enablePostOptions={content.user.id === user.id || user.user_type == 0}
         setIsRefresh={setIsRefresh}
         />
+      <CardTagBar tags={content.tags}/>
       <CardContent
         content={stateContent}
         enableShortView={true}
