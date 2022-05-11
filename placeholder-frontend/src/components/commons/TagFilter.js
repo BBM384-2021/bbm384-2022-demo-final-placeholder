@@ -70,7 +70,8 @@ export default function TagFilter ( {setSelectedTags} ) {
                 onClose={handleClose}
                 sx={{
                     maxHeight: 48 * 4.5,
-                    marginTop: '5px'
+                    marginTop: '5px',
+                    maxWidth:'50%'
                 }}
             >
                 {Object.keys(tags).map((tag_id) => {
@@ -78,16 +79,18 @@ export default function TagFilter ( {setSelectedTags} ) {
                         <ListItem key={"tag-entry-filter-" + tag_id}
                         sx={{
                             height:'30px',
-                            margin:'0px 0px 5px 0px',
+                            margin:'5px 0px 5px 0px',
                             borderBottom:'1px solid gray',
-                            width:filterButton.current.offsetWidth
+                            padding:'0px',
+                            width:filterButton.current.offsetWidth,
                         }}>
-                        <div style={{display:'flex', alignItems:'center', marginTop:'10px', marginBottom:'10px'}}>
+                        <div style={{display:'flex', alignItems:'center',
+                        justifyContent:'space-between'}}>
                             <Checkbox
                                 onChange={onTagEntrySelect(tag_id)}
                                 checked={tags[tag_id].isSelected}
                             />
-                            <p>{tags[tag_id].tagName}</p>
+                            <p style={{overflowWrap:'break-word', textAlign:'left'}}>{tags[tag_id].tagName}</p>
                         </div>
 
                         </ListItem>
