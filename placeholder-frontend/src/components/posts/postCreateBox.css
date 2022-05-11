@@ -52,7 +52,7 @@
   font-size: medium;
   font-family: "Poppins";
   /* overflow: scroll; */
-  /* resize: none; */
+  resize: none;
 }
 
 .post-config-bar {

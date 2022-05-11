@@ -2,12 +2,12 @@ import axios from "axios";
 
 const baseURL = "https://placeholder-backend.herokuapp.com/post";
 
-export function getMainFeed(user_id, setPosts) {
+export function getMainFeed(user_id, setPosts, selectedTags) {
   axios
     .get(baseURL + "/getMainFeed", {
       params: {
         user_id: user_id,
-        tags: "",
+        tags: selectedTags.toString(),
       },
     })
     .then((response) => {
@@ -100,4 +100,23 @@ export function getAllPostsOfUser(user_id) {
       user_id: user_id,
     },
   });
+}
+
+export function updatePost( post_id, post_body, post_visual_data_path, tags ) {
+  return axios.patch(baseURL + "/updatePost", {
+    "post": {
+      "id" : post_id,
+      "post_body" : post_body,
+      "post_visual_data_path" : post_visual_data_path
+    },
+    "tags" : tags
+  });
+}
+
+export function deletePost ( post_id ) {
+  return axios.delete(baseURL + "/deletePost", {
+    data : {
+      "id" : post_id
+    }
+  })
 }

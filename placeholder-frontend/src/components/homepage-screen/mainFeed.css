@@ -18,3 +18,18 @@ flex: '6',
         display:'flex',
         flexDirection : 'column',
         paddingInline : '10px', */
+
+.feed-option-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 10px 0px 10px;
+}
+
+.feed-option-container > h4 {
+  margin: 0px 0px 0px 10px;
+  font-family: 'Poppins';
+  font-weight: 600;
+  color: rgb(99, 97, 97);
+}
