@@ -14,7 +14,7 @@ import java.util.*;
 public class MessageDAO {
 
 
-    private static void extractMessageList(HashMap<String,HashMap<String,List<Object>>> result, List<Object> queryResult, String currentUserId) {
+    private static void extractMessageList(HashMap<String,HashMap<String,List<Object>>> result, List<Object> queryResult, String currentUserId, List<Object> singleResult) {
         Gson gson = new Gson();
         if (queryResult.size() != 0) {
             JsonParser jsonParser = new JsonParser();
@@ -52,6 +52,12 @@ public class MessageDAO {
                     chatLog.put("user",userList);
                     result.put(Integer.toString(otherUsersId),chatLog);
                 }
+            }
+        }
+
+        if(singleResult != null){
+            for(String key : result.keySet()){
+                singleResult.addAll(result.get(key).get("messages"));
             }
         }
     }
@@ -95,7 +101,7 @@ public class MessageDAO {
                     "INNER JOIN User u1 ON m.sender_id = u1.id " +
                     "INNER JOIN User u2 ON m.receiver_id = u2.id " +
                     "WHERE m.sender_id = '%s' or m.receiver_id = '%s'",user_id,user_id)).getResultList();
-            extractMessageList(result, queryResult,user_id);
+            extractMessageList(result, queryResult,user_id, null);
             session.getTransaction().commit();
 
         }
@@ -118,6 +124,7 @@ public class MessageDAO {
         Session session = factory.getCurrentSession();
 
         HashMap<String,HashMap<String,List<Object>>> result = new HashMap<>();
+        List<Object> singleResult = new ArrayList<>();
         List<Object> queryResult;
         try{
             session.beginTransaction();
@@ -125,7 +132,7 @@ public class MessageDAO {
                     "INNER JOIN User u1 ON m.sender_id = u1.id " +
                     "INNER JOIN User u2 ON m.receiver_id = u2.id " +
                     "WHERE (m.sender_id = '%s' and m.receiver_id = '%s') or (m.sender_id = '%s' and m.receiver_id = '%s')",current_user_id,other_user_id,other_user_id,current_user_id)).getResultList();
-            extractMessageList(result, queryResult,current_user_id);
+            extractMessageList(result, queryResult,current_user_id, singleResult);
             session.getTransaction().commit();
 
         }
@@ -136,7 +143,7 @@ public class MessageDAO {
         finally {
             factory.close();
         }
-        return result;
+        return singleResult;
     }
 
     public static int updateMessage(Message message){

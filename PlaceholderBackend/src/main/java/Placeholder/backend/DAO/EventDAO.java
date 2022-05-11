@@ -280,9 +280,14 @@ public class EventDAO {
 
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
-
+        List<Object> queryResult;
         try{
             session.beginTransaction();
+            queryResult = session.createQuery(String.format("from Attend at WHERE at.event_id = '%s' and at.user_id = '%s' ",attend.getEvent_id(),attend.getUser_id())).getResultList();
+            if(queryResult.size() != 0){
+                factory.close();
+                return 400;
+            }
             session.save(attend);
             session.getTransaction().commit();
         }

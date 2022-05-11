@@ -276,14 +276,18 @@ public class PostDAO {
     }
 
 
-    public static int updatePost(Post post){
+    public static int updatePost(Post post, ArrayList<PostTag> tagIds){
         SessionFactory factory = createFactory();
         Session session = factory.getCurrentSession();
 
         try{
             session.beginTransaction();
             session.createQuery(String.format("update Post p SET p.post_body = '%s' , p.post_visual_data_path = '%s' WHERE p.id = '%s'",post.getPost_body(),post.getPost_visual_data_path(),post.getId())).executeUpdate();
+            PostTagDAO.deleteAllTagsFromPost(Integer.toString(post.getId()));
+            PostTagDAO.addMultipleTags(tagIds);
             session.getTransaction().commit();
+
+
         }
         catch (Exception e){
             System.out.println(e);

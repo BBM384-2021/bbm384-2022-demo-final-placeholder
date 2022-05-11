@@ -19,19 +19,18 @@ public class ConnectionController {
     public Object createConnection(@RequestBody Connection connection){
 
         if(connection.getUser1_id() == 0 || connection.getUser2_id() == 0){
-            return DAOFunctions.getResponse(400,"",null);
+            return DAOFunctions.getResponse(400,"error","Missing Fields");
         }
         return DAOFunctions.getResponse(ConnectionDAO.createConnection(connection),"",null);
     }
 
     @GetMapping("/connection/checkConnection")
-    public Object checkConnection(@RequestBody HashMap<String, String> body){
+    public Object checkConnection(@RequestParam(value = "user1_id",defaultValue = "") String user1_id, @RequestParam(value = "user2_id",defaultValue = "") String user2_id){
 
-        if(!body.containsKey("user1_id") || !body.containsKey("user2_id") ||
-                body.get("user1_id").equals("") || body.get("user2_id").equals("")){
-            return DAOFunctions.getResponse(400,"",null);
+        if(user1_id.equals("") || user2_id.equals("")){
+            return DAOFunctions.getResponse(400,"error","Missing Fields");
         }
-        return DAOFunctions.getResponse(200,"connected",ConnectionDAO.checkConnection(body.get("user1_id"),body.get("user2_id")));
+        return DAOFunctions.getResponse(200,"connected",ConnectionDAO.checkConnection(user1_id,user2_id));
     }
 
     @DeleteMapping("/connection/removeConnection")
@@ -39,7 +38,7 @@ public class ConnectionController {
 
         if(!body.containsKey("user1_id") || !body.containsKey("user2_id") ||
                 body.get("user1_id").equals("") || body.get("user2_id").equals("")){
-            return DAOFunctions.getResponse(400,"",null);
+            return DAOFunctions.getResponse(400,"error","Missing Fields");
         }
         return DAOFunctions.getResponse(ConnectionDAO.removeConnection(body.get("user1_id"),body.get("user2_id")),"",null);
 
@@ -49,7 +48,7 @@ public class ConnectionController {
     public Object removeAllConnections(@RequestBody HashMap<String, String> body){
 
         if(!body.containsKey("user1_id") || body.get("user1_id").equals("")){
-            return DAOFunctions.getResponse(400,"",null);
+            return DAOFunctions.getResponse(400,"error","Missing Fields");
         }
         return DAOFunctions.getResponse(ConnectionDAO.removeAllConnections(body.get("user1_id")),"",null);
 
