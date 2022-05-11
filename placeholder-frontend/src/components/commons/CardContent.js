@@ -25,6 +25,7 @@ export default function CardContent({
   const [showMore, setShowMore] = useState(false);
 
   const pvdp = content.post.post_visual_data_path;
+  const date = new Date(content.post.post_share_date);
 
   // useState(() => {
   //   console.log(
@@ -95,7 +96,8 @@ export default function CardContent({
       >
         {/* <strong>Files Attached (1)</strong> */}
         <span style={{ fontWeight: "100" }}>
-          {convertMs2TimeString(new Date(content.post.post_share_date))}
+          {date.getHours() + "." + date.getMinutes() + " " + date.toLocaleDateString()
+          }
         </span>
       </div>
     </Box>
