@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, createRef } from "react";
 import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
@@ -73,9 +73,31 @@ export default function SearchBar() {
   const [inputKey, setInputKey] = useState("");
   const [results, setResults] = useState([]);
 
+  const searchBarRef = useRef();
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Esc" || event.key === "Escape") {
+        setResults([]);
+        setInputKey("");
+      }
+    })
+  }, [])
+
+  const handleClickOutside = (event) => {
+    if (searchBarRef && !searchBarRef.current.contains(event.target)) {
+      setResults([]);
+    }
+  }
+
+  const handleInputChange = (event) => {
+    setInputKey(event.target.value);
+  }
+
   // TODO!!!!!! USER ID
   useEffect(() => {
-    GetSimilarConnections(inputKey.target?.value, 100, setResults);
+    GetSimilarConnections(inputKey, 100, setResults);
   }, [inputKey]);
 
   return (
@@ -88,13 +110,15 @@ export default function SearchBar() {
         marginTop: "3.5%",
         height: "100%",
       }}
+      ref={searchBarRef}
     >
       <Search sx={{ width: "400px" }}>
         <StyledInputBase
           placeholder="Search…"
           inputProps={{ "aria-label": "search" }}
           sx={{ fontFamily: "Poppins" }}
-          onChange={setInputKey}
+          onChange={handleInputChange}
+          value={inputKey}
         />
         <SearchIconWrapper>
           <SearchIcon htmlColor="#808080" sx={{ transform: "rotate(90deg)" }} />
