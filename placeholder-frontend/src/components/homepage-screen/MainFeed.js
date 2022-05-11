@@ -30,6 +30,7 @@ export default function MainFeed({ user }) {
 
   return (
     <div className="feedContainer">
+      
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
         <ContentCreateBar onClick={onClickPostCreate}>
           Create a post...
@@ -38,7 +39,10 @@ export default function MainFeed({ user }) {
           Create an event...
         </ContentCreateBar>
       </div>
-      <TagFilter setSelectedTags={setSelectedTags}/>
+      <div className="feed-option-container">
+        <h4>Main Feed</h4>
+        <TagFilter setSelectedTags={setSelectedTags}/>
+      </div>
       {contents.length > 0 &&
         contents.map((content) => {
           return (

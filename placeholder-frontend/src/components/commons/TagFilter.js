@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./tagFilter.css";
 import { getAllTags } from "../../services/TagService";
 import { Checkbox, ListItem, Menu, MenuItem } from "@mui/material";
@@ -7,6 +7,7 @@ import { red } from "@mui/material/colors";
 
 export default function TagFilter ( {setSelectedTags} ) {
     const [tags, setTags] = useState({});
+    const filterButton = useRef();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -57,13 +58,19 @@ export default function TagFilter ( {setSelectedTags} ) {
 
     return (
         <div className="tag-filter-container">
-            <button onClick={handleClick}>Select Tags</button>
+            <button 
+                ref={filterButton}
+                className="tag-filter-button"
+                onClick={handleClick}>
+                    Select Tags
+            </button>
             <Menu 
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
                 sx={{
-                    maxHeight: 48 * 4.5
+                    maxHeight: 48 * 4.5,
+                    marginTop: '5px'
                 }}
             >
                 {Object.keys(tags).map((tag_id) => {
@@ -72,7 +79,8 @@ export default function TagFilter ( {setSelectedTags} ) {
                         sx={{
                             height:'30px',
                             margin:'0px 0px 5px 0px',
-                            borderBottom:'1px solid gray'
+                            borderBottom:'1px solid gray',
+                            width:filterButton.current.offsetWidth
                         }}>
                         <div style={{display:'flex', alignItems:'center', marginTop:'10px', marginBottom:'10px'}}>
                             <Checkbox
@@ -93,6 +101,7 @@ export default function TagFilter ( {setSelectedTags} ) {
                         border: 'none',
                         color: 'white',
                         padding: '5px 20px 5px 20px',
+                        fontFamily: 'Poppins'
                     }}
                     onClick={onApplyFilterClick}
                 >
