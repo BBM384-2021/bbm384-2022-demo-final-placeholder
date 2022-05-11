@@ -19,6 +19,14 @@ import { uploadPicture, ROOT_S3_URL } from "../../services/S3Service";
 // Style and Images
 import sendIcon from "../../img/paper-plane.png";
 import "./postCreateBox.css";
+// crypto functions
+import sha256 from 'crypto-js/sha256'
+import Base64 from 'crypto-js/enc-base64';
+
+function hashPost (postContent, postVisualData) {
+  const postHash = sha256(postContent + postVisualData + new Date().toISOString());
+  return Base64.stringify(postHash).slice(0, 10);
+}
 
 export default function PostCreateBox({ children, user, open, setOpen, isEdit, content, setIsRefresh }) {
   
@@ -84,7 +92,7 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
     // create the preview
     let objectUrl;
     if (state.isEdit && (pvdp !== "null" && pvdp !== null)) {
-      setPreview(content.post.post_visual_data_path);
+      setPreview(pvdp);
     } else if (state.postVisualData) {
       objectUrl = URL.createObjectURL(state.postVisualData);
       setPreview(objectUrl);
@@ -94,7 +102,7 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
     setState({ ...state, isEdit: false});
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
-  }, [state.postVisualData]);
+  }, [state.postVisualData, pvdp]);
 
   useEffect(() => {
     if (isEdit) {
@@ -121,8 +129,8 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
   const onPostCreateClick = () => {
     setWaitResponse(true);
     // since we don't know the post id yet, we generate a custom url for initial post image
-    // (normally we use id to store in S3 in order to get objects easily)
-    let customUrl = "newPost" + Math.floor(Math.random() * 100);
+    // (normally we use id to store in S3 in order to get objects easily) [CHANGE] -> sha256 for hashing
+    let customUrl = "newPost" + hashPost(postContent, state.postVisualData);
     // S3 service is  using that key to generate the below URL
     // we need to redefine the URL to save it on our database :D
     if (isEdit) {
@@ -130,7 +138,6 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
       customUrl = (pvdp !== "null" && pvdp !== null)
                           ?
                           content.post.post_visual_data_path.slice(62) : customUrl;
-      console.log(content.post.post_visual_data_path, customUrl)
       setState({ ...state, postKey: customUrl });               
     } else {
       setState({ ...state, postKey: customUrl });
