@@ -150,11 +150,12 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
       setNoTagError(true);
       setWaitResponse(false);
     } else if (isEdit) {
+      const isPhotoEdit = (state.postVisualData instanceof File);
       updatePost(content.post.id, postContent, attachmentLink)
         .then((response) => {
           if (response.data.code === 200) {
             // success
-            if (preview) {
+            if (preview && isPhotoEdit) {
               handlePostVisualData(state.postVisualData, {
                 ...state,
                 postKey: customUrl,
