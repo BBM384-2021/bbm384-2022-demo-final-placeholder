@@ -1,0 +1,110 @@
+.card{
+    margin-top: 15px;
+    background-color: #efefef;
+    max-height: 200px;
+    border: 0;
+    outline: 0;
+    box-shadow: 0 3px 15px -10px #565656;
+    border-radius: 15px ;
+}
+
+.cardHeader{
+    font-family: "Poppins";
+    font-size: 10px;
+
+}
+
+.cardHeader span {
+    color: #565656;
+    display: flex;
+    margin-left: 5px;
+    font-family: "Poppins";
+    font-size: 15px;
+    font-weight: 550;
+}
+
+.cardContent{
+    background-color: white;
+    border-radius: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 2px;
+}
+
+.cardPosterInfo{
+    display: flex;
+    justify-content: start;
+    margin-bottom: 6px;
+}
+
+.cardPosterInfo span{
+    margin-left: 3px;
+    color: #565656;
+    font-size: 15px;
+    font-family: "Poppins";
+}
+
+.cardContentButton{
+    display: flex;
+    justify-content: space-around;
+}
+
+.attend-button{
+    border: 0;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: mediumseagreen;
+    color: white;
+    font-weight: 550;
+    font-family: "Poppins";
+    width: 100px;
+}
+
+.going-button{
+    border: 0;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: orange;
+    color: white;
+    font-weight: 550;
+    font-family: "Poppins";
+    width: 100px;
+}
+
+.ended-button{
+    border: 0;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: indianred;
+    color: white;
+    font-weight: 550;
+    font-family: "Poppins";
+    width: 100px;
+}
+
+.cardContentButton span{
+    margin-top: 3px;
+    margin-left: 10px;
+    color: #565656;
+    font-size: 12px;
+    font-family: "Poppins";
+}
+
+.cardBottomContent{
+    padding-bottom: 12px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.cardBottomContent span:first-child{
+    font-size: 13px;
+    font-family: "Poppins";
+    color: #565656;
+}
+
+.cardBottomContent span:last-child{
+    font-size: 13px;
+    font-family: "Poppins";
+    color: #9a9a9a;
+}

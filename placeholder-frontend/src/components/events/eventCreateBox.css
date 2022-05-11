@@ -1,0 +1,105 @@
+@import "../../index.css";
+
+.event-create-container {
+    border-radius: 15px;
+    position: absolute;
+    width: 100%;
+    max-width: 45vw;
+    min-width: 20vw;
+    max-height: 90vh;
+    overflow: scroll;
+    transform: translate(27vw, 4vh);
+    background-color: var(--white);
+}
+
+.event-create-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+
+.event-create-header-inner {
+    width: 100%;
+    margin: 0px 10px 0px 30px;
+    display: flex;
+    align-items: center;
+}
+
+.event-create-header-inner > p {
+    font-weight: 600;
+    font-size: 22px;
+    color: #767676;
+    margin-left: 40px;
+    font-family: "Poppins";
+}
+
+.event-create-header-profile-pic {
+    margin-top: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.event-content-input {
+    border: 0;
+    outline: 0;
+    width: 90%;
+    /* min-height: 20px; */
+    height: fit-content;
+    /* max-height: 280px; */
+    margin-left: 30px;
+    margin-top: 10px;
+    font-size: medium;
+    font-family: "Poppins";
+    /* overflow: scroll; */
+    resize: none;
+}
+
+.event-location-input{
+    border-radius: 5px;
+    border-color: #C2C0C0;
+    outline: 0;
+    width: 523px;
+    /* min-height: 20px; */
+    height: fit-content;
+    /* max-height: 280px; */
+    margin-left: 30px;
+    margin-top: 10px;
+    font-size: medium;
+    font-family: "Poppins";
+    /* overflow: scroll; */
+    resize: none;
+}
+
+.event-config-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 15px 10px 15px;
+}
+
+.send-event-button {
+    filter: contrast(0);
+}
+
+.send-event-button:hover {
+    filter: none;
+}
+
+.eventVisualDataPreview {
+    display: block;
+    max-width: 60%;
+    width: auto;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.eventDateContainer{
+    margin-left: 22px;
+}
+
+.event-date-container{
+    display : flex;
+}

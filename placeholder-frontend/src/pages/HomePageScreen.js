@@ -27,7 +27,7 @@ export default function HomePageScreen({ user, setUser }) {
       <div className="homeContainer">
         {flexDisplay && (
           <>
-            <EventSideBar />
+              <EventSideBar user={user} />
 
             <Routes>
               <Route path="/" element={<MainFeed user={user} />} />
@@ -54,7 +54,6 @@ export default function HomePageScreen({ user, setUser }) {
                 maxHeight: "80%",
               }}
             >
-              <EventSideBar />
             </div>
 
             <div
