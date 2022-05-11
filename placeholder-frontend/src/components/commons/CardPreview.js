@@ -59,7 +59,7 @@ export default function CardPreview({ content, contentType, user, key }) {
         enablePostOptions={content.user.id === user.id || user.user_type == 0}
         setIsRefresh={setIsRefresh}
         />
-      <CardTagBar tags={content.tags}/>
+      <CardTagBar tags={content.tags} content_id={content.post.id}/>
       <CardContent
         content={stateContent}
         enableShortView={true}

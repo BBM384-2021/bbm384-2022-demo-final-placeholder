@@ -9,11 +9,14 @@ export function TagView ( {tag_name} ) {
     );
 }
 
-export default function CardTagBar ( {tags} ) {
+export default function CardTagBar ( {content_id, tags} ) {
     return (
         <div className="tag-view-container">
             {tags.map((tag) => {
-                return <TagView tag_name={tag.tag_name} />
+                return <TagView 
+                            tag_name={tag.tag_name} 
+                            key={content_id + "-" + "tag" + tag.id}    
+                        />
             })}
         </div>
     );

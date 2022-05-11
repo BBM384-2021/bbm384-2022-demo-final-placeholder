@@ -19,7 +19,7 @@ const CardView = React.forwardRef( ({content, setContent,
             paddingBottom: '20px'
         }}>
             <CardTitle content={content} contentType={contentType}/>
-            <CardTagBar tags={content.tags}/>
+            <CardTagBar tags={content.tags} content_id={content.post.id}/>
             <CardContent content={content} enableShortView={false}/>
             <InteractionBar 
                 content={interactionContent}
