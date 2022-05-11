@@ -2,12 +2,12 @@ import axios from "axios";
 
 const baseURL = "https://placeholder-backend.herokuapp.com/post";
 
-export function getMainFeed(user_id, setPosts) {
+export function getMainFeed(user_id, setPosts, selectedTags) {
   axios
     .get(baseURL + "/getMainFeed", {
       params: {
         user_id: user_id,
-        tags: "",
+        tags: selectedTags.toString(),
       },
     })
     .then((response) => {

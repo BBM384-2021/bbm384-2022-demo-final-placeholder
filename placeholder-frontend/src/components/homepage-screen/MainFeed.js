@@ -11,10 +11,11 @@ import TagFilter from "../commons/TagFilter";
 
 export default function MainFeed({ user }) {
   const [contents, setContents] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   useEffect(() => {
-    getMainFeed(user.id, setContents);
-  }, [user.id]);
+    getMainFeed(user.id, setContents, selectedTags);
+  }, [user.id, selectedTags]);
 
   const [openCreatePost, setOpenCreatePost] = useState(false);
   const [openCreateEvent, setOpenCreateEvent] = useState(false);
@@ -26,8 +27,6 @@ export default function MainFeed({ user }) {
   const onClickEventCreate = () => {
     setOpenCreateEvent(true);
   }
-
-  const [selectedTags, setSelectedTags] = useState([]);
 
   return (
     <div className="feedContainer">
