@@ -90,7 +90,15 @@ public class EventController {
             return DAOFunctions.getResponse(400,"error","Missing Fields");
 
         }
-        return DAOFunctions.getResponse(EventDAO.participateEvent(attend),"",null);
+        int res = EventDAO.participateEvent(attend);
+        if(res == 200){
+            return DAOFunctions.getResponse(res,"",null);
+
+        }
+        else{
+            return DAOFunctions.getResponse(res,"error","Already Attending");
+
+        }
     }
 
     @DeleteMapping("/event/cancelParticipation")
