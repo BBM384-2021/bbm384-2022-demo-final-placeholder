@@ -31,9 +31,12 @@ export default function Profile({ sessionUser, setSessionUser }) {
       (response) => {
         if (response.data.code === 200) {
           // success
+          console.log("connected users", response.data);
           setUser(response.data.user);
           setConnected(response.data.connected);
-          setConnections(response.data.connectedUsers);
+          setConnections(
+            response.data.connectedUsers ? response.data.connections : {}
+          );
           setUserPosts(response.data.posts);
           setEdited(false);
         } else {
