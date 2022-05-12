@@ -97,7 +97,9 @@ export default function SearchBar() {
 
   // TODO!!!!!! USER ID
   useEffect(() => {
-    GetSimilarConnections(inputKey, 100, setResults);
+    if (inputKey.length > 0) {
+      GetSimilarConnections(inputKey, 100, setResults);
+    }
   }, [inputKey]);
 
   return (

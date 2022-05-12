@@ -1,0 +1,137 @@
+/* ! ChatTextInput.js */
+
+.wrapForm {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.wrapText {
+  width: 100%;
+}
+.button {
+  border-radius: 20px;
+}
+
+/* ! Message.js */
+.messageRow {
+  display: flex;
+}
+.messageRowRight {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.message {
+  /* font: 400 2.2em; */
+
+  position: relative;
+  margin-bottom: 10px;
+  padding: 10px;
+  max-width: 30vw;
+  width: fit-content;
+  min-width: 120px;
+  height: fit-content;
+  min-height: 30px;
+  text-align: left;
+  border-radius: 20px;
+  font-size: 16px !important;
+  margin: 10px;
+}
+
+.left {
+  margin-left: 20px;
+  color: #444444;
+  background-color: #f5f5f5;
+}
+
+.right {
+  margin-right: 20px;
+  color: #fff;
+  background-color: #ff1f2ec8;
+}
+.textContainer{
+padding: 0 20px;
+}
+
+.messageContent {
+  font-size: 16px;
+  text-align: start;
+  padding: 0;
+  margin: 0;
+}
+.messageTimeStampRight {
+  position: absolute;
+  top: -25px;
+  font-size: 12px;
+  color: #a8a8a8;
+  font-weight: 300;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.displayName {
+  margin-left: 20px;
+}
+
+.editMessage{
+  resize: none;
+  background-color: transparent;
+  border: none;
+}
+
+/* ! ChatView.js */
+
+.paper {
+  /* height: 100%; */
+  
+}
+
+.chatContainer {
+  flex: 7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 30px;
+  border-radius: 20px;
+  overflow-y: scroll;
+  padding-inline: 10px;
+  background-color: transparent !important;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+
+}
+
+.messagesBody {
+  flex: 10;
+  padding: 30px;
+  width: calc(100% - 80px);
+  margin: 10px 0px;
+  overflow-y: scroll;
+  /* height: calc(100% - 230px); */
+}
+.noMessages{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444444;
+}
+
+/* ! Header */
+.profileBanner-chatHeader {
+  flex: 1;
+  width: 100%;
+  padding: 0 30px;
+  margin: 0 30px;
+  box-shadow: 0 4px 2px -2px gray;
+
+  /* height: 80px; */
+  border-radius: 20px;
+}
+
+/* ! ChatTextInput.js */
+

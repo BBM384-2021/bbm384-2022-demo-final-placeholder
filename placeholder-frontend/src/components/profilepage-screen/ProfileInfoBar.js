@@ -139,6 +139,14 @@ export default function ProfileInfoBar({
             label="Student Rep."
           />
         )}
+        {parseInt(user.user_type) === 4 && (
+          <Chip
+            sx={{ ml: 1 }}
+            variant="outlined"
+            color="info"
+            label="Graduate"
+          />
+        )}
         <div className="profileInfoContainer">
           {linkedInUrl && (
             <IconButton

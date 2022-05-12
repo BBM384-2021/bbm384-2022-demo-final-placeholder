@@ -1,25 +1,25 @@
 @import "../../index.css";
 
-.profileBanner{
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    margin-left: 15px;
-    flex-direction:row;
-    min-width: 100%;
-    min-height: 60px;
-    margin: 0px; 
-    border-radius: inherit;
-    background-color: var(--white); 
-    box-shadow: 0px 3px 5px 0px var(--whiteShadow);
-    border-style : none;
-    z-index : 10;
+.profileBanner {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 15px;
+  flex-direction: row;
+  min-width: 100%;
+  min-height: 60px;
+  margin: 0px;
+  border-radius: inherit;
+  background-color: var(--white);
+  box-shadow: 0px 3px 5px 0px var(--whiteShadow);
+  border-style: none;
+  z-index: 10;
 }
 
 .profileBanner-comment {
-    padding-right: 15px;
-    background-color: var(--defaultBg);
-    box-shadow: none;
+  padding-right: 15px;
+  background-color: var(--defaultBg);
+  box-shadow: none;
 }
 
 .profileBanner:hover {
@@ -54,3 +54,4 @@
   margin-bottom: 0px;
   border: 0px solid white;
 }
+
