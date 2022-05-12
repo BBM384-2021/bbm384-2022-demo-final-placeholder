@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { getUser } from "../../services/UserService";
+import { getProfileData, getUser } from "../../services/UserService";
 import LinearIndeterminate from "../commons/LinearIndeterminateLoading";
 import ProfileHeader from "./ProfileHeader";
 import ProfileInfoBar from "./ProfileInfoBar";
@@ -11,6 +11,10 @@ import "./Profile.css";
 
 export default function Profile({ sessionUser, setSessionUser }) {
   const { user_id } = useParams();
+  const [connections, setConnections] = useState([]);
+  const [isConnected, setConnected] = useState(false);
+  const [userPosts, setUserPosts] = useState([]);
+
   const [user, setUser] = useState(null);
   // const [sessionUser, setSessionUser] = useState(null);
   const [isOwnedProfile, setOwnedProfile] = useState(false);
@@ -23,16 +27,20 @@ export default function Profile({ sessionUser, setSessionUser }) {
   }, [user, isEdited, isOwnedProfile]);
 
   useEffect(() => {
-    getUser(user_id).then((response) => {
-      if (response.data.code === 200) {
-        // success
-        setUser(response.data.user);
-        setSessionUser(JSON.parse(localStorage.getItem("user")) || null);
-        setEdited(false);
-      } else {
-        setUser(null);
+    getProfileData({ user_id: user_id, session_id: sessionUser.id }).then(
+      (response) => {
+        if (response.data.code === 200) {
+          // success
+          setUser(response.data.user);
+          setConnected(response.data.connected);
+          setConnections(response.data.connectedUsers);
+          setUserPosts(response.data.posts);
+          setEdited(false);
+        } else {
+          setUser(null);
+        }
       }
-    });
+    );
   }, [user_id]);
 
   useEffect(() => {
@@ -65,9 +73,13 @@ export default function Profile({ sessionUser, setSessionUser }) {
         profileOwned={isOwnedProfile}
         isEdited={isEdited}
         setEdited={setEdited}
+        isConnected={isConnected}
+        setConnected={setConnected}
+        connections={connections}
+        setConnections={setConnections}
       ></ProfileInfoBar>
 
-      <ProfileFeed user={user}></ProfileFeed>
+      <ProfileFeed user={user} userPosts={userPosts}></ProfileFeed>
     </div>
   );
 }

@@ -26,12 +26,14 @@ export default function ProfileInfoBar({
   profileOwned,
   isEdited,
   setEdited,
+  isConnected,
+  setConnected,
+  connections,
+  setConnections,
 }) {
   const linkedInUrl = user.linkedIn_url;
   const githubUrl = user.github_url;
-  const [connections, setConnections] = useState([]);
 
-  const [isConnected, setConnected] = useState(false);
   //open modal for profile edit:
   const [open, setOpen] = useState(false);
 
