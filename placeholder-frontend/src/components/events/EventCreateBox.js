@@ -33,16 +33,23 @@ export const EventDatePicker = ({selectedDate, setSelectedDate, label}) => {
 
 export default function EventCreateBox({ user, open, setOpen ,isEdit, content, setIsRefresh}) {
 
+    console.log(content)
     const [selectedStartDate, setSelectedStartDate] = React.useState(
-        new Date()
+        isEdit ? new Date(content.event.start_date) : new Date()
     );
 
     const [selectedEndDate, setSelectedEndDate] = React.useState(
-        new Date()
+        isEdit ? new Date(content.event.end_date) : new Date()
     );
 
-    const [eventContent, setEventContent] = useState("");
-    const [eventLocation, setEventLocation] = useState("");
+    const [eventContent, setEventContent] = useState(
+        isEdit ? content.event.event_body : ""
+    );
+
+    const [eventLocation, setEventLocation] = useState(
+        isEdit ? content.event.event_location : ""
+    );
+
     const [preview, setPreview] = useState();
     const [waitResponse, setWaitResponse] = useState(false);
     const [emptyAlert, setEmptyAlert] = useState(false);
