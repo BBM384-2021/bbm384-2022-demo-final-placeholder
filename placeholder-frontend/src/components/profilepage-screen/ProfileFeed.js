@@ -5,8 +5,6 @@ import "./Profile.css";
 
 
 export default function ProfileFeed({ user, userPosts, sessionUser }) {
-  const [userPosts, setUserPosts] = useState([]);
-
 
   return (
     <div className="profileFeedContainer">
