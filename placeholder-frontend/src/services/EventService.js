@@ -27,6 +27,31 @@ export function participateEvent (user_id, event_id){
     });
 }
 
+export function cancelParticipation (user_id, event_id){
+    return axios.delete (baseURL + "/cancelParticipation", {
+        "user_id" : user_id,
+        "event_id" : event_id,
+    });
+}
+
+export function updateEvent( id, event_body, event_location, start_date, end_date ) {
+    return axios.patch(baseURL + "/updateEvent", {
+        "id" : id,
+        "event_body" : event_body,
+        "event_location" : event_location,
+        "start_date" : start_date,
+        "end_date" : end_date,
+    });
+}
+
+export function deleteEvent ( id ) {
+    return axios.delete(baseURL + "/deleteEvent", {
+        data : {
+            "id" : id
+        }
+    })
+}
+
 export function addEvent (user_id, event_body, event_share_date, event_location, start_date, end_date){
     return axios.post (baseURL + "/addEvent", {
             "user_id" : user_id,
