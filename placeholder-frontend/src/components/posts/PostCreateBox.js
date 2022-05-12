@@ -19,6 +19,7 @@ import { uploadPicture, ROOT_S3_URL } from "../../services/S3Service";
 // Style and Images
 import sendIcon from "../../img/paper-plane.png";
 import "./postCreateBox.css";
+import profilePic from "../profilepage-screen/assets/1post.png";
 // crypto functions
 import sha256 from 'crypto-js/sha256'
 import Base64 from 'crypto-js/enc-base64';
@@ -126,6 +127,10 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
     setOpen(false);
   };
 
+  const profilePicPath = user.profile_pic_path
+    ? user.profile_pic_path
+    : profilePic;
+
   const onPostCreateClick = () => {
     setWaitResponse(true);
     // since we don't know the post id yet, we generate a custom url for initial post image
@@ -199,7 +204,7 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
           <div className="post-create-header-inner">
             <img
               className="post-create-header-profile-pic"
-              src={user.profile_pic_path}
+              src={profilePicPath}
               alt="user-profile"
             />
             <p>{children}</p>

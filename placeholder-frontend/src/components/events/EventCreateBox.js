@@ -13,6 +13,7 @@ import { updateEvent } from "../../services/EventService";
 import sendIcon from "../../img/paper-plane.png";
 import CloseIcon from '@mui/icons-material/Close';
 import "./eventCreateBox.css";
+import profilePic from "../profilepage-screen/assets/1post.png";
 
 export const EventDatePicker = ({selectedDate, setSelectedDate, label}) => {
 
@@ -100,6 +101,10 @@ export default function EventCreateBox({ user, open, setOpen ,isEdit, content, s
         }
     };
 
+    const profilePicPath = user.profile_pic_path
+    ? user.profile_pic_path
+    : profilePic;
+
     return (
         <Modal open={open} onClose={handleClose} sx={{ overflow: "scroll" }}>
             <div className="event-create-container">
@@ -107,7 +112,7 @@ export default function EventCreateBox({ user, open, setOpen ,isEdit, content, s
                     <div className="event-create-header-inner">
                         <img
                             className="event-create-header-profile-pic"
-                            src={user.profile_pic_path}
+                            src={profilePicPath}
                             alt="event-profile"
                         />
                         <p>Create an event</p>
