@@ -53,13 +53,17 @@ export default function Comment({
     setCommentInput(comment.comment.body);
   };
   const handleEditDoneClick = () => {
-    setWaitResponse(true);
-    const editFinishFunction = () => {
-      setIsEdit(false);
-      setIsRefresh(true);
-      setWaitResponse(false);
-    };
-    updateComment(comment.comment.id, commentInput, editFinishFunction);
+    if (commentInput.length === 0) {
+      setNoCommentError(true);
+    } else {
+      setWaitResponse(true);
+      const editFinishFunction = () => {
+        setIsEdit(false);
+        setIsRefresh(true);
+        setWaitResponse(false);
+      };
+      updateComment(comment.comment.id, commentInput, editFinishFunction);
+    }
   };
 
   const handleRemoveClick = () => {
@@ -76,8 +80,10 @@ export default function Comment({
   // ==========================================================================
 
   const [commentInput, setCommentInput] = useState(comment.comment.body);
+  const [noCommentError, setNoCommentError] = useState(false);
   const handleCommentChange = (event) => {
     setCommentInput(event.target.value);
+    setNoCommentError(false);
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -123,6 +129,9 @@ export default function Comment({
 
       {isEdit ? (
         <div className="comment-edit-wrapper">
+          {noCommentError &&
+            <p style={{color:'red', fontWeight:'600'}}>Comments can not be empty</p>
+          }
           <textarea
             className="comment-edit-body"
             maxLength={1000}

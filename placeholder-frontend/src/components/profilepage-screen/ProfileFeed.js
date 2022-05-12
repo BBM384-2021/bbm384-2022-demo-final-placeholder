@@ -4,7 +4,7 @@ import { getAllPostsOfUser } from "../../services/PostService";
 import CardPreview from "../commons/CardPreview";
 import "./Profile.css";
 
-export default function ProfileFeed({ user }) {
+export default function ProfileFeed({ user, sessionUser }) {
   const [userPosts, setUserPosts] = useState([]);
 
   //   const getUserPosts = () => {};
@@ -32,7 +32,7 @@ export default function ProfileFeed({ user }) {
                 content={data}
                 contentType={"post"}
                 id={data.post.id}
-                user={user}
+                user={sessionUser}
               />
             </div>
           );
