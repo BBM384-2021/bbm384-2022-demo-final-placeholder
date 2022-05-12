@@ -7,9 +7,11 @@ export default function EventSideBar({user}) {
 
   const [participatingEvents, setParticipatingEvents] = useState([]);
   const [nonParticipatingEvents, setNonParticipatingEvents] = useState([]);
+  const [eventsOwned, setEventsOwned] = useState([]);
+
 
   useEffect(() => {
-    getMainEventFeed(user.id, setParticipatingEvents,setNonParticipatingEvents);
+    getMainEventFeed(user.id, setParticipatingEvents,setNonParticipatingEvents, setEventsOwned);
   }, [user.id]);
 
   return (
@@ -48,6 +50,21 @@ export default function EventSideBar({user}) {
                         user={user}
                         isEventOver={(new Date(content.event.end_date) - new Date()) < 0 }
 
+                    />
+                  </div>
+              );
+            })}
+        {eventsOwned.length > 0 &&
+            eventsOwned.map((content) => {
+              return (
+                  <div key={content.event.id}>
+                    <EventCard
+                        className="cardContainer"
+                        content={content}
+                        contentType={"going"}
+                        id={content.event.id}
+                        user={user}
+                        isEventOver={(new Date(content.event.end_date) - new Date()) < 0 }
                     />
                   </div>
               );

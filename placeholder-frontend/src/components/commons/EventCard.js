@@ -122,7 +122,7 @@ export default function EventCard({ content, contentType, user, isEventOver}) {
             <div className="cardBottomContent">
                 {!isEventOver &&
                     <span>
-                    In {convertMs2TimeString(new Date() - new Date(content.event.start_date))}
+                    In {convertMs2TimeString(new Date(content.event.start_date) - new Date())}
                     </span>
                 }
                 <span>
