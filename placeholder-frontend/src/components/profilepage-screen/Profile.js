@@ -35,7 +35,7 @@ export default function Profile({ sessionUser, setSessionUser }) {
           setUser(response.data.user);
           setConnected(response.data.connected);
           setConnections(
-            response.data.connectedUsers ? response.data.connections : {}
+            response.data.connectedUsers ? response.data.connectedUsers : {}
           );
           setUserPosts(response.data.posts);
           setEdited(false);
