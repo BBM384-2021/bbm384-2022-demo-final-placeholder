@@ -5,7 +5,7 @@ import { createComment } from "../../services/CommentService";
 
 export default function CommentSection({
   comments,
-  user_id,
+  user,
   post_id,
   interactionContent,
   setInteractionContent,
@@ -30,7 +30,7 @@ export default function CommentSection({
       };
 
       setWaitResponse(true);
-      createComment(user_id, post_id, commentBody, setWaitNInteraction);
+      createComment(user.id, post_id, commentBody, setWaitNInteraction);
     };
   };
 
@@ -60,7 +60,7 @@ export default function CommentSection({
                 comment={comment}
                 key={comment.comment.post_id + "-" + comment.comment.id}
                 timeDiffMS={diffTimeMS}
-                enableCommentOptions={user_id === comment.user.id}
+                enableCommentOptions={user.id === comment.user.id || user.user_type === "0"}
                 setIsRefresh={setIsRefresh}
                 interactionContent={interactionContent}
                 setInteractionContent={setInteractionContent}
