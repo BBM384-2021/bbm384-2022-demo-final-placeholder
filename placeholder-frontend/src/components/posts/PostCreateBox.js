@@ -53,6 +53,7 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
 
   const handlePostChange = (event) => {
     setPostContent(event.target.value);
+    setEmptyAlert(false);
   };
 
   const onSelectFile = (file) => {
@@ -156,46 +157,49 @@ export default function PostCreateBox({ children, user, open, setOpen, isEdit, c
     }
     if (!postContent) {
       setEmptyAlert(true);
+      setWaitResponse(false);
+    } else {
+      if (selectedTags.length === 0) {
+        setNoTagError(true);
+        setWaitResponse(false);
+      } else if (isEdit) {
+        const isPhotoEdit = (state.postVisualData instanceof File);
+        updatePost(content.post.id, postContent, attachmentLink, selectedTags)
+          .then((response) => {
+            if (response.data.code === 200) {
+              // success
+              if (preview && isPhotoEdit) {
+                handlePostVisualData(state.postVisualData, {
+                  ...state,
+                  postKey: customUrl,
+                })
+              }
+            }
+            setWaitResponse(false);
+            handleClose();
+          }).catch( (error) => error )
+      } else {
+        addPost(user.id, postContent, attachmentLink, selectedTags)
+          .then((response) => {
+            if (response.data.code === 200) {
+              // only when the upload is successful, we load the image to s3
+              // state doesn't immediately update, while passing the state we mannually update the postKey to keep it updated
+              //TODO: when the file is too large, code doesn't wait for this to end
+              if (preview) {
+                handlePostVisualData(state.postVisualData, {
+                  ...state,
+                  postKey: customUrl,
+                });
+              }
+            }
+            setWaitResponse(false);
+            handleClose();
+          })
+          .catch((error) => console.log(error));
+      }
     }
 
-    if (selectedTags.length === 0) {
-      setNoTagError(true);
-      setWaitResponse(false);
-    } else if (isEdit) {
-      const isPhotoEdit = (state.postVisualData instanceof File);
-      updatePost(content.post.id, postContent, attachmentLink, selectedTags)
-        .then((response) => {
-          if (response.data.code === 200) {
-            // success
-            if (preview && isPhotoEdit) {
-              handlePostVisualData(state.postVisualData, {
-                ...state,
-                postKey: customUrl,
-              })
-            }
-          }
-          setWaitResponse(false);
-          handleClose();
-        }).catch( (error) => error )
-    } else {
-      addPost(user.id, postContent, attachmentLink, selectedTags)
-        .then((response) => {
-          if (response.data.code === 200) {
-            // only when the upload is successful, we load the image to s3
-            // state doesn't immediately update, while passing the state we mannually update the postKey to keep it updated
-            //TODO: when the file is too large, code doesn't wait for this to end
-            if (preview) {
-              handlePostVisualData(state.postVisualData, {
-                ...state,
-                postKey: customUrl,
-              });
-            }
-          }
-          setWaitResponse(false);
-          handleClose();
-        })
-        .catch((error) => console.log(error));
-    }
+
   };
   return (
     <Modal open={open} onClose={handleClose} sx={{ overflow: "scroll" }}>
