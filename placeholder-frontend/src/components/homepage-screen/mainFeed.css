@@ -28,9 +28,14 @@ flex: '6',
   margin: 10px 10px 0px 10px;
 }
 
-.feed-option-container > h4 {
-  margin: 0px 0px 0px 10px;
+.feed-option-container-child > h4 {
+  margin: 0px 0px 0px 0px;
   font-family: 'Poppins';
   font-weight: 600;
   color: rgb(99, 97, 97);
+}
+
+.feed-option-container-child {
+  display: flex;
+  align-items: center;
 }

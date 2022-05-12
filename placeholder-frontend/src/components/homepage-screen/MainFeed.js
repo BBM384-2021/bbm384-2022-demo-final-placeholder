@@ -9,14 +9,19 @@ import ContentCreateBar from "../commons/ContentCreateBar";
 import PostCreateBox from "../posts/PostCreateBox";
 import TagFilter from "../commons/TagFilter";
 import EventCreateBox from "../events/EventCreateBox";
+import HomeIcon from '@mui/icons-material/Home';
+import { IconButton, LinearProgress } from "@mui/material";
 
 export default function MainFeed({ user , sessionUser, setSessionUser }) {
   const [contents, setContents] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [isRefresh, setIsRefresh] = useState(false);
+  const [isWaitResponse, setIsWaitResponse] = useState(false);
 
   useEffect(() => {
-    getMainFeed(user.id, setContents, selectedTags);
-  }, [user.id, selectedTags]);
+    getMainFeed(user.id, setContents, selectedTags, setIsWaitResponse);
+    setIsRefresh(false);
+  }, [user.id, selectedTags, isRefresh]);
 
 
 
@@ -46,23 +51,35 @@ export default function MainFeed({ user , sessionUser, setSessionUser }) {
 
       </div>
       <div className="feed-option-container">
-        <h4>Main Feed</h4>
+        <div className="feed-option-container-child"> 
+          <h4>Main Feed</h4>
+          <IconButton sx={{marginLeft:'10px'}} onClick={() => {setIsRefresh(true); setIsWaitResponse(true);}}>
+            <HomeIcon />
+          </IconButton>
+        </div>
+        
         <TagFilter setSelectedTags={setSelectedTags}/>
       </div>
-      {contents.length > 0 &&
-        contents.map((content) => {
-          return (
-            <div key={content.post.id}>
-              <CardPreview
-                className="cardContainer"
-                content={content}
-                contentType={"post"}
-                id={content.post.id}
-                user={user}
-              />
-            </div>
-          );
-        })}
+      {isWaitResponse ?
+        <LinearProgress />
+        :
+        <>
+          {contents.length > 0 &&
+          contents.map((content) => {
+            return (
+              <div key={content.post.id}>
+                <CardPreview
+                  className="cardContainer"
+                  content={content}
+                  contentType={"post"}
+                  id={content.post.id}
+                  user={user}
+                />
+              </div>
+            );
+          })}
+        </> 
+      }
       <PostCreateBox
         open={openCreatePost}
         setOpen={setOpenCreatePost}

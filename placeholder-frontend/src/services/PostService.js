@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURL = "https://placeholder-backend.herokuapp.com/post";
 
-export function getMainFeed(user_id, setPosts, selectedTags) {
+export function getMainFeed(user_id, setPosts, selectedTags, setIsWaitResponse) {
   axios
     .get(baseURL + "/getMainFeed", {
       params: {
@@ -19,6 +19,7 @@ export function getMainFeed(user_id, setPosts, selectedTags) {
       } else {
         setPosts([]);
       }
+      setIsWaitResponse(false);
     })
     .catch((error) => console.log(error));
 }
