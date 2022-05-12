@@ -78,7 +78,7 @@ export default function EventCard({ content, contentType, user, isEventOver}) {
     return (
         <Box className="card">
             <CardHeader className="cardHeader"
-                action={(user.id === content.user.id && user.user_type<1) &&
+                action={(user.id === content.user.id || user.user_type<1) &&
                     <IconButton aria-label="settings" onClick={handleClick}>
                         <MoreVertIcon />
                     </IconButton>
