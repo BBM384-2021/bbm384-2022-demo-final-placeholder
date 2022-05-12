@@ -24,14 +24,14 @@ export const getMessages = ({ session_id, user_id }) => {
 };
 
 export const updateMessage = ({ message_id, message }) => {
-  return client.patch("/getMessageLogForAUser", {
+  return client.patch("/updateMessage", {
     id: message_id,
     body: message,
   });
 };
 
-export const deleteMessage = ({ message_id }) => {
-  return client.get("/getMessageLogForAUser", {
-    id: message_id,
+export const deleteMessage = (message_id) => {
+  return client.delete("/deleteMessage", {
+    data: { id: message_id },
   });
 };

@@ -75,6 +75,12 @@ padding: 0 20px;
   margin-left: 20px;
 }
 
+.editMessage{
+  resize: none;
+  background-color: transparent;
+  border: none;
+}
+
 /* ! ChatView.js */
 
 .paper {
