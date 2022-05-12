@@ -84,6 +84,7 @@ export default function EventCreateBox({ user, open, setOpen ,isEdit, content, s
 
         if (!eventContent || !eventLocation) {
             setEmptyAlert(true);
+            setWaitResponse(false);
         } else if (isEdit){
             updateEvent(content.event.id, eventContent, eventLocation, selectedStartDate, selectedEndDate)
                 .then(() => {

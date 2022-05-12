@@ -27,6 +27,15 @@ export function createUser(data) {
   return client.post("/createUser", data);
 }
 
+export const getProfileData = ({ user_id, session_id }) => {
+  return client.get("/getProfileData", {
+    params: {
+      requested_id: user_id,
+      current_user_id: session_id,
+    },
+  });
+};
+
 export const getUser = (user_id) => {
   return client.get("/getUser", {
     params: {
