@@ -1,0 +1,21 @@
+@import "../../index.css";
+
+.tag-filter-container {
+    width: fit-content;
+}
+
+.tag-filter-button {
+    border: none;
+    background: var(--white);
+    color:rgb(95, 95, 95);
+    padding-left: 100px;
+    font-family: 'Poppins';
+    font-weight: 400;
+    border-radius: 5px;
+    box-shadow: 0px 3px 3px 0px var(--whiteShadow);
+    padding-right: 10px;
+}
+
+.tag-filter-button:hover {
+    background: var(--whiteShaded);
+}

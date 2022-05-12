@@ -1,31 +1,61 @@
-import React from "react";
-import Box from "@mui/material/Box";
+import React, { useEffect, useState } from "react";
 import "./eventSideBar.css";
+import EventCard from "../commons/EventCard";
+import {getMainEventFeed } from "../../services/EventService";
 
-export default function EventSideBar() {
-  const events = [
-    { id: 12, title: "Lecture Link", user: "Tuana Cetinkaya" },
-    { id: 13, title: "Exam", user: "Selma Kahya" },
-    { id: 14, title: "CS Dinner", user: "Ilkim Iclal Aydogan" },
-    { id: 15, title: "Lecture Link 2", user: "Tuana Cetinkaya" },
-  ];
+export default function EventSideBar({user}) {
+
+  const [participatingEvents, setParticipatingEvents] = useState([]);
+  const [nonParticipatingEvents, setNonParticipatingEvents] = useState([]);
+
+
+
+  useEffect(() => {
+    getMainEventFeed(user.id, setParticipatingEvents,setNonParticipatingEvents);
+  }, [user.id]);
+
+
 
   return (
     <div className="eventSidebar">
       <div className="eventWrapper">
         <ul className="eventList">
-          {events.map((u) => (
-            <li className="eventListItem" key={u.id}>
-              <h3>{u.title}</h3>
-              <span className="eventListItemText"> shared by {u.user}</span>
-            </li>
-          ))}
           <li className="eventListItem">
             <div className="eventIcon" />
-            <span className="eventListItemText">Feed</span>
+            <span className="eventListItemText">Event Feed</span>
           </li>
         </ul>
-        <button className="eventButton">Show More</button>
+        {participatingEvents.length > 0 &&
+            participatingEvents.map((content) => {
+              return (
+                  <div key={content.event.id}>
+                    <EventCard
+                        className="cardContainer"
+                        content={content}
+                        contentType={"going"}
+                        id={content.event.id}
+                        user={user}
+                    />
+                  </div>
+              );
+            })}
+        {nonParticipatingEvents.length > 0 &&
+            nonParticipatingEvents.map((content) => {
+              return (
+                  <div key={content.event.id}>
+                    <EventCard
+                        className="cardContainer"
+                        content={content}
+                        contentType={"attend"}
+                        id={content.event.id}
+                        user={user}
+                    />
+                  </div>
+              );
+            })}
+
+        <button className="eventButton">
+          Show More</button>
       </div>
     </div>
   );
