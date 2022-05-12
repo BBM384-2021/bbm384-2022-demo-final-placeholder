@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { updateUser } from "../../services/UserService";
 import BasicModal from "../commons/BasicModal";
 import {Colors} from "../../Colors";
+import DeleteProfileModal from "./DeleteProfileModal";
 
 const defaultInputValues = {
   fullName: "",
@@ -22,6 +23,7 @@ const defaultInputValues = {
 const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
   const [values, setValues] = useState(defaultInputValues);
   const [error, setError] = useState(``);
+  const [isDelOpen, setIsDelOpen] = useState(false);
 
   const onClose = () => {
     setOpen(false);
@@ -252,6 +254,20 @@ const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
           handleChange({ ...values, linkedinLink: event.target.value })
         }
       />
+        <button style={{
+            borderRadius : "5px",
+            background : "indianred",
+            border : "1px solid indianred",
+            height : "30px",
+            textAlign : "left",
+            color : "white",
+            paddingLeft : "12px",
+            cursor : "pointer",
+
+        }} onClick = {() => setIsDelOpen(true)} >
+            Delete Profile
+        </button>
+        <DeleteProfileModal open={isDelOpen} setOpen={setIsDelOpen} user={user}/>
     </Box>
   );
 

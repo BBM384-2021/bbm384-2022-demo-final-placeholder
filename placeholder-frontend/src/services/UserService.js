@@ -62,10 +62,12 @@ export const updateUser = ({ user, values, profilePic, coverUrl }) => {
 
 export function deleteUser(user_id, cs_mail, user_password){
   return client.delete ( "/deleteUser", {
-    "user_id" : user_id,
-    "cs_mail" : cs_mail,
-    "user_password" : user_password,
-  }) //nigga
+    data: {
+      "user_id" : user_id,
+      "cs_mail" : cs_mail,
+      "user_password" : user_password,
+    },
+  })
 }
 
 export function getUsersConnected(user_id) {
