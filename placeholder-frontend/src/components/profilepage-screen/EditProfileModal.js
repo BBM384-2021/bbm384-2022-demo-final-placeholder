@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { TextField, Alert, Box, IconButton, Typography } from "@mui/material";
+import {TextField, Alert, Box, IconButton, Typography, RadioGroup, FormControlLabel, Radio} from "@mui/material";
 import { Clear } from "@mui/icons-material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 import { updateUser } from "../../services/UserService";
 import BasicModal from "../commons/BasicModal";
+import {Colors} from "../../Colors";
+import DeleteProfileModal from "./DeleteProfileModal";
 
 const defaultInputValues = {
   fullName: "",
@@ -15,11 +17,13 @@ const defaultInputValues = {
   company: "",
   githubLink: "",
   linkedinLink: "",
+  user_type: ""
 };
 
 const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
   const [values, setValues] = useState(defaultInputValues);
   const [error, setError] = useState(``);
+  const [isDelOpen, setIsDelOpen] = useState(false);
 
   const onClose = () => {
     setOpen(false);
@@ -113,6 +117,48 @@ const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
           {error}
         </Alert>
       )}
+      <RadioGroup
+          row
+          aria-labelledby="user_type"
+          name="user_type"
+          className="radio-container"
+          value = {values.user_type} //nigga
+          onChange={(event) =>
+              handleChange({...values, user_type: event.target.value})}
+      >
+        <FormControlLabel
+            className="radio"
+            value="3" //student
+            control={
+              <Radio
+                  className="Radio"
+                  sx={{
+                    "&, &.Mui-checked": {
+                      color: Colors.hacettepe,
+                    },
+                  }}
+              />
+            }
+            label="Student"
+        />
+        <FormControlLabel
+            className="radio"
+            value="4" //graduate
+            control={
+              <Radio
+                  className="Radio"
+                  sx={{
+                    "&, &.Mui-checked": {
+                      color: Colors.hacettepe,
+                    },
+                  }}
+              />
+            }
+            label="Graduate"
+        />
+
+      </RadioGroup>
+
 
       <TextField
         placeholder="FullName"
@@ -208,6 +254,20 @@ const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
           handleChange({ ...values, linkedinLink: event.target.value })
         }
       />
+        <button style={{
+            borderRadius : "5px",
+            background : "indianred",
+            border : "1px solid indianred",
+            height : "30px",
+            textAlign : "left",
+            color : "white",
+            paddingLeft : "12px",
+            cursor : "pointer",
+
+        }} onClick = {() => setIsDelOpen(true)} >
+            Delete Profile
+        </button>
+        <DeleteProfileModal open={isDelOpen} setOpen={setIsDelOpen} user={user}/>
     </Box>
   );
 

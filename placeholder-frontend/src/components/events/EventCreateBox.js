@@ -9,6 +9,7 @@ import {
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {DateTimePicker, LocalizationProvider} from '@mui/lab';
 import { addEvent } from "../../services/EventService";
+import { updateEvent } from "../../services/EventService";
 import sendIcon from "../../img/paper-plane.png";
 import CloseIcon from '@mui/icons-material/Close';
 import "./eventCreateBox.css";
@@ -29,7 +30,7 @@ export const EventDatePicker = ({selectedDate, setSelectedDate, label}) => {
     )
 }
 
-export default function EventCreateBox({ user, open, setOpen }) {
+export default function EventCreateBox({ user, open, setOpen ,isEdit, content, setIsRefresh}) {
 
     const [selectedStartDate, setSelectedStartDate] = React.useState(
         new Date()
@@ -49,6 +50,7 @@ export default function EventCreateBox({ user, open, setOpen }) {
         isLoading: false,
         value: 0,
         postKey: -1,
+        isEdit : isEdit
     });
 
     const handleEventChange = (event) => {
@@ -81,6 +83,13 @@ export default function EventCreateBox({ user, open, setOpen }) {
 
         if (!eventContent || !eventLocation) {
             setEmptyAlert(true);
+        } else if (isEdit){
+            updateEvent(content.event.id, eventContent, eventLocation, selectedStartDate, selectedEndDate)
+                .then(() => {
+                setWaitResponse(false);
+                handleClose();
+            }).catch((error) => error)
+
         } else {
             addEvent(user.id, eventContent, new Date().toISOString(), eventLocation, selectedStartDate, selectedEndDate)
                 .then(() => {

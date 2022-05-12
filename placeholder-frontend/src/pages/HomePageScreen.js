@@ -33,7 +33,7 @@ export default function HomePageScreen({ user, setUser }) {
               <EventSideBar user={user} />
 
             <Routes>
-              <Route path="/" element={<MainFeed user={user} />} />
+              <Route path="/" element={<MainFeed user={user} sessionUser={user} setSessionUser={setUser} />} />
               <Route
                 path="/in/:user_id"
                 element={
