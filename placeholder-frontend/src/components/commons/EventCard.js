@@ -86,6 +86,8 @@ export default function EventCard({ content, contentType, user, isEventOver}) {
                 titleTypographyProps={{variant:'span'}}
                 title={content.event.event_body} //body
                 //subtitle
+                subheaderTypographyProps={{variant:'span'}}
+                subheader={content.event.event_location}
             />
             <Menu
                 open={open}

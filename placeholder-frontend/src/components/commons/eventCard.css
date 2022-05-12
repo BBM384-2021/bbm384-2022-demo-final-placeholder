@@ -1,9 +1,10 @@
 .card{
     margin-top: 15px;
     background-color: #efefef;
-    max-height: 200px;
+    max-height: 230px;
     border: 0;
     outline: 0;
+    padding-bottom: 5px;
     box-shadow: 0 3px 15px -10px #565656;
     border-radius: 15px ;
 }
@@ -14,12 +15,23 @@
 
 }
 
-.cardHeader span {
+.cardHeader span:first-child {
     color: #565656;
     display: flex;
     margin-left: 5px;
     font-family: "Poppins";
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: 550;
+    text-align: start;
+}
+.cardHeader span:last-child {
+    text-align: start;
+    color: #626262;
+    display: flex;
+    margin-top: 5px;
+    margin-left: 5px;
+    font-family: "Poppins";
+    font-size: 8px;
     font-weight: 550;
 }
 
@@ -91,20 +103,19 @@
 }
 
 .cardBottomContent{
-    padding-bottom: 12px;
     margin-top: 8px;
     display: flex;
     justify-content: space-around;
 }
 
 .cardBottomContent span:first-child{
-    font-size: 13px;
+    font-size: 12px;
     font-family: "Poppins";
     color: #565656;
 }
 
 .cardBottomContent span:last-child{
-    font-size: 13px;
+    font-size: 12px;
     font-family: "Poppins";
     color: #9a9a9a;
 }
