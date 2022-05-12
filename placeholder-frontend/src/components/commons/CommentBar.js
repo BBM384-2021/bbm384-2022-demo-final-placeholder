@@ -6,8 +6,10 @@ import { Colors } from "../../Colors";
 import CircularProgress from '@mui/material/CircularProgress';
 
 export default function CommentBar ( {onClick, waitResponse} ) {
+    const [noCommentError, setNoCommentError] = useState(false);
     const [commentInput, setCommentInput] = useState("");
     const handleCommentChange = (event) => {
+        setNoCommentError(false);
         setCommentInput(event.target.value);
     };
 
@@ -27,6 +29,9 @@ export default function CommentBar ( {onClick, waitResponse} ) {
             justifyContent: 'space-between',
             alignItems: 'center'
             }}>
+            {noCommentError &&
+                <p style={{color:'red', fontWeight:'600'}}>Comments can not be empty</p>
+            }
             <textarea className="comment-bar-input" maxLength={1000} placeholder={"Post a comment"}
                 onChange={handleCommentChange} value={commentInput}
             />

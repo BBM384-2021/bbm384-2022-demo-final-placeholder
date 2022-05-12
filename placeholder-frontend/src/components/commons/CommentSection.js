@@ -14,7 +14,11 @@ export default function CommentSection({
   const currTime = new Date();
   const [waitResponse, setWaitResponse] = useState(false);
 
-  const handleCreateComment = (commentBody) => {
+  const handleCreateComment = (commentBody, setNoCommentError) => {
+    if (commentBody.length === 0) {
+      return () => setNoCommentError(true);
+    }
+    
     return () => {
       const setWaitNInteraction = () => {
         setWaitResponse(false);
