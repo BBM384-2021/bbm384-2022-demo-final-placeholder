@@ -30,8 +30,10 @@ export function participateEvent (user_id, event_id){
 
 export function cancelParticipation (user_id, event_id){
     return axios.delete (baseURL + "/cancelParticipation", {
-        "user_id" : user_id,
-        "event_id" : event_id,
+        data: {
+            "user_id" : user_id,
+            "event_id" : event_id,
+        }
     });
 }
 
