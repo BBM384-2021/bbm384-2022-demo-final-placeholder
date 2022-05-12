@@ -53,7 +53,7 @@ export default function TopBar({ userObj, setUser }) {
 
   return (
     <React.Fragment>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box >
         <AppBar
           position="static"
           sx={{ bgcolor: "white", borderRadius: "20px" }}
