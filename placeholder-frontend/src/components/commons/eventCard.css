@@ -74,7 +74,7 @@
 .ended-button{
     border: 0;
     border-radius: 25px;
-    cursor: pointer;
+    cursor: not-allowed;
     background-color: indianred;
     color: white;
     font-weight: 550;

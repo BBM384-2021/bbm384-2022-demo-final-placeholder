@@ -27,11 +27,14 @@ function convertMs2TimeString(time) {
     }
 }
 
-export default function EventCard({ content, contentType, user}) {
+export default function EventCard({ content, contentType, user, isEventOver}) {
 
-    const [eventStatus, setEventStatus] = useState(contentType);
+    const [eventStatus, setEventStatus] = useState(isEventOver?"ended":contentType);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
+
+
     const handleClick = (event) => {
         if (content.user.id === user.id || user.user_type == 0) {
             setAnchorEl(event.currentTarget);
@@ -52,13 +55,10 @@ export default function EventCard({ content, contentType, user}) {
 
     const [openEditPost, setOpenEditPost] = useState(false);
 
-    const [eventOver, setEventOver] = useState(false);
-    //nigga
     const handleAttendClick = () => {
-        if(!(content.participants).includes(user)){
+        if(eventStatus === "attend"){
             participateEvent(user.id, content.event.id).then(
                 (response) =>{
-                    setEventStatus("attend")
                     if(response.data.code === 200){
                         setEventStatus("going")
                     }
@@ -67,19 +67,18 @@ export default function EventCard({ content, contentType, user}) {
         }else{
             cancelParticipation(user.id, content.event.id).then(
                 (response) =>{
-                    setEventStatus("going")
                     if(response.data.code === 200){
                         setEventStatus("attend")
                     }
                 }
-            ).catch((error)=> console.log(error)) //nigga
+            ).catch((error)=> console.log(error))
         }
     }
 
     return (
         <Box className="card">
             <CardHeader className="cardHeader"
-                action={
+                action={(user.id === content.user.id) &&
                     <IconButton aria-label="settings" onClick={handleClick}>
                         <MoreVertIcon />
                     </IconButton>
@@ -112,7 +111,7 @@ export default function EventCard({ content, contentType, user}) {
                         <span> {content.user.full_name} posted</span>
                     </div>
                     <div className="cardContentButton">
-                        <button className={eventStatus+"-button"} onClick={handleAttendClick}>
+                        <button disabled={isEventOver} className={eventStatus+"-button"} onClick={handleAttendClick}>
                             {eventStatus.toUpperCase()}
                         </button>
 
@@ -121,10 +120,11 @@ export default function EventCard({ content, contentType, user}) {
                 </div>
             </CardContent>
             <div className="cardBottomContent">
-                <span>
+                {!isEventOver &&
+                    <span>
                     In {convertMs2TimeString(new Date() - new Date(content.event.start_date))}
-                </span>
-
+                    </span>
+                }
                 <span>
                     {convertMs2TimeString(new Date() - new Date(content.event.event_share_date))} ago
                 </span>

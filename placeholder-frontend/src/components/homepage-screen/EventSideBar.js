@@ -8,13 +8,9 @@ export default function EventSideBar({user}) {
   const [participatingEvents, setParticipatingEvents] = useState([]);
   const [nonParticipatingEvents, setNonParticipatingEvents] = useState([]);
 
-
-
   useEffect(() => {
     getMainEventFeed(user.id, setParticipatingEvents,setNonParticipatingEvents);
   }, [user.id]);
-
-
 
   return (
     <div className="eventSidebar">
@@ -35,6 +31,7 @@ export default function EventSideBar({user}) {
                         contentType={"going"}
                         id={content.event.id}
                         user={user}
+                        isEventOver={(new Date(content.event.end_date) - new Date()) < 0 }
                     />
                   </div>
               );
@@ -49,13 +46,12 @@ export default function EventSideBar({user}) {
                         contentType={"attend"}
                         id={content.event.id}
                         user={user}
+                        isEventOver={(new Date(content.event.end_date) - new Date()) < 0 }
+
                     />
                   </div>
               );
             })}
-
-        <button className="eventButton">
-          Show More</button>
       </div>
     </div>
   );
