@@ -74,15 +74,17 @@ export default function CardPreview({ content, contentType, user, key }) {
       />
 
       <Modal open={open} onClose={handleClose} sx={{ overflow: "scroll" }}>
-        <CardView
-          contentType={contentType}
-          content={stateContent}
-          setContent={setStateContent}
-          user={user}
-          interactionContent={interactionContent}
-          setInteractionContent={setInteractionContent}
-          setIsRefresh={setIsRefresh}
-        />
+        <>
+          <CardView
+            contentType={contentType}
+            content={stateContent}
+            setContent={setStateContent}
+            user={user}
+            interactionContent={interactionContent}
+            setInteractionContent={setInteractionContent}
+            setIsRefresh={setIsRefresh}
+          />
+        </>
       </Modal>
     </Card>
   );

@@ -17,7 +17,9 @@ const CardView = React.forwardRef( ({content, setContent,
             backgroundColor: Colors.whiteShaded,
             borderRadius:'10px',
             paddingBottom: '20px'
-        }}>
+        }}
+        ref={ref}
+        >
             <CardTitle content={content} contentType={contentType}/>
             <CardTagBar tags={content.tags} content_id={content.post.id}/>
             <CardContent content={content} enableShortView={false}/>
@@ -29,7 +31,7 @@ const CardView = React.forwardRef( ({content, setContent,
                 />
             <CommentSection 
                 comments={content.comments}
-                user_id={user.id}
+                user={user}
                 post_id={content.post.id}
                 interactionContent={interactionContent}
                 setInteractionContent={setInteractionContent}

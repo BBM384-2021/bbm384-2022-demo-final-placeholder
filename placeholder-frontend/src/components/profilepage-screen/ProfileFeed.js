@@ -3,7 +3,10 @@ import React, { useState, useEffect } from "react";
 import CardPreview from "../commons/CardPreview";
 import "./Profile.css";
 
-export default function ProfileFeed({ user, userPosts }) {
+
+export default function ProfileFeed({ user, userPosts, sessionUser }) {
+  const [userPosts, setUserPosts] = useState([]);
+
 
   return (
     <div className="profileFeedContainer">
@@ -17,7 +20,7 @@ export default function ProfileFeed({ user, userPosts }) {
                 content={data}
                 contentType={"post"}
                 id={data.post.id}
-                user={user}
+                user={sessionUser}
               />
             </div>
           );

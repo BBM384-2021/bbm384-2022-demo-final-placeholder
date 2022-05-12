@@ -82,7 +82,9 @@ export default function Profile({ sessionUser, setSessionUser }) {
         setConnections={setConnections}
       ></ProfileInfoBar>
 
-      <ProfileFeed user={user} userPosts={userPosts}></ProfileFeed>
+
+      <ProfileFeed user={user} userPosts={userPosts} sessionUser={sessionUser}></ProfileFeed>
+
     </div>
   );
 }

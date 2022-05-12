@@ -68,7 +68,7 @@ export default function InteractionBar({
       </div>
 
       <div>
-        <IconButton disabled={setOpen === undefined} onClick={setOpen}>
+        <IconButton disabled={setOpen === undefined} onClick={() => setOpen(true)}>
           <ModeCommentIcon />
         </IconButton>
         {content.commentCount}
