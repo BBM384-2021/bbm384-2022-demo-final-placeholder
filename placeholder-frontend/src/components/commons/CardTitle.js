@@ -39,9 +39,12 @@ export default function CardTitle( {content, contentType, enablePostOptions, set
                     key={"postAuthor"+content.post.id+content.user.id}
                 />
             </div>
-            <IconButton sx={{height:'40px', width:'40px', marginRight:'20px'}} onClick={handleClick}>
-                <MoreHorizIcon />
-            </IconButton>
+            {enablePostOptions &&
+                <IconButton sx={{height:'40px', width:'40px', marginRight:'20px'}} onClick={handleClick}>
+                    <MoreHorizIcon />
+                </IconButton>
+            }
+
             <Menu
                     open={open}
                     anchorEl={anchorEl}
