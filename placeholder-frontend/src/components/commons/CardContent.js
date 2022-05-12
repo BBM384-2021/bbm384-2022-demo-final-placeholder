@@ -96,7 +96,9 @@ export default function CardContent({
       >
         {/* <strong>Files Attached (1)</strong> */}
         <span style={{ fontWeight: "100" }}>
-          {date.getHours() + "." + date.getMinutes() + " " + date.toLocaleDateString()
+          {(date.getHours() < 10 ? ("0" + date.getHours()) : date.getHours()) + "." +
+           (date.getMinutes() < 10 ? ("0" + date.getMinutes()) : date.getMinutes()) + " " +
+           date.toLocaleDateString()
           }
         </span>
       </div>
