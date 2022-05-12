@@ -98,11 +98,12 @@ export default function TagFilter ( {setSelectedTags} ) {
                 })}
                 <button 
                     style={{
-                        background:"black",
+                        background:"indianred",
                         width:'100%',
                         margin: '10px 0px 0px 0px',
                         border: 'none',
                         color: 'white',
+                        cursor: "pointer",
                         padding: '5px 20px 5px 20px',
                         fontFamily: 'Poppins'
                     }}
