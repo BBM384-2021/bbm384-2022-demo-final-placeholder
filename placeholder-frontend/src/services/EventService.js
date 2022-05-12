@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURL = "https://placeholder-backend.herokuapp.com/event";
 
-export function getMainEventFeed(user_id, setParticipatingEvents,setNonParticipatingEvents) {
+export function getMainEventFeed(user_id, setParticipatingEvents,setNonParticipatingEvents, setEventsOwned) {
     axios
         .get(baseURL + "/getMainFeed", {
             params: {
@@ -14,7 +14,8 @@ export function getMainEventFeed(user_id, setParticipatingEvents,setNonParticipa
             if (response.data.code === 200) {
 
                 setNonParticipatingEvents(response.data.nonParticipatingEvents);
-                setParticipatingEvents(response.data.participatingEvents)
+                setParticipatingEvents(response.data.participatingEvents);
+                setEventsOwned(response.data.eventsOwned);
             }
         })
         .catch((error) => console.log(error));
