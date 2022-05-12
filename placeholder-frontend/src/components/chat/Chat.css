@@ -83,11 +83,6 @@ padding: 0 20px;
 
 /* ! ChatView.js */
 
-.paper {
-  /* height: 100%; */
-  
-}
-
 .chatContainer {
   flex: 7;
   display: flex;

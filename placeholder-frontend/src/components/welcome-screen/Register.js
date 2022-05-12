@@ -55,14 +55,19 @@ const theme = createTheme();
 export default function Register({ setLogin, setUser }) {
   const [errors, setErrors] = useState({});
   const [userData, setUserData] = useState({});
+  const [isSubmitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     console.log(userData);
-    createUser(userData).then((response) => {
-      if (response.data.code === 200) {
-        setUser(response.data.user);
-      }
-    });
+    if (isSubmitted) {
+      createUser(userData).then((response) => {
+        if (response.data.code === 200) {
+          setUser(response.data.user);
+        } else {
+          setErrors({ ...errors, server: response.data.error });
+        }
+      });
+    }
   }, [userData]);
 
   const validate = (fieldValues) => {
@@ -94,6 +99,7 @@ export default function Register({ setLogin, setUser }) {
     const data = new FormData(event.currentTarget);
     if (validate(data)) {
       console.log("Register Validated");
+      setSubmitted(true);
       setUserData({
         full_name: data.get("full_name"),
         // student: 3 , graduate: 4

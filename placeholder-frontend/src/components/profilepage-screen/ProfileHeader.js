@@ -101,6 +101,7 @@ export default function ProfileHeader({
       className="headerContainer"
       style={{
         backgroundImage: `url(${state.coverPic})`,
+        backgroundSize: "cover",
       }}
     >
       <div className="ppContainer">

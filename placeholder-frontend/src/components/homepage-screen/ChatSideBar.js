@@ -50,7 +50,7 @@ export default function ChatSideBar({ user }) {
   // };
   return (
     <div className="chatSidebar">
-      <div style={{ marginLeft: "31px" }}>
+      <div >
         <h3 style={{ color: "#888888" }}>Chat</h3>
         {Object.values(connectedUsers).map((connection) => {
           // return <div>{connection.full_name}</div>;

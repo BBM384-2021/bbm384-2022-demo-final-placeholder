@@ -1,6 +1,7 @@
 @import "../../index.css";
 
 .content-create-box {
+  flex: 1;
   border-radius: 15px;
   background-color: var(--white);
   margin: 0px 10px 0px 10px;
@@ -16,7 +17,6 @@
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
   cursor: pointer;
-
 }
 
 .content-create-box:hover {
