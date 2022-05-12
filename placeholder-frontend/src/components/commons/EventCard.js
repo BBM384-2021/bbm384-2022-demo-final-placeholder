@@ -78,13 +78,14 @@ export default function EventCard({ content, contentType, user, isEventOver}) {
     return (
         <Box className="card">
             <CardHeader className="cardHeader"
-                action={(user.id === content.user.id) &&
+                action={(user.id === content.user.id && user.user_type<1) &&
                     <IconButton aria-label="settings" onClick={handleClick}>
                         <MoreVertIcon />
                     </IconButton>
                 }
                 titleTypographyProps={{variant:'span'}}
                 title={content.event.event_body} //body
+                //subtitle
             />
             <Menu
                 open={open}
