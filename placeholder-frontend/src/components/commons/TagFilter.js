@@ -5,7 +5,7 @@ import { Checkbox, ListItem, Menu, MenuItem } from "@mui/material";
 import { borderColor, margin } from "@mui/system";
 import { red } from "@mui/material/colors";
 
-export default function TagFilter ( {setSelectedTags} ) {
+export default function TagFilter ( {setSelectedTags, isRefresh} ) {
     const [tags, setTags] = useState({});
     const filterButton = useRef();
 
@@ -54,7 +54,7 @@ export default function TagFilter ( {setSelectedTags} ) {
                 setTags(allTags);
             }
         });
-    }, [])
+    }, [isRefresh])
 
     return (
         <div className="tag-filter-container">

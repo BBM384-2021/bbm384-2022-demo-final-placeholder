@@ -58,7 +58,7 @@ export default function MainFeed({ user , sessionUser, setSessionUser }) {
           </IconButton>
         </div>
         
-        <TagFilter setSelectedTags={setSelectedTags}/>
+        <TagFilter setSelectedTags={setSelectedTags} isRefresh={isRefresh}/>
       </div>
       {isWaitResponse ?
         <LinearProgress />
