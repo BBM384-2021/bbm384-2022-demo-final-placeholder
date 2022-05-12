@@ -10,13 +10,15 @@ import PostCreateBox from "../posts/PostCreateBox";
 import TagFilter from "../commons/TagFilter";
 import EventCreateBox from "../events/EventCreateBox";
 
-export default function MainFeed({ user }) {
+export default function MainFeed({ user , sessionUser, setSessionUser }) {
   const [contents, setContents] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
 
   useEffect(() => {
     getMainFeed(user.id, setContents, selectedTags);
   }, [user.id, selectedTags]);
+
+
 
   const [openCreatePost, setOpenCreatePost] = useState(false);
   const [openCreateEvent, setOpenCreateEvent] = useState(false);
@@ -36,9 +38,12 @@ export default function MainFeed({ user }) {
         <ContentCreateBar onClick={onClickPostCreate}>
           Create a post...
         </ContentCreateBar>
-        <ContentCreateBar onClick={onClickEventCreate}>
-          Create an event...
-        </ContentCreateBar>
+          {parseInt(sessionUser.user_type) < 3 && (
+              <ContentCreateBar onClick={onClickEventCreate}>
+                  Create an event...
+              </ContentCreateBar>
+          )}
+
       </div>
       <div className="feed-option-container">
         <h4>Main Feed</h4>
@@ -68,14 +73,16 @@ export default function MainFeed({ user }) {
       >
         Create a post
       </PostCreateBox>
-        <EventCreateBox
-            open={openCreateEvent}
-            setOpen={setOpenCreateEvent}
-            user={user}
-            isEdit={false}
-            content={null}
-            setIsRefresh={undefined}
-        />
+        {parseInt(sessionUser.user_type) < 3 && (
+            <EventCreateBox
+                open={openCreateEvent}
+                setOpen={setOpenCreateEvent}
+                user={user}
+                isEdit={false}
+                content={null}
+                setIsRefresh={undefined}
+            />
+        )}
     </div>
   );
 }
