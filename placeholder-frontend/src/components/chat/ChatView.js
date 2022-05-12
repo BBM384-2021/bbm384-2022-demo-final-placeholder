@@ -106,6 +106,11 @@ export default function ChatView({ sessionUser }) {
     <Paper className={"chatContainer"}>
       <ChatHeader user={user}></ChatHeader>
       <Paper id="style-1" className={"messagesBody"}>
+        {messages.length === 0 && (
+          <div className="noMessages">
+            <h2>Send a Message and Say Hi!</h2>
+          </div>
+        )}
         {Object.values(messages).map((data) => {
           if (parseInt(data.sender_id) === parseInt(user_id)) {
             return (

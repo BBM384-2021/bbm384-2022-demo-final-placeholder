@@ -113,6 +113,13 @@ padding: 0 20px;
   overflow-y: scroll;
   /* height: calc(100% - 230px); */
 }
+.noMessages{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444444;
+}
 
 /* ! Header */
 .profileBanner-chatHeader {
