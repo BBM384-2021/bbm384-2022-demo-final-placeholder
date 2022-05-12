@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Paper } from "@mui/material";
 
 import { getUser } from "../../services/UserService";
 import { getMessages } from "../../services/ChatService";
 import { ChatTextInput } from "./ChatTextInput";
-import { MessageLeft, MessageRight } from "./Message";
+import Message from "./Message";
 import ErrorPage from "../../pages/error/ErrorPage";
 import ChatHeader from "./ChatHeader.js";
 
@@ -22,14 +22,15 @@ export default function ChatView({ sessionUser }) {
   const { user_id } = useParams();
   const [noSuchUser, setNoSuchUser] = useState(false);
   const [user, setUser] = useState({});
-  const [futuremessages, setMessages] = useState({});
-
-  const messages = [
+  const [newMessage, setNewMessage] = useState(false);
+  const [messages, setMessages] = useState({});
+  const messagesEnd = useRef(null);
+  const fakemessages = [
     {
       id: 11,
       sender_id: 471,
       receiver_id: 511,
-      body: "selammm",
+      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       date: "2022-05-10T00:23:53.375Z",
     },
     {
@@ -53,57 +54,89 @@ export default function ChatView({ sessionUser }) {
     getUser(user_id).then((res) => {
       if (res.data.code === 200) {
         setUser(res.data.user);
-        console.log("user:", res);
+        getMessages({
+          session_id: sessionUser.id,
+          user_id: parseInt(user_id),
+        }).then((response) => {
+          if (response.data.code === 200) {
+            setMessages(response.data.messages);
+          }
+        });
         setNoSuchUser(false);
       } else {
         setNoSuchUser(true);
       }
     });
     // then get message log for that user
-    getMessages({ session_id: sessionUser.id, user_id: user_id }).then(
-      (response) => {
-        console.log(response.data.code);
-      }
-    );
+    // getMessages({ session_id: sessionUser.id, user_id: user_id }).then(
+    //   (response) => {
+    //     console.log(response.data.code);
+    //   }
+    // );
   }, [user_id, sessionUser.id]);
+
+  useEffect(() => {
+    console.log("New Message detected");
+    if (newMessage) {
+      getMessages({ session_id: sessionUser.id, user_id: user_id }).then(
+        (response) => {
+          if (response.data.code === 200) {
+            console.log("messages", response.data.messages);
+            setMessages(response.data.messages);
+            setNewMessage(false);
+          }
+        }
+      );
+    }
+  }, [newMessage]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEnd.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   if (noSuchUser) {
     return <ErrorPage></ErrorPage>;
   }
 
   return (
-    <div className={"chatContainer"}>
-      <Paper className={"paper"}>
-        <ChatHeader user={user}></ChatHeader>
-        <Paper id="style-1" className={"messagesBody"}>
-          {messages.map((data) => {
-            if (parseInt(data.sender_id) === parseInt(user_id)) {
-              return (
-                <MessageLeft
-                  key={data.id}
-                  message={data.body}
-                  timestamp={data.date}
-                  photoURL={user.profile_pic_path}
-                  displayName={user.full_name}
-                  avatarDisp={true}
-                />
-              );
-            } else {
-              return (
-                <MessageRight
-                  key={data.id}
-                  message={data.body}
-                  timestamp={data.date}
-                  photoURL={sessionUser.profile_pic_path}
-                  displayName="You"
-                  avatarDisp={true}
-                />
-              );
-            }
-          })}
-        </Paper>
-        <ChatTextInput />
+    <Paper className={"chatContainer"}>
+      <ChatHeader user={user}></ChatHeader>
+      <Paper id="style-1" className={"messagesBody"}>
+        {Object.values(messages).map((data) => {
+          if (parseInt(data.sender_id) === parseInt(user_id)) {
+            return (
+              <Message
+                key={data.id}
+                owned={false}
+                data={data}
+                user={user}
+                sessionUser={sessionUser}
+              />
+            );
+          } else {
+            return (
+              <Message
+                key={data.id}
+                data={data}
+                owned={true}
+                user={user}
+                sessionUser={sessionUser}
+              />
+            );
+          }
+        })}
+        <div ref={messagesEnd} />
       </Paper>
-    </div>
+      <ChatTextInput
+        sender_id={sessionUser.id}
+        user_id={user.id}
+        newMessage={newMessage}
+        setNewMessage={setNewMessage}
+      />
+    </Paper>
   );
 }

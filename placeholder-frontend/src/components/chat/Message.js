@@ -4,43 +4,34 @@ import Avatar from "@mui/material/Avatar";
 import { Colors } from "../../Colors";
 import { convertMs2TimeString as timeStamp } from "../commons/Comment";
 
-
 import defaultProfilePic from "../../img/defaultProfilePic.png";
 import "./Chat.css";
 
-export const MessageLeft = (props) => {
-  const message = props.message ? props.message : "no message";
-  const timestamp = props.timestamp ? props.timestamp : "";
-  const photoURL = props.photoURL ? props.photoURL : defaultProfilePic;
-  const displayName = props.displayName ? props.displayName : "display name";
-
+export default function Message({ data, owned, sessionUser, user }) {
+  const message = data.body ? data.body : "can not load...";
+  const photoURL = owned
+    ? sessionUser.profile_pic_path
+      ? sessionUser.profile_pic_path
+      : defaultProfilePic
+    : user.profile_pic_path
+    ? user.profile_pic_path
+    : defaultProfilePic;
+  const displayName = owned ? "You" : sessionUser.full_name;
+  const currTime = new Date();
+  const commentTime = new Date(data.date);
+  const timeDiff = currTime - commentTime;
   return (
-    <>
-      <div className={"messageRow"}>
-        <Avatar alt={displayName} className={"orange"} src={photoURL}></Avatar>
-        <div>
-          <div className={displayName}>{displayName}</div>
-          <div className={"messageBlue"}>
-            <div>
-              <p className={"messageContent"}>{message}</p>
-            </div>
-            <div className={"messageTimeStampRight"}>{timestamp}</div>
+    <div className={owned ? "messageRowRight" : "messageRow"}>
+      {!owned && <Avatar alt={displayName} src={photoURL}></Avatar>}
+      <div>
+        <div className={owned ? "message right" : "message left"}>
+          <div className={"messageTimeStampRight"}>{timeStamp(timeDiff)}</div>
+          <div className="textContainer">
+            <p className={"messageContent"}>{message}</p>
           </div>
         </div>
       </div>
-    </>
-  );
-};
-//avatar
-export const MessageRight = (props) => {
-  const message = props.message ? props.message : "no message";
-  const timestamp = props.timestamp ? props.timestamp : "";
-  return (
-    <div className={"messageRowRight"}>
-      <div className={"messageOrange"}>
-        <p className={"messageContent"}>{message}</p>
-        <div className={"messageTimeStampRight"}>{timestamp}</div>
-      </div>
+      {/* {owned && <Avatar alt={displayName} src={photoURL}></Avatar>} */}
     </div>
   );
-};
+}

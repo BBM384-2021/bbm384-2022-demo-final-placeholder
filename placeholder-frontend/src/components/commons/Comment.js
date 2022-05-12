@@ -27,7 +27,8 @@ export function convertMs2TimeString(time) {
     // if less than a day
     return Math.floor(time / (1000 * 60 * 60)) + " hours ago";
   } else {
-    return Math.floor(time / (1000 * 60 * 60 * 24)) + " days ago";
+    const day = Math.floor(time / (1000 * 60 * 60 * 24));
+    return day > 1 ? day + " days ago" : "yesterday";
   }
 }
 
