@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BasicModal from "../commons/BasicModal";
-import {TextField, Box} from "@mui/material";
+import {TextField, Box, Alert} from "@mui/material";
 import {deleteUser} from "../../services/UserService";
 
 const defaultInputValues = {
@@ -14,10 +14,11 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
     const [values, setValues] = useState(defaultInputValues);
     const [error, setError] = useState(``);
 
-
     const onClose = () => {
+        setError(``);
         setOpen(false);
     };
+
     const modalStyles = {
         inputFields: {
             display: "flex",
@@ -43,11 +44,11 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
         deleteUser(user.id, values.csMail, values.password)
             .then(response => {
                 console.log(response);
-                if(response.data.code === 200){
+                if (response.data.code === 200){
                     setOpen(false);
                     setError(``);
                     localStorage.setItem("user",null);
-                }else{
+                } else{
                     setError(
                         'Please Check Your Data'
                     );
@@ -56,15 +57,17 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
             .catch((error) =>{
                 console.log(error.message)
             });
+        
     }
 
     const getContent = () => (
         <Box sx={modalStyles.inputFields}>
+        {error && <Alert severity="error" sx={{marginBottom:'15px'}}>{error}</Alert>}
             <TextField
                 placeholder="CS Mail"
                 name="csMail"
                 label="Mail"
-
+                error={error.length > 0}
                 value={values.csMail}
                 onChange={(event) =>
                     handleChange({ ...values, csMail: event.target.value })
@@ -76,6 +79,7 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
                 label="Password"
                 type="password"
                 autoComplete="current-password"
+                error={error.length > 0}
 
                 value={values.password}
                 onChange={(event) =>
