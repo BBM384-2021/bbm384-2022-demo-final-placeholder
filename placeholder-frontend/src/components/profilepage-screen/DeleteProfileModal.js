@@ -95,7 +95,11 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
                 }
             />
         {isWaitResponse &&
-            <LinearProgress />
+            <>
+                <p>We shall meet again!</p>
+                <LinearProgress />
+            </>
+            
         }
         </Box>
     )
