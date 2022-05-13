@@ -6,6 +6,7 @@ import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import { IconButton } from "@mui/material";
 import "./InteractionBar.css";
 import { postLike, deleteLike } from "../../services/PostService";
+import LikesModal from "../posts/LikesModal";
 
 function isUserLikedPost(likeArray, userID) {
   for (let i = 0; i < likeArray.length; i++) {
@@ -20,10 +21,11 @@ export default function InteractionBar({
   content,
   setContent,
   post_id,
-  curr_user_id,
+  user,
   setOpen,
 }) {
   const [likeLock, setLikeLock] = useState(false);
+  const [openLikesPopup, setOpenLikesPopup] = useState(false);
 
   const onLikeClick = () => {
     if (likeLock) {
@@ -35,17 +37,32 @@ export default function InteractionBar({
     }
     setLikeLock(true);
 
+    const newLikeArray = [...content.likeArray];
+    if (!content.isLiked) {
+      newLikeArray.push({
+        "like" : {
+          "id" : post_id,
+          "user_id" : user.id
+        },
+        "user" : {...user, full_name:"You"}
+      })
+    } else {
+      const likeIndex = newLikeArray.findIndex( (elem) => elem.like.user_id === user.id );
+      newLikeArray.splice(likeIndex, 1)
+    }
+
     setContent({
       ...content,
       isLiked: !content.isLiked,
       likeCount: !content.isLiked
         ? content.likeCount + 1
         : content.likeCount - 1,
+      likeArray: [...newLikeArray]
     });
     if (!content.isLiked) {
-      postLike(curr_user_id, post_id, setLikeLock);
+      postLike(user.id, post_id, setLikeLock);
     } else {
-      deleteLike(curr_user_id, post_id, setLikeLock);
+      deleteLike(user.id, post_id, setLikeLock);
     }
   };
 
@@ -64,7 +81,16 @@ export default function InteractionBar({
           {content.isLiked && <FavoriteIcon htmlColor="red" />}
           {!content.isLiked && <FavoriteBorderIcon />}
         </IconButton>
-        {content.likeCount}
+        {content.likeCount > 0 ?
+          <u onClick={()=>setOpenLikesPopup(true)} className="like-count">{content.likeCount}</u>
+          :
+          <>{content.likeCount}</>
+        }
+        <LikesModal 
+          open={openLikesPopup}
+          setOpen={setOpenLikesPopup}
+          likes={content.likeArray}
+        />
       </div>
 
       <div>
