@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Avatar, IconButton } from "@mui/material/";
-import { Cancel, CheckCircle, MoreVert, Delete } from "@mui/icons-material";
+import { Cancel, CheckCircle, Edit, Delete } from "@mui/icons-material";
 
 import { Colors } from "../../Colors";
 import { convertMs2TimeString as timeStamp } from "../commons/Comment";
@@ -110,7 +110,7 @@ export default function Message({ key, data, owned, sessionUser, user }) {
           variant="raised"
           sx={{ "&:hover": { backgroundColor: "transparent" } }}
         >
-          <MoreVert />
+          <Edit />
         </IconButton>
       )}
       <ConfirmationDialog
