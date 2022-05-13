@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BasicModal from "../commons/BasicModal";
-import {TextField, Box} from "@mui/material";
+import {TextField, Box, Alert, LinearProgress} from "@mui/material";
 import {deleteUser} from "../../services/UserService";
 
 const defaultInputValues = {
@@ -13,11 +13,13 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
 
     const [values, setValues] = useState(defaultInputValues);
     const [error, setError] = useState(``);
-
+    const [isWaitResponse, setIsWaitResponse] = useState(false);
 
     const onClose = () => {
+        setError(``);
         setOpen(false);
     };
+
     const modalStyles = {
         inputFields: {
             display: "flex",
@@ -39,32 +41,41 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
     }, [open]);
 
     const handleSubmit = () => {
+        if (isWaitResponse) {
+            return;
+        }
+
+        setIsWaitResponse(true);
         setError(``);
         deleteUser(user.id, values.csMail, values.password)
             .then(response => {
                 console.log(response);
-                if(response.data.code === 200){
+                if (response.data.code === 200){
                     setOpen(false);
                     setError(``);
                     localStorage.setItem("user",null);
-                }else{
+                    window.location.replace("/")
+                } else{
                     setError(
                         'Please Check Your Data'
                     );
                 }
+                setIsWaitResponse(false);
             })
             .catch((error) =>{
                 console.log(error.message)
             });
+        
     }
 
     const getContent = () => (
         <Box sx={modalStyles.inputFields}>
+        {error && <Alert severity="error" sx={{marginBottom:'15px'}}>{error}</Alert>}
             <TextField
-                placeholder="CSMail"
+                placeholder="CS Mail"
                 name="csMail"
-                label="csMail"
-
+                label="Mail"
+                error={error.length > 0}
                 value={values.csMail}
                 onChange={(event) =>
                     handleChange({ ...values, csMail: event.target.value })
@@ -73,13 +84,23 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
             <TextField
                 placeholder="Password"
                 name="password"
-                label="password"
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+                error={error.length > 0}
 
                 value={values.password}
                 onChange={(event) =>
                     handleChange({ ...values, password: event.target.value })
                 }
             />
+        {isWaitResponse &&
+            <>
+                <p>We shall meet again!</p>
+                <LinearProgress />
+            </>
+            
+        }
         </Box>
     )
 
