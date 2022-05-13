@@ -14,6 +14,8 @@ public class TagController {
     @GetMapping("tag/getAllTags")
     public Object getAllTags(){
 
+        System.out.println("\n****************\n"+"getAllTags"+"\n****************\n");
+
         List<Tag> allTags = TagDAO.getAllTags();
         if(allTags != null){
             return DAOFunctions.getResponse(200,"allTags",allTags);
@@ -27,6 +29,9 @@ public class TagController {
     @PostMapping("/tag/createTag")
     public Object createTag(@RequestBody Tag tag){
 
+        System.out.println("\n****************\n"+"createTag"+"\n****************\n");
+
+
         if(tag.getTag_name().equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -35,6 +40,9 @@ public class TagController {
 
     @PatchMapping("/tag/updateTag")
     public Object updateTag(@RequestBody Tag tag){
+
+        System.out.println("\n****************\n"+"updateTag"+"\n****************\n");
+
         if(tag.getId() == 0 || tag.getTag_name() == null || tag.getTag_name().equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -43,6 +51,9 @@ public class TagController {
 
     @DeleteMapping("/tag/deleteTag")
     public Object deleteTag(@RequestBody HashMap<String, String> body){
+
+        System.out.println("\n****************\n"+"deleteTag"+"\n****************\n");
+
         if(!body.containsKey("id") || body.get("id").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }

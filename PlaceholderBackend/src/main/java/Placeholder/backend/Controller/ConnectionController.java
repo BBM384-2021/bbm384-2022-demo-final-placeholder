@@ -18,6 +18,9 @@ public class ConnectionController {
     @PostMapping("/connection/createConnection")
     public Object createConnection(@RequestBody Connection connection){
 
+        System.out.println("\n****************\n"+"createConnection"+"\n****************\n");
+
+
         if(connection.getUser1_id() == 0 || connection.getUser2_id() == 0){
             return DAOFunctions.getResponse(400,"error","Missing Fields");
         }
@@ -27,6 +30,9 @@ public class ConnectionController {
     @GetMapping("/connection/checkConnection")
     public Object checkConnection(@RequestParam(value = "user1_id",defaultValue = "") String user1_id, @RequestParam(value = "user2_id",defaultValue = "") String user2_id){
 
+        System.out.println("\n****************\n"+"checkConnection"+"\n****************\n");
+
+
         if(user1_id.equals("") || user2_id.equals("")){
             return DAOFunctions.getResponse(400,"error","Missing Fields");
         }
@@ -35,6 +41,9 @@ public class ConnectionController {
 
     @DeleteMapping("/connection/removeConnection")
     public Object removeConnection(@RequestBody HashMap<String, String> body){
+
+        System.out.println("\n****************\n"+"removeConnection"+"\n****************\n");
+
 
         if(!body.containsKey("user1_id") || !body.containsKey("user2_id") ||
                 body.get("user1_id").equals("") || body.get("user2_id").equals("")){
@@ -47,6 +56,9 @@ public class ConnectionController {
     @DeleteMapping("/connection/deleteAllConnections")
     public Object removeAllConnections(@RequestBody HashMap<String, String> body){
 
+        System.out.println("\n****************\n"+"deleteAllConnections"+"\n****************\n");
+
+
         if(!body.containsKey("user1_id") || body.get("user1_id").equals("")){
             return DAOFunctions.getResponse(400,"error","Missing Fields");
         }
@@ -57,6 +69,9 @@ public class ConnectionController {
 
     @GetMapping("/connection/getAllConnections")
     public Object getAllRequests(){
+
+        System.out.println("\n****************\n"+"getAllConnections"+"\n****************\n");
+
 
         List<Connection> allConnections = ConnectionDAO.getAllConnections();
         if(allConnections != null){

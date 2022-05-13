@@ -14,6 +14,10 @@ public class PostController {
 
     @GetMapping("/post/getPost")
     public Object getPost(@RequestParam(value = "post_id",defaultValue = "") String post_id){
+
+        System.out.println("\n****************\n"+"getPost"+"\n****************\n");
+
+
         Object post = PostDAO.getPost(post_id);
         if(post != null){
             return DAOFunctions.getResponse(200,"post",post);
@@ -25,6 +29,10 @@ public class PostController {
 
     @GetMapping("/post/getAllPosts")
     public Object getAllPosts(){
+
+        System.out.println("\n****************\n"+"getAllPosts"+"\n****************\n");
+
+
         List<Object> allPost = PostDAO.getAllPosts();
         if(allPost != null){
             return DAOFunctions.getResponse(200,"allPosts",allPost);
@@ -36,6 +44,10 @@ public class PostController {
 
     @GetMapping("/post/getAllPostsOfAUser")
     public Object getAllPostsOfAUser(@RequestParam(value = "user_id",defaultValue = "") String user_id){
+
+        System.out.println("\n****************\n"+"getAllPostsOfAUser"+"\n****************\n");
+
+
         if(user_id.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -51,6 +63,10 @@ public class PostController {
 
     @PostMapping("/post/addPost")
     public Object createPost(@RequestBody HashMap<String,Object> body){
+
+        System.out.println("\n****************\n"+"addPost"+"\n****************\n");
+
+
         try{
             Gson gson = new Gson();
             String postJsonStr = gson.toJson(body.get("post"));
@@ -96,6 +112,10 @@ public class PostController {
 
     @PatchMapping("/post/updatePost")
     public Object updatePost(@RequestBody HashMap<String,Object> body){
+
+        System.out.println("\n****************\n"+"updatePost"+"\n****************\n");
+
+
         try {
             Gson gson = new Gson();
             String postJsonStr = gson.toJson(body.get("post"));
@@ -130,6 +150,10 @@ public class PostController {
 
     @DeleteMapping("/post/deletePost")
     public Object deletePost(@RequestBody HashMap<String, String> body){
+
+        System.out.println("\n****************\n"+"deletePost"+"\n****************\n");
+
+
         if(!body.containsKey("id") || body.get("id").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -138,6 +162,10 @@ public class PostController {
 
     @GetMapping("/post/getMainFeed")
     public Object getMainFeed(@RequestParam(value = "user_id",defaultValue = "") String user_id, @RequestParam(value = "tags",defaultValue = "") String tagsString){
+
+        System.out.println("\n****************\n"+"getMainFeed"+"\n****************\n");
+
+
         if(user_id.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -161,6 +189,9 @@ public class PostController {
     @PostMapping("/post/likePost")
     public Object likePost(@RequestBody Like like){
 
+        System.out.println("\n****************\n"+"likePost"+"\n****************\n");
+
+
         if(like.getPost_id() == 0 || like.getuser_id() == 0){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -170,6 +201,10 @@ public class PostController {
 
     @DeleteMapping("/post/removeLike")
     public Object removeLike(@RequestBody Like like){
+
+        System.out.println("\n****************\n"+"removeLike"+"\n****************\n");
+
+
         if(like.getPost_id() == 0 || like.getuser_id() == 0){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -178,6 +213,9 @@ public class PostController {
 
     @GetMapping("/post/getAllLikes")
     public Object getAllLikes(){
+
+        System.out.println("\n****************\n"+"getAllLikes"+"\n****************\n");
+
 
         List<Like> allLikes = PostDAO.getAllLikes();
 
@@ -194,6 +232,9 @@ public class PostController {
     @PostMapping("/post/addComment")
     public Object addComment(@RequestBody Comment comment){
 
+        System.out.println("\n****************\n"+"addComment"+"\n****************\n");
+
+
         if(comment.getPost_id() == 0 || comment.getUser_id() == 0 || comment.getBody()== null ||comment.getBody().equals("") || comment.getShare_date() == null || comment.getShare_date().equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -203,6 +244,10 @@ public class PostController {
 
     @DeleteMapping("/post/deleteComment")
     public Object deleteComment(@RequestBody HashMap<String, String> body){
+
+        System.out.println("\n****************\n"+"deleteComment"+"\n****************\n");
+
+
         if(!body.containsKey("id") || body.get("id").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -211,6 +256,9 @@ public class PostController {
 
     @GetMapping("/post/getAllComments")
     public Object getAllComments(){
+
+        System.out.println("\n****************\n"+"getAllComments"+"\n****************\n");
+
 
         List<Comment> allComments = PostDAO.getAllComments();
 
@@ -226,6 +274,10 @@ public class PostController {
 
     @PatchMapping("/post/updateComment")
     public Object updatePost(@RequestBody Comment comment){
+
+        System.out.println("\n****************\n"+"updateComment"+"\n****************\n");
+
+
         if(comment.getBody() == null || comment.getBody().equals("") || comment.getId() == 0){
             return DAOFunctions.getResponse(400,"",null);
         }

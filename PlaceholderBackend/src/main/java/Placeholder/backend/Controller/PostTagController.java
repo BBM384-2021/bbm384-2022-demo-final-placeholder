@@ -14,6 +14,9 @@ public class PostTagController {
     @GetMapping("postTag/getAllPostTags")
     public Object getAllPostTags(){
 
+        System.out.println("\n****************\n"+"getAllPostTags"+"\n****************\n");
+
+
         List<PostTag> allTags = PostTagDAO.getAllTags();
         if(allTags != null){
             return DAOFunctions.getResponse(200,"allPostTags",allTags);
@@ -25,6 +28,9 @@ public class PostTagController {
     }
     @GetMapping("postTag/getTags")
     public Object getTags(@RequestParam(value = "post_id",defaultValue = "") String post_id){
+
+        System.out.println("\n****************\n"+"getTags"+"\n****************\n");
+
 
         if(post_id.equals("")){
             return DAOFunctions.getResponse(400,"",null);
@@ -43,6 +49,9 @@ public class PostTagController {
     @PostMapping("/postTag/addTag")
     public Object createPostTag(@RequestBody PostTag postTag){
 
+        System.out.println("\n****************\n"+"addTag"+"\n****************\n");
+
+
         if(postTag.getPost_id() == 0 || postTag.getTag_id() == 0){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -52,6 +61,10 @@ public class PostTagController {
 
     @DeleteMapping("/postTag/removeTag")
     public Object deletePostTag(@RequestBody HashMap<String, String> body){
+
+        System.out.println("\n****************\n"+"removeTag"+"\n****************\n");
+
+
         if(!body.containsKey("id") || body.get("id").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
