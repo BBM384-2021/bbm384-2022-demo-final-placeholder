@@ -14,19 +14,22 @@ import {
   MenuItem,
   ListItemIcon,
 } from "@mui/material";
-
-import { Settings, PersonOutline, Logout } from "@mui/icons-material";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
+import { Settings, PersonOutline, Logout } from "@mui/icons-material";
+
+import ConfirmationDialog from "../commons/ConfirmationDialog";
 import SearchBar from "../search-bar/SearchBar";
 import TagManagementBox from "../tag-management/TagManagementBox";
+import EditProfileModal from "../profilepage-screen/EditProfileModal";
+
 import { ReactComponent as LinkedHuIcon } from "../../linhu_logo.svg";
-import ConfirmationDialog from "../commons/ConfirmationDialog";
 
 export default function TopBar({ userObj, setUser }) {
   const history = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [tagManOpen, setTagManOpen] = useState(false);
+  const [editProfileOpen, setEditProfileOpen] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const openUserMenu = Boolean(anchorEl);
 
@@ -53,7 +56,7 @@ export default function TopBar({ userObj, setUser }) {
 
   return (
     <React.Fragment>
-      <Box >
+      <Box>
         <AppBar
           position="static"
           sx={{ bgcolor: "white", borderRadius: "20px" }}
@@ -162,7 +165,7 @@ export default function TopBar({ userObj, setUser }) {
         <MenuItem onClick={navigateToProfile}>
           <Avatar src={userObj.profile_pic_path} /> View Profile
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => setEditProfileOpen(true)}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
@@ -193,6 +196,13 @@ export default function TopBar({ userObj, setUser }) {
 
       {userObj.user_type == 0 && (
         <TagManagementBox open={tagManOpen} setOpen={setTagManOpen} />
+      )}
+      {editProfileOpen && (
+        <EditProfileModal
+          open={editProfileOpen}
+          setOpen={setEditProfileOpen}
+          user={userObj}
+        ></EditProfileModal>
       )}
     </React.Fragment>
   );
