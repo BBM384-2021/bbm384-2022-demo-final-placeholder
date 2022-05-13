@@ -74,6 +74,8 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
                 placeholder="Password"
                 name="password"
                 label="password"
+                type="password"
+                autoComplete="current-password"
 
                 value={values.password}
                 onChange={(event) =>
