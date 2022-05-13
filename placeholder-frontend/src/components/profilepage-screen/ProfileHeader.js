@@ -9,6 +9,8 @@ import FileUploader from "../commons/FileUploader";
 import defaultCover from "../../img/defaultProfileCover.png";
 import defaultProfilePic from "../../img/defaultProfilePic.png";
 import "./Profile.css";
+import ConfirmationDialog from "../commons/ConfirmationDialog";
+import { deleteUser } from "../../services/UserService";
 
 export default function ProfileHeader({
   profileOwned,
@@ -20,6 +22,7 @@ export default function ProfileHeader({
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [isRoleChange, setRoleChange] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
   const [state, setState] = useState({
     isLoading: false,
@@ -92,6 +95,14 @@ export default function ProfileHeader({
     updateUser({ user: user, values: { userType: 3 } }).then((response) => {
       if (response.data.code === 200) {
         setRoleChange(true);
+      }
+    });
+  };
+
+  const adminDeleteUser = () => {
+    deleteUser(user.id, user.cs_mail, "", 0).then((response) => {
+      if (response.data.code === 200) {
+        alert("User is Deleted");
       }
     });
   };
@@ -189,7 +200,23 @@ export default function ProfileHeader({
               Remove Instructor Role
             </MenuItem>
           )}
+        {!profileOwned && sessionUser.user_type < 1 && (
+          <MenuItem
+            onClick={() => {
+              setDeleteConfirmation(true);
+            }}
+          >
+            Delete User
+          </MenuItem>
+        )}
       </Menu>
+      <ConfirmationDialog
+        open={deleteConfirmation}
+        setOpen={setDeleteConfirmation}
+        onConfirm={adminDeleteUser}
+      >
+        This user will be deleted permanently
+      </ConfirmationDialog>
     </div>
   );
 }

@@ -9,6 +9,7 @@ export default function ConnectionsModal({
   open,
   connections,
   userName,
+  title,
 }) {
   const handleCloseConnections = () => setOpen(false);
   return (
@@ -16,7 +17,7 @@ export default function ConnectionsModal({
       <BasicModal
         open={open}
         onClose={handleCloseConnections}
-        title={`Connections of ${userName}`}
+        title={title ? title : `Connections of ${userName}`}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

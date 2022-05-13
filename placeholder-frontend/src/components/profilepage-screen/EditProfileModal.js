@@ -14,10 +14,11 @@ import { Clear } from "@mui/icons-material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-import { updateUser } from "../../services/UserService";
+import { deleteUser, updateUser } from "../../services/UserService";
 import BasicModal from "../commons/BasicModal";
 import { Colors } from "../../Colors";
 import DeleteProfileModal from "./DeleteProfileModal";
+import ConfirmationDialog from "../commons/ConfirmationDialog";
 
 const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
   const defaultInputValues = {
@@ -273,7 +274,9 @@ const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
           paddingLeft: "12px",
           cursor: "pointer",
         }}
-        onClick={() => setIsDelOpen(true)}
+        onClick={() => {
+          setIsDelOpen(true);
+        }}
       >
         Delete Profile
       </button>

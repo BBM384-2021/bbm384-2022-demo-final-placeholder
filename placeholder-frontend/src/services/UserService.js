@@ -6,17 +6,17 @@ const client = axios.create({
 
 //  TODO: Do we even have a use case for this?
 // if not, DELETE DIS
-export async function getAllUsers() {
-  try {
-    client.get("/getAllUsers").then((res) => {
-      console.log(res);
-    });
-    const response = await fetch("/api/users");
-    return await response.json();
-  } catch (error) {
-    return [];
-  }
-}
+// export async function getAllUsers() {
+//   try {
+//     client.get("/getAllUsers").then((res) => {
+//       console.log(res);
+//     });
+//     const response = await fetch("/api/users");
+//     return await response.json();
+//   } catch (error) {
+//     return [];
+//   }
+// }
 
 export function createUser(data) {
   // const response = await fetch(`/api/user`, {
@@ -42,6 +42,9 @@ export const getUser = (user_id) => {
       requested_id: user_id,
     },
   });
+};
+export const getAllUsers = () => {
+  return client.get("/getAllUsers");
 };
 
 export const updateUser = ({ user, values, profilePic, coverUrl }) => {
@@ -69,14 +72,25 @@ export const updateUser = ({ user, values, profilePic, coverUrl }) => {
   });
 };
 
-export function deleteUser(user_id, cs_mail, user_password){
-  return client.delete ( "/deleteUser", {
+export function deleteUser(user_id, cs_mail, user_password, user_type) {
+  if (parseInt(user_type) === 0) {
+    return client.delete("/deleteUser", {
+      data: {
+        user_id: user_id,
+        cs_mail: cs_mail,
+        user_password: user_password,
+        user_type: user_type,
+      },
+    });
+  }
+  return client.delete("/deleteUser", {
     data: {
-      "user_id" : user_id,
-      "cs_mail" : cs_mail,
-      "user_password" : user_password,
+      user_id: user_id,
+      cs_mail: cs_mail,
+      user_password: user_password,
+      user_type: "-1",
     },
-  })
+  });
 }
 
 export function getUsersConnected(user_id) {
