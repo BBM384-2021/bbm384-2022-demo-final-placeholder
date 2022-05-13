@@ -19,17 +19,17 @@ import BasicModal from "../commons/BasicModal";
 import { Colors } from "../../Colors";
 import DeleteProfileModal from "./DeleteProfileModal";
 
-const defaultInputValues = {
-  fullName: "",
-  phone: "",
-  email: "",
-  company: "",
-  githubLink: "",
-  linkedinLink: "",
-  userType: "",
-};
-
 const EditProfileModal = ({ open, setOpen, user, setEdited }) => {
+  const defaultInputValues = {
+    fullName: user.full_name,
+    phone: user.phone,
+    email: user.cs_mail,
+    company: user.company,
+    githubLink: user.github_url,
+    linkedinLink: user.linkedIn_url,
+    userType: user.user_type,
+  };
+
   const [values, setValues] = useState(defaultInputValues);
   const [error, setError] = useState(``);
   const [isDelOpen, setIsDelOpen] = useState(false);
