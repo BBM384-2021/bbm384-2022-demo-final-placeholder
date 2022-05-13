@@ -44,13 +44,17 @@ export default function MainFeed({ user, sessionUser, setSessionUser }) {
           width: "100%",
         }}
       >
-        <ContentCreateBar onClick={onClickPostCreate}>
-          Create a post...
-        </ContentCreateBar>
-        {parseInt(sessionUser.user_type) < 3 && (
-          <ContentCreateBar onClick={onClickEventCreate}>
-            Create an event...
-          </ContentCreateBar>
+        {parseInt(sessionUser.user_type) !== 0 && (
+          <>
+            <ContentCreateBar onClick={onClickPostCreate}>
+              Create a post...
+            </ContentCreateBar>
+            {parseInt(sessionUser.user_type) < 3 && (
+              <ContentCreateBar onClick={onClickEventCreate}>
+                Create an event...
+              </ContentCreateBar>
+            )}
+          </>
         )}
       </div>
       <div className="feed-option-container">
@@ -66,8 +70,8 @@ export default function MainFeed({ user, sessionUser, setSessionUser }) {
             <HomeIcon />
           </IconButton>
         </div>
-        
-        <TagFilter setSelectedTags={setSelectedTags} isRefresh={isRefresh}/>
+
+        <TagFilter setSelectedTags={setSelectedTags} isRefresh={isRefresh} />
       </div>
       {isWaitResponse ? (
         <LinearProgress />
