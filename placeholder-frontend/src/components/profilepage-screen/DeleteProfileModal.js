@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BasicModal from "../commons/BasicModal";
-import {TextField, Box, Alert} from "@mui/material";
+import {TextField, Box, Alert, LinearProgress} from "@mui/material";
 import {deleteUser} from "../../services/UserService";
 
 const defaultInputValues = {
@@ -13,6 +13,7 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
 
     const [values, setValues] = useState(defaultInputValues);
     const [error, setError] = useState(``);
+    const [isWaitResponse, setIsWaitResponse] = useState(false);
 
     const onClose = () => {
         setError(``);
@@ -40,6 +41,11 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
     }, [open]);
 
     const handleSubmit = () => {
+        if (isWaitResponse) {
+            return;
+        }
+
+        setIsWaitResponse(true);
         setError(``);
         deleteUser(user.id, values.csMail, values.password)
             .then(response => {
@@ -53,6 +59,7 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
                         'Please Check Your Data'
                     );
                 }
+                setIsWaitResponse(false);
             })
             .catch((error) =>{
                 console.log(error.message)
@@ -86,6 +93,9 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
                     handleChange({ ...values, password: event.target.value })
                 }
             />
+        {isWaitResponse &&
+            <LinearProgress />
+        }
         </Box>
     )
 
