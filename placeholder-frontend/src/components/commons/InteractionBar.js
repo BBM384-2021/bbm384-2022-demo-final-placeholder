@@ -44,7 +44,7 @@ export default function InteractionBar({
           "id" : post_id,
           "user_id" : user.id
         },
-        "user" : {...user, full_name:"You"}
+        "user" : user
       })
     } else {
       const likeIndex = newLikeArray.findIndex( (elem) => elem.like.user_id === user.id );
