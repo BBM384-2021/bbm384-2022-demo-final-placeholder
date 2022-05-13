@@ -188,5 +188,24 @@ public class MessageDAO {
 
     }
 
+    public static int deleteAllMessagesOfAUser(String user_id){
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+        try{
+            session.beginTransaction();
+            session.createQuery(String.format("delete from Message m where m.sender_id = '%s' or m.receiver_id = '%s'",user_id,user_id)).executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
+
+        return 200;
+    }
+
 
 }

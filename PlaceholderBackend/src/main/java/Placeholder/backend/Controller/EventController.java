@@ -14,7 +14,11 @@ import java.util.List;
 public class EventController {
 
     @GetMapping("/event/getAllEventsOfAUser")
-    public Object getAllPostsOfAUser(@RequestParam(value = "requested_user_id",defaultValue = "") String requested_user_id, @RequestParam(value = "current_user_id",defaultValue = "") String current_user_id){
+    public Object getAllEventsOfAUser(@RequestParam(value = "requested_user_id",defaultValue = "") String requested_user_id, @RequestParam(value = "current_user_id",defaultValue = "") String current_user_id){
+
+        System.out.println("\n****************\n"+"getAllEventsOfAUser"+"\n****************\n");
+
+
         if(requested_user_id.equals("") || current_user_id.equals("") ){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -29,6 +33,9 @@ public class EventController {
 
     @GetMapping("/event/getMainFeed")
     public Object getMainFeed(@RequestParam(value = "current_user_id",defaultValue = "") String current_user_id){
+
+        System.out.println("\n****************\n"+"getMainFeed-Event"+"\n****************\n");
+
         if(current_user_id.equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -43,6 +50,9 @@ public class EventController {
 
     @PostMapping("/event/addEvent")
     public Object addEvent(@RequestBody Event event){
+
+        System.out.println("\n****************\n"+"addEvent"+"\n****************\n");
+
 
         if(event.getEvent_body() == null || event.getEvent_body().equals("")
             || event.getEvent_location() == null || event.getEvent_location().equals("")
@@ -65,6 +75,10 @@ public class EventController {
 
     @PatchMapping("/event/updateEvent")
     public Object updateEvent(@RequestBody Event event){
+
+        System.out.println("\n****************\n"+"updateEvent"+"\n****************\n");
+
+
         if(event.getEvent_body() == null || event.getEvent_body().equals("") || event.getId() == 0 ||
             event.getEvent_location() == null ||event.getEvent_location().equals("")
                 || event.getStart_date() == null || event.getStart_date().equals("")
@@ -76,6 +90,10 @@ public class EventController {
 
     @DeleteMapping("/event/deleteEvent")
     public Object deleteEvent(@RequestBody HashMap<String, String> body){
+
+        System.out.println("\n****************\n"+"deleteEvent"+"\n****************\n");
+
+
         if(!body.containsKey("id") || body.get("id").equals("")){
             return DAOFunctions.getResponse(400,"",null);
         }
@@ -84,6 +102,9 @@ public class EventController {
 
     @PostMapping("/event/participateEvent")
     public Object participateEvent(@RequestBody Attend attend){
+
+        System.out.println("\n****************\n"+"Participate Event"+"\n****************\n");
+
 
         if(attend.getUser_id() == 0 || attend.getEvent_id() == 0){
 
@@ -104,6 +125,9 @@ public class EventController {
     @DeleteMapping("/event/cancelParticipation")
     public Object cancelParticipation(@RequestBody Attend attend){
 
+        System.out.println("\n****************\n"+"cancelParticipation"+"\n****************\n");
+
+
         if(attend.getUser_id() == 0 || attend.getEvent_id() == 0){
 
             return DAOFunctions.getResponse(400,"error","Missing Fields");
@@ -114,6 +138,9 @@ public class EventController {
 
     @GetMapping("/event/getAllAttend")
     public Object getAllAttend(){
+
+        System.out.println("\n****************\n"+"getAllAttend"+"\n****************\n");
+
 
         List<Attend> allAttend = EventDAO.getAllAttend();
 

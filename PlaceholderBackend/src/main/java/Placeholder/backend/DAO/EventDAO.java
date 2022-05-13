@@ -39,7 +39,40 @@ public class EventDAO {
 
             boolean participating = false;
 
-            for(Object o : queryResult) {
+            List<Object> sortedQueryResult = new ArrayList<>();
+            List<Integer> eventIds = new ArrayList<>();
+            HashSet<String> objectSet = new HashSet<>();
+
+            for(int i = 0 ; i<queryResult.size();i++){
+                int currentSmallestEventId = Integer.MAX_VALUE;
+                int currentSmallestIndex = -1;
+                String currentJsonStr = "";
+                for(int j = 0; j<queryResult.size();j++){
+                    String jsonStr = gson.toJson(queryResult.get(j));
+                    JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
+
+                    Event currentEvent = gson.fromJson(jsonArray.get(0), Event.class);
+                    if(sortedQueryResult.size() == 0 && currentSmallestEventId > currentEvent.getId()){
+                        currentSmallestEventId = currentEvent.getId();
+                        currentSmallestIndex = j;
+                        currentJsonStr = jsonStr;
+                    }
+                    else if(sortedQueryResult.size() != 0 && currentSmallestEventId > currentEvent.getId() && currentEvent.getId() >= eventIds.get(eventIds.size()-1) && !objectSet.contains(jsonStr)){
+                        currentSmallestEventId = currentEvent.getId();
+                        currentSmallestIndex = j;
+                        currentJsonStr = jsonStr;
+                    }
+
+                }
+                if(currentSmallestIndex != -1){
+                    sortedQueryResult.add(queryResult.get(currentSmallestIndex));
+                    eventIds.add(currentSmallestEventId);
+                    objectSet.add(currentJsonStr);
+                }
+            }
+
+
+            for(Object o : sortedQueryResult) {
                 String jsonStr = gson.toJson(o);
                 JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
 
@@ -48,16 +81,14 @@ public class EventDAO {
                     continue;
                 }
                 User currentUser = gson.fromJson(jsonArray.get(1),User.class);
-
                 if(!eventIdSet.contains(currentEvent.getId())){
-
                     if(prevEvent != null){
                         HashMap<String,Object> currentEventWithData = new HashMap<>();
                         currentEventWithData.put("event",prevEvent);
                         currentEventWithData.put("participants", currentParticipants);
                         currentEventWithData.put("user",prevUser);
 
-                        if(Integer.toString(currentUser.getId()).equals(currentUserId)){
+                        if(Integer.toString(prevUser.getId()).equals(currentUserId)){
                             eventsOwned.add(currentEventWithData);
                         }
                         else if(participating){
@@ -85,7 +116,6 @@ public class EventDAO {
                     }
                 }
                 catch (Exception e){
-
                 }
 
                 if(participant != null){
@@ -94,8 +124,6 @@ public class EventDAO {
             }
 
             if(prevUser != null){
-
-
                 HashMap<String,Object> currentEventWithData = new HashMap<>();
                 currentEventWithData.put("event",prevEvent);
                 currentEventWithData.put("participants", currentParticipants);
@@ -368,6 +396,49 @@ public class EventDAO {
         }
 
         return allAttend;
+    }
+
+    public static int deleteAllEventsOfAUser(String user_id){
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        List<Event> queryResult ;
+        try{
+            session.beginTransaction();
+            queryResult = session.createQuery(String.format("from Event e WHERE e.user_id = '%s'",user_id)).getResultList();
+            for(Event e : queryResult){
+                deleteEvent(Integer.toString(e.getId()));
+            }
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+
+        return 200;
+
+    }
+
+    public static int deleteAllAttendOfAUser(String userId){
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try{
+            session.beginTransaction();
+            session.createQuery("delete from Attend a where a.user_id = "+userId).executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
+
+        return 200;
     }
 
 

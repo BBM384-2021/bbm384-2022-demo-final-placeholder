@@ -42,12 +42,45 @@ public class PostDAO {
             Post prevPost = null;
             User prevUser = null;
 
+            List<Object> sortedQueryResult = new ArrayList<>();
+            List<Integer> postIds = new ArrayList<>();
+            HashSet<String> objectSet = new HashSet<>();
             JsonParser jsonParser = new JsonParser();
-            for(Object o : queryResult){
+
+            for(int i = 0 ; i<queryResult.size();i++){
+                int currentSmallestPostId = Integer.MAX_VALUE;
+                int currentSmallestIndex = -1;
+                String currentJsonStr = "";
+                for(int j = 0; j<queryResult.size();j++){
+                    String jsonStr = gson.toJson(queryResult.get(j));
+                    JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
+
+                    Post currentPost = gson.fromJson(jsonArray.get(2), Post.class);
+                    if(sortedQueryResult.size() == 0 && currentSmallestPostId > currentPost.getId()){
+                        currentSmallestPostId = currentPost.getId();
+                        currentSmallestIndex = j;
+                        currentJsonStr = jsonStr;
+                    }
+                    else if(sortedQueryResult.size() != 0 && currentSmallestPostId > currentPost.getId() && currentPost.getId() >= postIds.get(postIds.size()-1) && !objectSet.contains(jsonStr)){
+                        currentSmallestPostId = currentPost.getId();
+                        currentSmallestIndex = j;
+                        currentJsonStr = jsonStr;
+                    }
+
+                }
+                if(currentSmallestIndex != -1){
+                    sortedQueryResult.add(queryResult.get(currentSmallestIndex));
+                    postIds.add(currentSmallestPostId);
+                    objectSet.add(currentJsonStr);
+                }
+            }
+            for(Object o : sortedQueryResult){
                 String jsonStr = gson.toJson(o);
                 JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonStr);
 
+
                 Post currentPost = gson.fromJson(jsonArray.get(2), Post.class);
+
 
                 if(!postIdSet.contains(currentPost.getId())){
                     if(postIdSet.size() != 0){
@@ -561,6 +594,50 @@ public class PostDAO {
 
         return 200;
     }
+
+    public static int deleteAllLikesOfAUser(String userId){
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try{
+            session.beginTransaction();
+            session.createQuery("delete from Like l where l.user_id = "+userId).executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
+
+        return 200;
+    }
+
+    public static int deleteAllCommentsOfAUser(String userId){
+
+        SessionFactory factory = createFactory();
+        Session session = factory.getCurrentSession();
+
+        try{
+            session.beginTransaction();
+            session.createQuery("delete from Comment c where c.user_id = "+userId).executeUpdate();
+            session.getTransaction().commit();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return 400;
+        }
+        finally {
+            factory.close();
+        }
+
+        return 200;
+    }
+
+
 
 
 

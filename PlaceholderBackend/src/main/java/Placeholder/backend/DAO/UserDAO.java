@@ -49,7 +49,7 @@ public class UserDAO {
             }
             else{
                 session.getTransaction().commit();
-                return null;
+                return new User();
             }
             users= session.createQuery(String.format("from User u WHERE u.cs_mail = '%s'",user.getCs_mail())).getResultList();
             if(users.size() != 1){
