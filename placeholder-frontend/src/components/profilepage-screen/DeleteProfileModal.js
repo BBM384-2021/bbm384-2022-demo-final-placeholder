@@ -54,6 +54,7 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
                     setOpen(false);
                     setError(``);
                     localStorage.setItem("user",null);
+                    window.location.replace("/")
                 } else{
                     setError(
                         'Please Check Your Data'
