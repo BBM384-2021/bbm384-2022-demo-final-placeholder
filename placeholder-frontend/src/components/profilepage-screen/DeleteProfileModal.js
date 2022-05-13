@@ -61,9 +61,9 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
     const getContent = () => (
         <Box sx={modalStyles.inputFields}>
             <TextField
-                placeholder="CSMail"
+                placeholder="CS Mail"
                 name="csMail"
-                label="csMail"
+                label="Mail"
 
                 value={values.csMail}
                 onChange={(event) =>
@@ -73,7 +73,7 @@ const DeleteProfileModal = ({open, setOpen, user}) => {
             <TextField
                 placeholder="Password"
                 name="password"
-                label="password"
+                label="Password"
                 type="password"
                 autoComplete="current-password"
 
