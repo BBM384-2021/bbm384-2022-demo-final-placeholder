@@ -1,3 +1,11 @@
 .interaction-bar-row > * {
   margin: 10px 20px 10px 0px;
 }
+
+.like-count {
+  cursor:pointer;
+}
+
+.like-count:hover {
+  color:red;
+}

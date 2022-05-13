@@ -25,7 +25,7 @@ const CardView = React.forwardRef( ({content, setContent,
             <CardContent content={content} enableShortView={false}/>
             <InteractionBar 
                 content={interactionContent}
-                curr_user_id={user.id}
+                user={user}
                 setContent={setInteractionContent}
                 post_id={content.post.id}
                 />

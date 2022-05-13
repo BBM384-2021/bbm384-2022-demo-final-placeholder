@@ -26,6 +26,7 @@ export default function CardPreview({ content, contentType, user, key }) {
   const [stateContent, setStateContent] = useState(content);
   const [isRefresh, setIsRefresh] = useState(false);
   const [interactionContent, setInteractionContent] = useState({
+    likeArray: content.likes,
     isLiked: isUserLikedPost(content.likes, user.id),
     likeCount: content.likes.length,
     commentCount: content.comments.length,
@@ -68,7 +69,7 @@ export default function CardPreview({ content, contentType, user, key }) {
       <InteractionBar
         content={interactionContent}
         setContent={setInteractionContent}
-        curr_user_id={user.id}
+        user={user}
         post_id={stateContent.post.id}
         setOpen={setOpen}
       />
