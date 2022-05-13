@@ -102,6 +102,7 @@ export default function ProfileHeader({
       style={{
         backgroundImage: `url(${state.coverPic})`,
         backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <div className="ppContainer">

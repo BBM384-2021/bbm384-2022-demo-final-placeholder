@@ -14,3 +14,7 @@
   position: relative;
   /* background-color: blueviolet; */
 }
+
+.errorMiddle {
+  flex: 7;
+}

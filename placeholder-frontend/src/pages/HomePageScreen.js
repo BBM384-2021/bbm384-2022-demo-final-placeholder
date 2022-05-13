@@ -30,10 +30,19 @@ export default function HomePageScreen({ user, setUser }) {
       <div className="homeContainer">
         {flexDisplay && (
           <>
-              <EventSideBar user={user} />
+            <EventSideBar user={user} />
 
             <Routes>
-              <Route path="/" element={<MainFeed user={user} sessionUser={user} setSessionUser={setUser} />} />
+              <Route
+                path="/"
+                element={
+                  <MainFeed
+                    user={user}
+                    sessionUser={user}
+                    setSessionUser={setUser}
+                  />
+                }
+              />
               <Route
                 path="/in/:user_id"
                 element={
@@ -46,11 +55,17 @@ export default function HomePageScreen({ user, setUser }) {
                   <ChatView sessionUser={user} setSessionUser={setUser} />
                 }
               />
-              <Route path="*" element={<ErrorPage />} />
+              <Route
+                path="*"
+                element={
+                  <div className="errorMiddle">
+                    <ErrorPage />
+                  </div>
+                }
+              />
             </Routes>
 
             <ChatSideBar user={user} />
-
           </>
         )}
       </div>

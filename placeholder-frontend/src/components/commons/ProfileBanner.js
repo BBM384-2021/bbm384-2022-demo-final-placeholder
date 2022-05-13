@@ -60,12 +60,21 @@ export default function ProfileBanner({
       onClick={() => handleProfileBannerClick(user)}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
-        <img
-          className="profileBanner---profilePic"
-          src={profilePicPath}
-          alt=""
-          style={{ margin: "0px 10px 0px 5px" }}
-        />
+        <div
+          style={{
+            margin: "0px 20px 10px 5px",
+            height: "50px",
+            width: "50px",
+            // marginRight: "20px",
+          }}
+        >
+          <img
+            className="profileBanner---profilePic"
+            src={profilePicPath}
+            alt=""
+            style={{ height: "100%", width: "100%" }}
+          />
+        </div>
         <div className="bannerInfoContainer">
           {!withoutName && (
             <p style={{ margin: "0px", wordWrap: "normal" }}>
