@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
-import { Settings, PersonOutline, Logout } from "@mui/icons-material";
+import { Settings, PersonOutline, Logout, Group } from "@mui/icons-material";
 
 import ConfirmationDialog from "../commons/ConfirmationDialog";
 import SearchBar from "../search-bar/SearchBar";
@@ -24,6 +24,8 @@ import TagManagementBox from "../tag-management/TagManagementBox";
 import EditProfileModal from "../profilepage-screen/EditProfileModal";
 
 import { ReactComponent as LinkedHuIcon } from "../../linhu_logo.svg";
+import ConnectionsModal from "../profilepage-screen/ConnectionsModal";
+import { getAllUsers } from "../../services/UserService";
 
 export default function TopBar({ userObj, setUser }) {
   const history = useNavigate();
@@ -32,6 +34,8 @@ export default function TopBar({ userObj, setUser }) {
   const [editProfileOpen, setEditProfileOpen] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const openUserMenu = Boolean(anchorEl);
+  const [allUsers, setAllUsers] = useState([]);
+  const [allUsersModal, setAllUsersModal] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -105,6 +109,27 @@ export default function TopBar({ userObj, setUser }) {
               {/* <IconButton size="large" sx={{ backgroundColor: "#F5F5F5" }}>
                 <Settings />
               </IconButton> */}
+              {parseInt(userObj.user_type) === 0 && (
+                <Tooltip title="List All Users">
+                  <IconButton
+                    onClick={() => {
+                      getAllUsers().then((response) => {
+                        console.log("response: ", response);
+                        if (response.data.code === 200) {
+                          setAllUsers(response.data.allUsers);
+                          setAllUsersModal(true);
+                        }
+                      });
+                    }}
+                    sx={{ mr: 2 }}
+                    aria-controls={openUserMenu ? "account-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openUserMenu ? "true" : undefined}
+                  >
+                    <Group />
+                  </IconButton>
+                </Tooltip>
+              )}
 
               <Tooltip title="Account settings">
                 <IconButton
@@ -203,6 +228,14 @@ export default function TopBar({ userObj, setUser }) {
           setOpen={setEditProfileOpen}
           user={userObj}
         ></EditProfileModal>
+      )}
+      {ConnectionsModal && (
+        <ConnectionsModal
+          open={allUsersModal}
+          setOpen={setAllUsersModal}
+          connections={allUsers}
+          title="All System Users"
+        ></ConnectionsModal>
       )}
     </React.Fragment>
   );
